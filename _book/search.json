@@ -1,0 +1,42 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "VAR step by step review",
+    "section": "",
+    "text": "0.1 Quarto\nQuarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org.\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Index</span>"
+    ]
+  },
+  {
+    "objectID": "preface.html",
+    "href": "preface.html",
+    "title": "2  Preface",
+    "section": "",
+    "text": "Just matter of what was libido for Freud, this is my two cents on macroeconometrics.\nThese notes are my attempt to really understand how VAR models work, getting into the details to see how the gears turn, with simple examples that make every step clear. They could be useful if you already have basic time series knowledge, to be more precise: AR model.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Preface</span>"
+    ]
+  },
+  {
+    "objectID": "01-from-ar-to-var.html",
+    "href": "01-from-ar-to-var.html",
+    "title": "3  01-From AR to VAR",
+    "section": "",
+    "text": "3.0.0.1 What is VAR?\nThey are multivariate1 linear time series model, designed to capture the joint dynamics2 of multiple time series.\nVARs treat each endogenous variable in the system as a function of lagged values of all endogenous variables.\nVARs offer a simple and flexible alternative to traditional multiple equation models.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>01-From AR to VAR</span>"
+    ]
+  },
+  {
+    "objectID": "01-from-ar-to-var.html#footnotes",
+    "href": "01-from-ar-to-var.html#footnotes",
+    "title": "3  01-From AR to VAR",
+    "section": "",
+    "text": "Multivariate: Models several variables jointly, not just one. Each variable depends on its own lags and on the lags of all other variables in the system. (Univariate AR: only own past values. VAR: own past + others’ past.)↩︎\nJoint dynamics: How all variables move together and influence each other over time — not “multiple” series side by side, but one interconnected system.\nThe interconnection isn’t a one-off cross-effect — it propagates forward indefinitely. Suppose inflation (\\(\\pi\\)) and GDP depend on both their own lag and each other’s lag:\n\\[\\begin{aligned}\n\\pi_t &= f(\\pi_{t-1},\\, gdp_{t-1}) \\\\\ngdp_t &= f(gdp_{t-1},\\, \\pi_{t-1})\n\\end{aligned}\\]\nTo isolate how the cross-variable link alone propagates over time (own-lag effects work the same way, in parallel), follow just the \\(gdp \\to \\pi\\) channel:\n\\[gdp_{t-1} \\;\\rightarrow\\; \\pi_t \\;\\rightarrow\\; gdp_{t+1} \\;\\rightarrow\\; \\pi_{t+2} \\;\\rightarrow\\; gdp_{t+3} \\;\\rightarrow\\; \\cdots\\]\nA shock to GDP today doesn’t stop after hitting inflation next period — it feeds back into GDP the period after, which feeds back into inflation again, and so on. This self-sustaining feedback loop is what makes the system truly joint, and it’s the part most often underestimated when first learning VAR.↩︎\nIdentified VAR: identification means separating correlation from causation — the reduced-form residuals are correlated across equations, but correlation alone cannot tell us which shock caused what. Two main ways to identify a VAR, and so to identify shocks’ effects:\n\nRecursive ordering: impose a causal chain among variables (via Cholesky decomposition), assuming variable 1 affects all others within the period, variable 2 affects all but variable 1, and so on.\nStructural approach: impose restrictions derived from economic theory instead of an arbitrary ordering.\n\n↩︎\nImpulse-response function (IRF): Traces the effect of a one-time shock to one variable on the current and future values of all variables in the system, holding everything else constant. It answers: “if variable X is hit by a shock today, how does variable Y react today, next period, two periods ahead, …?”↩︎\nForecast error variance decomposition (FEVD): At each forecast horizon, splits the forecast error variance of a variable into the share explained by shocks to itself versus shocks to each of the other variables. It answers: “how much of the uncertainty in forecasting X comes from X’s own shocks, and how much from shocks to the other variables?”↩︎",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>01-From AR to VAR</span>"
+    ]
+  }
+]

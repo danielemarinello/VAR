@@ -1,0 +1,8 @@
+---
+title: "Preface"
+format: html
+---
+
+Just matter of what was libido for Freud, this is my two cents on macroeconometrics.
+
+These notes are my attempt to really understand how VAR models work, getting into the details to see how the gears turn, with simple examples that make every step clear. They could be useful if you already have basic time series knowledge, to be more precise: AR model.

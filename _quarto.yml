@@ -1,0 +1,18 @@
+project:
+  type: book
+
+book:
+  title: "VAR step by step review"
+  author: "Daniele Marinello"
+  date: today
+  chapters:
+    - index.qmd
+    - preface.qmd
+    - 01-from-ar-to-var.qmd
+    - 02-var.qmd
+
+format:
+  html:
+    theme: cosmo
+  
+
