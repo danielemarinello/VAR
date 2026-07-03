@@ -3,6 +3,8 @@ title: "Preface"
 format: html
 ---
 
-Just matter of what was libido for Freud, this is my two cents on macroeconometrics.
+Just matter of what was libido for Freud, this is my little contribution to a topic that I am very passionate about.
 
-These notes are my attempt to really understand how VAR models work, getting into the details to see how the gears turn, with simple examples that make every step clear. They could be useful if you already have basic time series knowledge, to be more precise: AR model.
+These notes are my attempt to truly understand how VAR models work, going into the details to see how the mechanisms behind them operate, with simple examples that make each step clear. Most of the material is based on lectures by Professor Roberto Golinelli, the Macroeconometric Forecasting (MFx) course by the IMF, and Stock, J. H., & Watson, M. W. (2001).
+
+They may be useful if you already have a basic knowledge of time series analysis, and more specifically of AR models.

@@ -2,9 +2,15 @@
 title: "Index"
 ---
 
-## Quarto
+## Test page
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Try
+
+1\) VAR general
+
+2\) AR VAR. Wold representation MA(inf)
+
+3\) From reduced to recursive
 
 ```{r}
 1 + 1

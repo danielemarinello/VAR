@@ -1,5 +1,4 @@
 ---
-title: "02-VAR"
+title: "02-From AR to VAR, usefull links"
 format: html
 ---
-
