@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "VAR step by step review",
     "section": "",
-    "text": "0.1 Test page\nTry\n1 + 1\n\n[1] 2",
+    "text": "0.1 Test page\nTry\n1) VAR general\n2) AR VAR. Wold representation MA(inf)\n3) From reduced to recursive\n1 + 1\n\n[1] 2",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Index</span>"
     ]
