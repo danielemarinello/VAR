@@ -8,11 +8,11 @@ book:
   chapters:
     - index.qmd
     - preface.qmd
-    - 01-from-ar-to-var.qmd
-    - 02-var.qmd
+    - 01-what-is-var.qmd
+    - 02-from-ar-to-var.qmd
 
 format:
   html:
     theme: cosmo
-  
+    css: styles.css
 

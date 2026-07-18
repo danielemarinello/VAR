@@ -1,4 +1,0 @@
----
-title: "02-From AR to VAR, usefull links"
-format: html
----

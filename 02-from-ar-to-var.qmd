@@ -1,0 +1,89 @@
+---
+title: "02-From AR to VAR, usefull links"
+format: html
+---
+
+## The Wold representation: from AR to VAR
+
+### Scalar case — the MA(∞) representation of an AR(1)
+
+Consider a zero-mean AR(1) (deterministic terms omitted):
+
+$$x_t = \alpha\, x_{t-1} + \varepsilon_t,
+\qquad \varepsilon_t \sim \text{WN}(0,\sigma^2)$$
+ {#eq-ar1}
+
+Introducing the lag operator $L$ (with $L\,x_t = x_{t-1}$):
+
+$$x_t = \alpha L\, x_t + \varepsilon_t
+\;\Longrightarrow\;
+(1-\alpha L)\,x_t = \varepsilon_t
+\;\Longrightarrow\;
+x_t = \frac{\varepsilon_t}{1-\alpha L}$$
+ {#eq-ar1-lag}
+
+If the process is stationary, i.e. $|\alpha| < 1$,[^02-var-1] the polynomial can be inverted as a convergent geometric series:
+
+[^02-var-1]: For the AR(1), the inversion in @eq-geom is a geometric series that converges only when $|\alpha| < 1$. If $|\alpha| \ge 1$ the weights $\alpha^{i}$ do not decay, the sum of past shocks diverges, and no stable MA($\infty$) exists — the process is nonstationary (the random walk $\alpha = 1$ is the borderline case).
+
+    For the VAR the requirement is the same in spirit but heavier to state: $G(L)^{-1}$ exists as a convergent power series only if $G(L)$ is invertible, which holds *if and only if* all $np$ roots of
+
+    $$\det\!\left(I_n - G_1 L - G_2 L^{2} - \cdots - G_p L^{p}\right) = 0$$
+
+    lie outside the unit circle — equivalently, the *inverse* roots (the eigenvalues of the companion matrix) lie *inside* it. It is the exact matrix generalization of $|\alpha| < 1$: one condition on a single scalar becomes a condition on the modulus of *every* root of a matrix polynomial.
+
+$$\frac{1}{1-\alpha L} = \sum_{i=0}^{\infty} \alpha^{i} L^{i}$$
+ {#eq-geom}
+
+so that the AR(1) admits an **MA(**$\infty$) — or **Wold** — representation:
+
+$$x_t = \sum_{i=0}^{\infty} \alpha^{i}\, \varepsilon_{t-i}
+= \varepsilon_t + \alpha\,\varepsilon_{t-1} + \alpha^{2}\,\varepsilon_{t-2} + \cdots$$
+ {#eq-ar-wold}
+
+The current value $x_t$ is nothing but a weighted sum of all past shocks, with weights $\alpha^{i}$ that fade out geometrically.
+
+### Multivariate case — the VMA(∞) representation of a VAR(p)
+
+The logic carries over almost verbatim: *scalars become matrices*. Write a VAR($p$) with the lag operator:
+
+$$y_t = G_0 + G_1 y_{t-1} + \cdots + G_p y_{t-p} + e_t
+\;\Longrightarrow\;
+\underbrace{(I_n - G_1 L - \cdots - G_p L^{p})}_{G(L)}\, y_t = G_0 + e_t$$
+ {#eq-var-lag}
+
+If the VAR is stationary — so that $G(L)$ is invertible (the matrix analogue of $|\alpha|<1$; see the note above) — then, exactly as we inverted $(1-\alpha L)$ in the scalar case, we invert the matrix polynomial $G(L)$:
+
+$$y_t = \mu + G(L)^{-1} e_t,
+\qquad \mu = G(L)^{-1} G_0$$
+ {#eq-var-inv}
+
+Expanding $G(L)^{-1}$ as a power series in $L$ yields the **VMA(**$\infty$) — the multivariate Wold representation:
+
+$$y_t = \mu + (I_n + \Psi_1 L + \Psi_2 L^{2} + \cdots)\, e_t
+= \mu + \sum_{i=0}^{\infty} \Psi_i\, e_{t-i}$$
+ {#eq-var-wold}
+
+where each $\Psi_i$ is an $n \times n$ matrix of coefficients and $\Psi_0 = I_n$.
+
+The parallel is one-to-one:
+
+|   | AR(1) — scalar | VAR(p) — matrix |
+|------------------------|------------------------|------------------------|
+| coefficient | $\alpha^{i}$ | $\Psi_i$ |
+| inversion | $\dfrac{1}{1-\alpha L}=\sum_i \alpha^{i} L^{i}$ | $G(L)^{-1}=\sum_i \Psi_i L^{i}$ |
+| stationarity | $\lvert\alpha\rvert<1$ | roots of $\det G(L)=0$ outside the unit circle |
+| representation | MA($\infty$) | VMA($\infty$) |
+
+### Why the Wold form is the natural home for IRFs
+
+An impulse-response function asks a single question: if a shock hits the system at time $t$, how does it respond at $t, t+1, t+2, \dots$? The Wold representation answers it directly, because the moving-average coefficients *are* the responses:
+
+$$\frac{\partial\, y_{t+i}}{\partial\, e_t'} = \Psi_i .$$
+ {#eq-irf}
+
+A one-time impulse $e_t$, with everything else held fixed, propagates to $y_{t+i}$ exactly through $\Psi_i$. Reading the sequence $\Psi_0, \Psi_1, \Psi_2, \dots$ across horizons $i$ *traces out* the impulse-response function.
+
+In the scalar case the analogue is $\partial x_{t+i}/\partial \varepsilon_t = \alpha^{i}$: a single shock decays monotonically and geometrically. In the VAR each $\Psi_i$ carries both own- and cross-effects, so the responses can oscillate, overshoot, and feed back through the system before dying out — the *feedback loop* of the previous section, now made quantitative.
+
+(These $\Psi_i$ are the *reduced-form* IRFs. Recovering *structural* IRFs requires identifying — orthogonalizing — the shocks, which connects back to the identified VAR; but the VMA($\infty$) form is the common starting point in every case.)

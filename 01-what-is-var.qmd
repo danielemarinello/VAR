@@ -30,7 +30,7 @@ VARs offer a simple and flexible alternative to traditional multiple equation mo
 
 #### Why is VAR simple and flexible, so useful and used?
 
-A standard AR model is inherently *unidirectional*: the researcher must decide, a priori, which variable belongs on the left-hand side and which on the right. But the true data-generating process (DGP) is *unobservable* — we can never verify whether the relationship we impose reflects reality, or is simply a convenient assumption.
+A standard AR and ARDL model[^ardl] is inherently *unidirectional*: the researcher must decide, a priori, which variable belongs on the left-hand side and which on the right. But the true data-generating process (DGP) is *unobservable* — we can never verify whether the relationship we impose reflects reality, or is simply a convenient assumption.
 
 VARs sidestep this problem by allowing for *simultaneity*: every variable can affect, and be affected by, every other variable, with no need to decide in advance who is endogenous and who is exogenous. Since every equation shares the same regressors — lags of all variables — each can be estimated independently via OLS.
 
@@ -94,3 +94,11 @@ Two main ways to identify a VAR, and so to identify shocks' effects:
 [^4]: **Impulse-response function (IRF)**: Traces the effect of a one-time shock to one variable on the current and future values of all variables in the system, holding everything else constant. It answers: "if variable X is hit by a shock today, how does variable Y react today, next period, two periods ahead, …?"
 
 [^5]: **Forecast error variance decomposition (FEVD)**: At each forecast horizon, splits the forecast error variance of a variable into the share explained by shocks to itself versus shocks to each of the other variables. It answers: "how much of the uncertainty in forecasting X comes from X's own shocks, and how much from shocks to the other variables?"
+
+[^ardl]: **ARDL (AutoRegressive Distributed Lag)**: a single-equation model in which a dependent variable is explained by its own lags (the *autoregressive* part) plus current and past values of one or more explanatory variables (the *distributed-lag* part). For a single regressor:
+
+    $$
+    y_t = c + \sum_{i=1}^{p} \phi_i\, y_{t-i} + \sum_{j=0}^{q} \beta_j\, x_{t-j} + \varepsilon_t
+    $$
+
+    The roles are fixed a priori: $y$ is the dependent variable and $x$ is treated as exogenous — exactly the unidirectional assumption a VAR avoids.
