@@ -72,6 +72,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -139,8 +168,19 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-wold-representation-from-ar-to-var" id="toc-the-wold-representation-from-ar-to-var" class="nav-link active" data-scroll-target="#the-wold-representation-from-ar-to-var"><span class="header-section-number">4.1</span> The Wold representation: from AR to VAR</a>
+  <ul class="collapse">
+  <li><a href="#scalar-case-the-ma-representation-of-an-ar1" id="toc-scalar-case-the-ma-representation-of-an-ar1" class="nav-link" data-scroll-target="#scalar-case-the-ma-representation-of-an-ar1"><span class="header-section-number">4.1.1</span> Scalar case — the MA(∞) representation of an AR(1)</a></li>
+  <li><a href="#multivariate-case-the-vma-representation-of-a-varp" id="toc-multivariate-case-the-vma-representation-of-a-varp" class="nav-link" data-scroll-target="#multivariate-case-the-vma-representation-of-a-varp"><span class="header-section-number">4.1.2</span> Multivariate case — the VMA(∞) representation of a VAR(p)</a></li>
+  <li><a href="#why-the-wold-form-is-the-natural-home-for-irfs" id="toc-why-the-wold-form-is-the-natural-home-for-irfs" class="nav-link" data-scroll-target="#why-the-wold-form-is-the-natural-home-for-irfs"><span class="header-section-number">4.1.3</span> Why the Wold form is the natural home for IRFs</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -164,8 +204,97 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="the-wold-representation-from-ar-to-var" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-wold-representation-from-ar-to-var"><span class="header-section-number">4.1</span> The Wold representation: from AR to VAR</h2>
+<section id="scalar-case-the-ma-representation-of-an-ar1" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="scalar-case-the-ma-representation-of-an-ar1"><span class="header-section-number">4.1.1</span> Scalar case — the MA(∞) representation of an AR(1)</h3>
+<p>Consider a zero-mean AR(1) (deterministic terms omitted):</p>
+<p><span class="math display">\[x_t = \alpha\, x_{t-1} + \varepsilon_t,
+\qquad \varepsilon_t \sim \text{WN}(0,\sigma^2)\]</span> {#eq-ar1}</p>
+<p>Introducing the lag operator <span class="math inline">\(L\)</span> (with <span class="math inline">\(L\,x_t = x_{t-1}\)</span>):</p>
+<p><span class="math display">\[x_t = \alpha L\, x_t + \varepsilon_t
+\;\Longrightarrow\;
+(1-\alpha L)\,x_t = \varepsilon_t
+\;\Longrightarrow\;
+x_t = \frac{\varepsilon_t}{1-\alpha L}\]</span> {#eq-ar1-lag}</p>
+<p>If the process is stationary, i.e.&nbsp;<span class="math inline">\(|\alpha| &lt; 1\)</span>,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> the polynomial can be inverted as a convergent geometric series:</p>
+<p><span class="math display">\[\frac{1}{1-\alpha L} = \sum_{i=0}^{\infty} \alpha^{i} L^{i}\]</span> {#eq-geom}</p>
+<p>so that the AR(1) admits an <strong>MA(</strong><span class="math inline">\(\infty\)</span>) — or <strong>Wold</strong> — representation:</p>
+<p><span class="math display">\[x_t = \sum_{i=0}^{\infty} \alpha^{i}\, \varepsilon_{t-i}
+= \varepsilon_t + \alpha\,\varepsilon_{t-1} + \alpha^{2}\,\varepsilon_{t-2} + \cdots\]</span> {#eq-ar-wold}</p>
+<p>The current value <span class="math inline">\(x_t\)</span> is nothing but a weighted sum of all past shocks, with weights <span class="math inline">\(\alpha^{i}\)</span> that fade out geometrically.</p>
+</section>
+<section id="multivariate-case-the-vma-representation-of-a-varp" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="multivariate-case-the-vma-representation-of-a-varp"><span class="header-section-number">4.1.2</span> Multivariate case — the VMA(∞) representation of a VAR(p)</h3>
+<p>The logic carries over almost verbatim: <em>scalars become matrices</em>. Write a VAR(<span class="math inline">\(p\)</span>) with the lag operator:</p>
+<p><span class="math display">\[y_t = G_0 + G_1 y_{t-1} + \cdots + G_p y_{t-p} + e_t
+\;\Longrightarrow\;
+\underbrace{(I_n - G_1 L - \cdots - G_p L^{p})}_{G(L)}\, y_t = G_0 + e_t\]</span> {#eq-var-lag}</p>
+<p>If the VAR is stationary — so that <span class="math inline">\(G(L)\)</span> is invertible (the matrix analogue of <span class="math inline">\(|\alpha|&lt;1\)</span>; see the note above) — then, exactly as we inverted <span class="math inline">\((1-\alpha L)\)</span> in the scalar case, we invert the matrix polynomial <span class="math inline">\(G(L)\)</span>:</p>
+<p><span class="math display">\[y_t = \mu + G(L)^{-1} e_t,
+\qquad \mu = G(L)^{-1} G_0\]</span> {#eq-var-inv}</p>
+<p>Expanding <span class="math inline">\(G(L)^{-1}\)</span> as a power series in <span class="math inline">\(L\)</span> yields the <strong>VMA(</strong><span class="math inline">\(\infty\)</span>) — the multivariate Wold representation:</p>
+<p><span class="math display">\[y_t = \mu + (I_n + \Psi_1 L + \Psi_2 L^{2} + \cdots)\, e_t
+= \mu + \sum_{i=0}^{\infty} \Psi_i\, e_{t-i}\]</span> {#eq-var-wold}</p>
+<p>where each <span class="math inline">\(\Psi_i\)</span> is an <span class="math inline">\(n \times n\)</span> matrix of coefficients and <span class="math inline">\(\Psi_0 = I_n\)</span>.</p>
+<p>The parallel is one-to-one:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>AR(1) — scalar</th>
+<th>VAR(p) — matrix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>coefficient</td>
+<td><span class="math inline">\(\alpha^{i}\)</span></td>
+<td><span class="math inline">\(\Psi_i\)</span></td>
+</tr>
+<tr class="even">
+<td>inversion</td>
+<td><span class="math inline">\(\dfrac{1}{1-\alpha L}=\sum_i \alpha^{i} L^{i}\)</span></td>
+<td><span class="math inline">\(G(L)^{-1}=\sum_i \Psi_i L^{i}\)</span></td>
+</tr>
+<tr class="odd">
+<td>stationarity</td>
+<td><span class="math inline">\(\lvert\alpha\rvert&lt;1\)</span></td>
+<td>roots of <span class="math inline">\(\det G(L)=0\)</span> outside the unit circle</td>
+</tr>
+<tr class="even">
+<td>representation</td>
+<td>MA(<span class="math inline">\(\infty\)</span>)</td>
+<td>VMA(<span class="math inline">\(\infty\)</span>)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="why-the-wold-form-is-the-natural-home-for-irfs" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="why-the-wold-form-is-the-natural-home-for-irfs"><span class="header-section-number">4.1.3</span> Why the Wold form is the natural home for IRFs</h3>
+<p>An impulse-response function asks a single question: if a shock hits the system at time <span class="math inline">\(t\)</span>, how does it respond at <span class="math inline">\(t, t+1, t+2, \dots\)</span>? The Wold representation answers it directly, because the moving-average coefficients <em>are</em> the responses:</p>
+<p><span class="math display">\[\frac{\partial\, y_{t+i}}{\partial\, e_t'} = \Psi_i .\]</span> {#eq-irf}</p>
+<p>A one-time impulse <span class="math inline">\(e_t\)</span>, with everything else held fixed, propagates to <span class="math inline">\(y_{t+i}\)</span> exactly through <span class="math inline">\(\Psi_i\)</span>. Reading the sequence <span class="math inline">\(\Psi_0, \Psi_1, \Psi_2, \dots\)</span> across horizons <span class="math inline">\(i\)</span> <em>traces out</em> the impulse-response function.</p>
+<p>In the scalar case the analogue is <span class="math inline">\(\partial x_{t+i}/\partial \varepsilon_t = \alpha^{i}\)</span>: a single shock decays monotonically and geometrically. In the VAR each <span class="math inline">\(\Psi_i\)</span> carries both own- and cross-effects, so the responses can oscillate, overshoot, and feed back through the system before dying out — the <em>feedback loop</em> of the previous section, now made quantitative.</p>
+<p>(These <span class="math inline">\(\Psi_i\)</span> are the <em>reduced-form</em> IRFs. Recovering <em>structural</em> IRFs requires identifying — orthogonalizing — the shocks, which connects back to the identified VAR; but the VMA(<span class="math inline">\(\infty\)</span>) form is the common starting point in every case.)</p>
 
 
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>For the AR(1), the inversion in <span class="quarto-unresolved-ref">?eq-geom</span> is a geometric series that converges only when <span class="math inline">\(|\alpha| &lt; 1\)</span>. If <span class="math inline">\(|\alpha| \ge 1\)</span> the weights <span class="math inline">\(\alpha^{i}\)</span> do not decay, the sum of past shocks diverges, and no stable MA(<span class="math inline">\(\infty\)</span>) exists — the process is nonstationary (the random walk <span class="math inline">\(\alpha = 1\)</span> is the borderline case).</p>
+<p>For the VAR the requirement is the same in spirit but heavier to state: <span class="math inline">\(G(L)^{-1}\)</span> exists as a convergent power series only if <span class="math inline">\(G(L)\)</span> is invertible, which holds <em>if and only if</em> all <span class="math inline">\(np\)</span> roots of</p>
+<p><span class="math display">\[\det\!\left(I_n - G_1 L - G_2 L^{2} - \cdots - G_p L^{p}\right) = 0\]</span></p>
+<p>lie outside the unit circle — equivalently, the <em>inverse</em> roots (the eigenvalues of the companion matrix) lie <em>inside</em> it. It is the exact matrix generalization of <span class="math inline">\(|\alpha| &lt; 1\)</span>: one condition on a single scalar becomes a condition on the modulus of <em>every</em> root of a matrix polynomial.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
