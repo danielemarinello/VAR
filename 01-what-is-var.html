@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -72,6 +107,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -196,7 +233,113 @@ window.Quarto = {
 
 <section id="what-is-var" class="level4" data-number="3.0.0.1">
 <h4 data-number="3.0.0.1" class="anchored" data-anchor-id="what-is-var"><span class="header-section-number">3.0.0.1</span> What is VAR?</h4>
-<p>VAR (Vector AutoRegressive) is a <em>multivariate</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> linear time series model, designed to capture the <em>joint dynamics</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> of multiple time series.</p>
+<p>VAR (Vector AutoRegressive) is a <em>multivariate</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> linear time series model, designed to capture the <em>joint dynamics</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> of multiple time series, through an <em>interconnected system</em>.</p>
+<p>The interconnection is not a one-off cross-effect: it propagates forward indefinitely. To fix ideas, consider a simple example. Let inflation (<span class="math inline">\(\pi\)</span>) and GDP each depend on both their own lag and the other’s lag. Since the true data-generating process is unknown, the relationship is left as a generic function:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\pi_t &amp;= f(\pi_{t-1},\, gdp_{t-1}) \\
+gdp_t &amp;= f(gdp_{t-1},\, \pi_{t-1})
+\end{aligned}
+\]</span></p>
+<p>Tracing a single channel makes the mechanism visible. Following only the <span class="math inline">\(gdp \to \pi\)</span> link — own-lag effects operate in parallel, in exactly the same way:</p>
+<p><span class="math display">\[
+gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t+2} \;\rightarrow\; gdp_{t+3} \;\rightarrow\; \cdots
+\]</span></p>
+<p>A shock to GDP today does not stop after reaching inflation next period. It feeds back into GDP the period after, which feeds back into inflation again, and so on without end. This self-sustaining <em>feedback loop</em> is what makes the system genuinely <em>joint</em> — and it is the aspect most often underestimated when first learning VAR. The diagram below animates the transmission: an impulse originating in GDP alternates between the two variables as time advances, never settling.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="28" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 27;"><span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>step <span class="op">=</span> {</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> s <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> N <span class="op">=</span> <span class="dv">7</span><span class="op">;</span>              <span class="co">// number of periods shown</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="kw">true</span>) {</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">yield</span> s<span class="op">;</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> (s <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> (N <span class="op">+</span> <span class="dv">2</span>)<span class="op">;</span>  <span class="co">// reveal 0..N, hold, then loop</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> Promises<span class="op">.</span><span class="fu">delay</span>(<span class="dv">1100</span>)<span class="op">;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="41" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 40;"><span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> periods <span class="op">=</span> [<span class="st">"t-1"</span><span class="op">,</span> <span class="st">"t"</span><span class="op">,</span> <span class="st">"t+1"</span><span class="op">,</span> <span class="st">"t+2"</span><span class="op">,</span> <span class="st">"t+3"</span><span class="op">,</span> <span class="st">"t+4"</span><span class="op">,</span> <span class="st">"t+5"</span>]<span class="op">;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> N <span class="op">=</span> periods<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> width <span class="op">=</span> <span class="dv">720</span><span class="op">,</span> height <span class="op">=</span> <span class="dv">250</span><span class="op">;</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mL <span class="op">=</span> <span class="dv">70</span><span class="op">,</span> mR <span class="op">=</span> <span class="dv">20</span><span class="op">,</span> mT <span class="op">=</span> <span class="dv">40</span><span class="op">,</span> mB <span class="op">=</span> <span class="dv">40</span><span class="op">;</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> dx <span class="op">=</span> (width <span class="op">-</span> mL <span class="op">-</span> mR) <span class="op">/</span> (N <span class="op">-</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> yGDP <span class="op">=</span> mT <span class="op">+</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> yPI  <span class="op">=</span> height <span class="op">-</span> mB <span class="op">-</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> rowOf <span class="op">=</span> i <span class="kw">=&gt;</span> i <span class="op">%</span> <span class="dv">2</span><span class="op">;</span>               <span class="co">// 0 = GDP, 1 = pi</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> rowY  <span class="op">=</span> r <span class="kw">=&gt;</span> (r <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> yGDP <span class="op">:</span> yPI)<span class="op">;</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> x <span class="op">=</span> i <span class="kw">=&gt;</span> mL <span class="op">+</span> i <span class="op">*</span> dx<span class="op">;</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cur <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(step<span class="op">,</span> N <span class="op">-</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">create</span>(<span class="st">"svg"</span>)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> width<span class="op">,</span> height])</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> width)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"style"</span><span class="op">,</span> <span class="st">"max-width:100%;height:auto;font-family:sans-serif;"</span>)<span class="op">;</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"defs"</span>)<span class="op">.</span><span class="fu">append</span>(<span class="st">"marker"</span>)</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"id"</span><span class="op">,</span> <span class="st">"arrow"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> <span class="st">"0 0 10 10"</span>)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"refX"</span><span class="op">,</span> <span class="dv">9</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"refY"</span><span class="op">,</span> <span class="dv">5</span>)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"markerWidth"</span><span class="op">,</span> <span class="dv">7</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"markerHeight"</span><span class="op">,</span> <span class="dv">7</span>)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"orient"</span><span class="op">,</span> <span class="st">"auto"</span>)</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">append</span>(<span class="st">"path"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"d"</span><span class="op">,</span> <span class="st">"M0 0 L10 5 L0 10 z"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"#f0a202"</span>)<span class="op">;</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>  [[<span class="st">"GDP"</span><span class="op">,</span> yGDP<span class="op">,</span> <span class="st">"#4c78a8"</span>]<span class="op">,</span> [<span class="st">"</span><span class="sc">\u03C0</span><span class="st">"</span><span class="op">,</span> yPI<span class="op">,</span> <span class="st">"#e45756"</span>]]<span class="op">.</span><span class="fu">forEach</span>(([lab<span class="op">,</span> yy<span class="op">,</span> col]) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"line"</span>)</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x1"</span><span class="op">,</span> mL <span class="op">-</span> <span class="dv">12</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x2"</span><span class="op">,</span> width <span class="op">-</span> mR)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y1"</span><span class="op">,</span> yy)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y2"</span><span class="op">,</span> yy)</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> <span class="st">"#eee"</span>)<span class="op">;</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> mL <span class="op">-</span> <span class="dv">26</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> yy <span class="op">+</span> <span class="dv">5</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"end"</span>)</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-weight"</span><span class="op">,</span> <span class="st">"bold"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">16</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> col)<span class="op">.</span><span class="fu">text</span>(lab)<span class="op">;</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  periods<span class="op">.</span><span class="fu">forEach</span>((p<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> <span class="fu">x</span>(i))<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> mT <span class="op">-</span> <span class="dv">14</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"middle"</span>)</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">12</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"#999"</span>)<span class="op">.</span><span class="fu">text</span>(p)<span class="op">;</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> on <span class="op">=</span> i <span class="op">&lt;</span> step<span class="op">;</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"line"</span>)</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x1"</span><span class="op">,</span> <span class="fu">x</span>(i))<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y1"</span><span class="op">,</span> <span class="fu">rowY</span>(<span class="fu">rowOf</span>(i)))</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x2"</span><span class="op">,</span> <span class="fu">x</span>(i <span class="op">+</span> <span class="dv">1</span>))<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y2"</span><span class="op">,</span> <span class="fu">rowY</span>(<span class="fu">rowOf</span>(i <span class="op">+</span> <span class="dv">1</span>)))</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> on <span class="op">?</span> <span class="st">"#f0a202"</span> <span class="op">:</span> <span class="st">"#ddd"</span>)</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> on <span class="op">?</span> <span class="dv">3</span> <span class="op">:</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"marker-end"</span><span class="op">,</span> <span class="st">"url(#arrow)"</span>)</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"opacity"</span><span class="op">,</span> on <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="fl">0.5</span>)<span class="op">;</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> reached <span class="op">=</span> i <span class="op">&lt;=</span> step<span class="op">;</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> isCur <span class="op">=</span> i <span class="op">===</span> cur<span class="op">;</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> col <span class="op">=</span> <span class="fu">rowOf</span>(i) <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"#4c78a8"</span> <span class="op">:</span> <span class="st">"#e45756"</span><span class="op">;</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"circle"</span>)</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"cx"</span><span class="op">,</span> <span class="fu">x</span>(i))<span class="op">.</span><span class="fu">attr</span>(<span class="st">"cy"</span><span class="op">,</span> <span class="fu">rowY</span>(<span class="fu">rowOf</span>(i)))</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"r"</span><span class="op">,</span> isCur <span class="op">?</span> <span class="dv">15</span> <span class="op">:</span> <span class="dv">10</span>)</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> reached <span class="op">?</span> col <span class="op">:</span> <span class="st">"#f2f2f2"</span>)</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> reached <span class="op">?</span> col <span class="op">:</span> <span class="st">"#ccc"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="dv">2</span>)</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"opacity"</span><span class="op">,</span> reached <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="fl">0.55</span>)<span class="op">;</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> who <span class="op">=</span> <span class="fu">rowOf</span>(cur) <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"GDP"</span> <span class="op">:</span> <span class="st">"inflation"</span><span class="op">;</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>  svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> width <span class="op">/</span> <span class="dv">2</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> height <span class="op">-</span> <span class="dv">8</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"middle"</span>)</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">13</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"#333"</span>)</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">text</span>(<span class="st">"period "</span> <span class="op">+</span> periods[cur] <span class="op">+</span> <span class="st">": the shock is now carried by "</span> <span class="op">+</span> who)<span class="op">;</span></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> svg<span class="op">.</span><span class="fu">node</span>()<span class="op">;</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
 <p>VARs treat each endogenous variable in the system as a function of lagged values of all endogenous variables.</p>
 <p>VARs offer a simple and flexible alternative to traditional multiple equation models.</p>
 </section>
@@ -247,14 +390,14 @@ Z_t = c + \Phi\, Z_{t-1} + w_t
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p><strong>Multivariate</strong>: Models <em>several variables</em> jointly, not just one. Each variable depends on its own lags and on the lags of all other variables in the system. (Univariate AR: only own past values. VAR: own past + others’ past.)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><strong>Joint dynamics</strong>: How all variables move <em>together</em> and <em>influence each other</em> over time — not “multiple” series side by side, but one <em>interconnected system</em>.</p>
-<p>The interconnection isn’t a one-off cross-effect — it <em>propagates forward indefinitely</em>. Suppose inflation (<span class="math inline">\(\pi\)</span>) and GDP depend on both their own lag and each other’s lag:</p>
+<li id="fn1"><p><strong>Multivariate</strong>: VAR models <em>several variables</em> jointly, not just one. Each variable depends on its own lags and on the lags of all other variables in the system. (Univariate AR: only own past values. VAR: own past + others’ past.)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>Joint dynamics</strong>: This is the first key concept. VAR accounts for the fact that all variables move <em>together</em> and <em>influence each other</em> over time — not “multiple” series side by side, but one <em>interconnected system</em>.</p>
+<p>The interconnection is not a one-off cross-effect, it <em>propagates forward</em> indefinitely. To fix ideas, consider the following basic example: Suppose inflation (<span class="math inline">\(\pi\)</span>) and GDP depend on both their own lag and each other’s lag, without knowing the exact data generation process, we are accounting for a generic function:</p>
 <p><span class="math display">\[\begin{aligned}
 \pi_t &amp;= f(\pi_{t-1},\, gdp_{t-1}) \\
 gdp_t &amp;= f(gdp_{t-1},\, \pi_{t-1})
 \end{aligned}\]</span></p>
-<p>To isolate how the cross-variable link alone propagates over time (own-lag effects work the same way, in parallel), follow just the <span class="math inline">\(gdp \to \pi\)</span> channel:</p>
+<p>We can see that the cross-variable link propagates over time following the following scheme (own-lag effects work the same way, in parallel), follow just the <span class="math inline">\(gdp \to \pi\)</span> channel:</p>
 <p><span class="math display">\[gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t+2} \;\rightarrow\; gdp_{t+3} \;\rightarrow\; \cdots\]</span></p>
 <p>A shock to GDP today doesn’t stop after hitting inflation next period — it feeds back into GDP the period after, which feeds back into inflation again, and so on. This self-sustaining <em>feedback loop</em> is what makes the system truly <em>joint</em>, and it’s the part most often underestimated when first learning VAR.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p><strong>ARDL (AutoRegressive Distributed Lag)</strong>: a single-equation model in which a dependent variable is explained by its own lags (the <em>autoregressive</em> part) plus current and past values of one or more explanatory variables (the <em>distributed-lag</em> part). For a single regressor:</p>
@@ -274,6 +417,17 @@ y_t = c + \sum_{i=1}^{p} \phi_i\, y_{t-i} + \sum_{j=0}^{q} \beta_j\, x_{t-j} + \
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InN0ZXAgPSB7XG4gIGxldCBzID0gMDtcbiAgY29uc3QgTiA9IDc7ICAgICAgICAgICAgICAvLyBudW1iZXIgb2YgcGVyaW9kcyBzaG93blxuICB3aGlsZSAodHJ1ZSkge1xuICAgIHlpZWxkIHM7XG4gICAgcyA9IChzICsgMSkgJSAoTiArIDIpOyAgLy8gcmV2ZWFsIDAuLk4sIGhvbGQsIHRoZW4gbG9vcFxuICAgIGF3YWl0IFByb21pc2VzLmRlbGF5KDExMDApO1xuICB9XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ7XG4gIGNvbnN0IHBlcmlvZHMgPSBbXCJ0LTFcIiwgXCJ0XCIsIFwidCsxXCIsIFwidCsyXCIsIFwidCszXCIsIFwidCs0XCIsIFwidCs1XCJdO1xuICBjb25zdCBOID0gcGVyaW9kcy5sZW5ndGg7XG4gIGNvbnN0IHdpZHRoID0gNzIwLCBoZWlnaHQgPSAyNTA7XG4gIGNvbnN0IG1MID0gNzAsIG1SID0gMjAsIG1UID0gNDAsIG1CID0gNDA7XG4gIGNvbnN0IGR4ID0gKHdpZHRoIC0gbUwgLSBtUikgLyAoTiAtIDEpO1xuICBjb25zdCB5R0RQID0gbVQgKyAyMDtcbiAgY29uc3QgeVBJICA9IGhlaWdodCAtIG1CIC0gMjA7XG4gIGNvbnN0IHJvd09mID0gaSA9PiBpICUgMjsgICAgICAgICAgICAgICAvLyAwID0gR0RQLCAxID0gcGlcbiAgY29uc3Qgcm93WSAgPSByID0+IChyID09PSAwID8geUdEUCA6IHlQSSk7XG4gIGNvbnN0IHggPSBpID0+IG1MICsgaSAqIGR4O1xuICBjb25zdCBjdXIgPSBNYXRoLm1pbihzdGVwLCBOIC0gMSk7XG5cbiAgY29uc3Qgc3ZnID0gZDMuY3JlYXRlKFwic3ZnXCIpXG4gICAgLmF0dHIoXCJ2aWV3Qm94XCIsIFswLCAwLCB3aWR0aCwgaGVpZ2h0XSlcbiAgICAuYXR0cihcIndpZHRoXCIsIHdpZHRoKVxuICAgIC5hdHRyKFwic3R5bGVcIiwgXCJtYXgtd2lkdGg6MTAwJTtoZWlnaHQ6YXV0bztmb250LWZhbWlseTpzYW5zLXNlcmlmO1wiKTtcblxuICBzdmcuYXBwZW5kKFwiZGVmc1wiKS5hcHBlbmQoXCJtYXJrZXJcIilcbiAgICAuYXR0cihcImlkXCIsIFwiYXJyb3dcIikuYXR0cihcInZpZXdCb3hcIiwgXCIwIDAgMTAgMTBcIilcbiAgICAuYXR0cihcInJlZlhcIiwgOSkuYXR0cihcInJlZllcIiwgNSlcbiAgICAuYXR0cihcIm1hcmtlcldpZHRoXCIsIDcpLmF0dHIoXCJtYXJrZXJIZWlnaHRcIiwgNylcbiAgICAuYXR0cihcIm9yaWVudFwiLCBcImF1dG9cIilcbiAgICAuYXBwZW5kKFwicGF0aFwiKS5hdHRyKFwiZFwiLCBcIk0wIDAgTDEwIDUgTDAgMTAgelwiKS5hdHRyKFwiZmlsbFwiLCBcIiNmMGEyMDJcIik7XG5cbiAgW1tcIkdEUFwiLCB5R0RQLCBcIiM0Yzc4YThcIl0sIFtcIlxcdTAzQzBcIiwgeVBJLCBcIiNlNDU3NTZcIl1dLmZvckVhY2goKFtsYWIsIHl5LCBjb2xdKSA9PiB7XG4gICAgc3ZnLmFwcGVuZChcImxpbmVcIilcbiAgICAgIC5hdHRyKFwieDFcIiwgbUwgLSAxMikuYXR0cihcIngyXCIsIHdpZHRoIC0gbVIpLmF0dHIoXCJ5MVwiLCB5eSkuYXR0cihcInkyXCIsIHl5KVxuICAgICAgLmF0dHIoXCJzdHJva2VcIiwgXCIjZWVlXCIpO1xuICAgIHN2Zy5hcHBlbmQoXCJ0ZXh0XCIpXG4gICAgICAuYXR0cihcInhcIiwgbUwgLSAyNikuYXR0cihcInlcIiwgeXkgKyA1KS5hdHRyKFwidGV4dC1hbmNob3JcIiwgXCJlbmRcIilcbiAgICAgIC5hdHRyKFwiZm9udC13ZWlnaHRcIiwgXCJib2xkXCIpLmF0dHIoXCJmb250LXNpemVcIiwgMTYpLmF0dHIoXCJmaWxsXCIsIGNvbCkudGV4dChsYWIpO1xuICB9KTtcblxuICBwZXJpb2RzLmZvckVhY2goKHAsIGkpID0+IHtcbiAgICBzdmcuYXBwZW5kKFwidGV4dFwiKVxuICAgICAgLmF0dHIoXCJ4XCIsIHgoaSkpLmF0dHIoXCJ5XCIsIG1UIC0gMTQpLmF0dHIoXCJ0ZXh0LWFuY2hvclwiLCBcIm1pZGRsZVwiKVxuICAgICAgLmF0dHIoXCJmb250LXNpemVcIiwgMTIpLmF0dHIoXCJmaWxsXCIsIFwiIzk5OVwiKS50ZXh0KHApO1xuICB9KTtcblxuICBmb3IgKGxldCBpID0gMDsgaSA8IE4gLSAxOyBpKyspIHtcbiAgICBjb25zdCBvbiA9IGkgPCBzdGVwO1xuICAgIHN2Zy5hcHBlbmQoXCJsaW5lXCIpXG4gICAgICAuYXR0cihcIngxXCIsIHgoaSkpLmF0dHIoXCJ5MVwiLCByb3dZKHJvd09mKGkpKSlcbiAgICAgIC5hdHRyKFwieDJcIiwgeChpICsgMSkpLmF0dHIoXCJ5MlwiLCByb3dZKHJvd09mKGkgKyAxKSkpXG4gICAgICAuYXR0cihcInN0cm9rZVwiLCBvbiA/IFwiI2YwYTIwMlwiIDogXCIjZGRkXCIpXG4gICAgICAuYXR0cihcInN0cm9rZS13aWR0aFwiLCBvbiA/IDMgOiAxLjUpXG4gICAgICAuYXR0cihcIm1hcmtlci1lbmRcIiwgXCJ1cmwoI2Fycm93KVwiKVxuICAgICAgLmF0dHIoXCJvcGFjaXR5XCIsIG9uID8gMSA6IDAuNSk7XG4gIH1cblxuICBmb3IgKGxldCBpID0gMDsgaSA8IE47IGkrKykge1xuICAgIGNvbnN0IHJlYWNoZWQgPSBpIDw9IHN0ZXA7XG4gICAgY29uc3QgaXNDdXIgPSBpID09PSBjdXI7XG4gICAgY29uc3QgY29sID0gcm93T2YoaSkgPT09IDAgPyBcIiM0Yzc4YThcIiA6IFwiI2U0NTc1NlwiO1xuICAgIHN2Zy5hcHBlbmQoXCJjaXJjbGVcIilcbiAgICAgIC5hdHRyKFwiY3hcIiwgeChpKSkuYXR0cihcImN5XCIsIHJvd1kocm93T2YoaSkpKVxuICAgICAgLmF0dHIoXCJyXCIsIGlzQ3VyID8gMTUgOiAxMClcbiAgICAgIC5hdHRyKFwiZmlsbFwiLCByZWFjaGVkID8gY29sIDogXCIjZjJmMmYyXCIpXG4gICAgICAuYXR0cihcInN0cm9rZVwiLCByZWFjaGVkID8gY29sIDogXCIjY2NjXCIpLmF0dHIoXCJzdHJva2Utd2lkdGhcIiwgMilcbiAgICAgIC5hdHRyKFwib3BhY2l0eVwiLCByZWFjaGVkID8gMSA6IDAuNTUpO1xuICB9XG5cbiAgY29uc3Qgd2hvID0gcm93T2YoY3VyKSA9PT0gMCA/IFwiR0RQXCIgOiBcImluZmxhdGlvblwiO1xuICBzdmcuYXBwZW5kKFwidGV4dFwiKVxuICAgIC5hdHRyKFwieFwiLCB3aWR0aCAvIDIpLmF0dHIoXCJ5XCIsIGhlaWdodCAtIDgpLmF0dHIoXCJ0ZXh0LWFuY2hvclwiLCBcIm1pZGRsZVwiKVxuICAgIC5hdHRyKFwiZm9udC1zaXplXCIsIDEzKS5hdHRyKFwiZmlsbFwiLCBcIiMzMzNcIilcbiAgICAudGV4dChcInBlcmlvZCBcIiArIHBlcmlvZHNbY3VyXSArIFwiOiB0aGUgc2hvY2sgaXMgbm93IGNhcnJpZWQgYnkgXCIgKyB3aG8pO1xuXG4gIHJldHVybiBzdmcubm9kZSgpO1xufVxuIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
