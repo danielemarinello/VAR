@@ -24,7 +24,7 @@
     "href": "01-what-is-var.html",
     "title": "3  01-VAR",
     "section": "",
-    "text": "3.0.0.1 What is VAR?\nThey are multivariate1 linear time series model, designed to capture the joint dynamics2 of multiple time series.\nVARs treat each endogenous variable in the system as a function of lagged values of all endogenous variables.\nVARs offer a simple and flexible alternative to traditional multiple equation models.",
+    "text": "3.0.0.1 What is VAR?\nVAR (Vector AutoRegressive) is a multivariate1 linear time series model, designed to capture the joint dynamics2 of multiple time series.\nVARs treat each endogenous variable in the system as a function of lagged values of all endogenous variables.\nVARs offer a simple and flexible alternative to traditional multiple equation models.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>01-VAR</span>"
     ]
