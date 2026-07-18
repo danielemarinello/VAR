@@ -5,7 +5,7 @@ format: html
 
 #### What is VAR?
 
-They are *multivariate*[^1] linear time series model, designed to capture the *joint dynamics*[^2] of multiple time series.
+VAR (Vector AutoRegressive) is a *multivariate*[^1] linear time series model, designed to capture the *joint dynamics*[^2] of multiple time series.
 
 [^1]: **Multivariate**: Models *several variables* jointly, not just one. Each variable depends on its own lags and on the lags of all other variables in the system. (Univariate AR: only own past values. VAR: own past + others' past.)
 
