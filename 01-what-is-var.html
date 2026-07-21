@@ -496,14 +496,14 @@ Z_t = \begin{bmatrix} x_t \\ y_t \end{bmatrix}, \qquad
 \Phi = \begin{bmatrix} \phi_{11} &amp; \phi_{12} \\ \phi_{21} &amp; \phi_{22} \end{bmatrix}, \qquad
 w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix}
 \tag{3.3}\]</span></span></p>
-<p>It is easy to verify that <span class="quarto-unresolved-ref">?eq-var1-matrix</span> is equivalent to <a href="#eq-var1-equations" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> by expanding the matrix product:</p>
+<p>It is easy to verify that <a href="#eq-var1-matrix-const" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> is equivalent to <a href="#eq-var1-equations" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> by expanding the matrix product:</p>
 <p><span id="eq-var1-expansion"><span class="math display">\[
 \Phi Z_{t-1} = \begin{bmatrix} \phi_{11} &amp; \phi_{12} \\ \phi_{21} &amp; \phi_{22} \end{bmatrix} \begin{bmatrix} x_{t-1} \\ y_{t-1} \end{bmatrix} = \begin{bmatrix} \phi_{11} x_{t-1} + \phi_{12} y_{t-1} \\ \phi_{21} x_{t-1} + \phi_{22} y_{t-1} \end{bmatrix}
 \tag{3.4}\]</span></span></p>
 </section>
 <section id="how-var-is-used-in-macroeconometrics" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="how-var-is-used-in-macroeconometrics"><span class="header-section-number">3.4</span> How VAR is used in macroeconometrics?</h2>
-<p>VARs offer a coherent and credible framework for four distinct tasks: data description, forecasting, structural inference and policy analysis.</p>
+<p>VAR offers a coherent and credible framework for four distinct tasks: data description, forecasting, structural inference and policy analysis.</p>
 <p>For forecasting and data description, a <em>reduced-form VAR</em> is sufficient: forecasting only requires the conditional mean of future values given the past, with no need to take a stance on the underlying structural relationships among the variables.</p>
 <p>For structural inference and policy analysis, however, the reduced-form VAR is not enough — these tasks require an <em>identified VAR</em><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. In this context, the goal is to analyze the impact of structural shocks. This is done with <em>impulse-response analysis</em><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and with <em>forecast error variance decomposition</em><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p>
 
