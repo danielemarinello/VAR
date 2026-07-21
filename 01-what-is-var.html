@@ -454,18 +454,6 @@ gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t
 </div>
 </div>
 </div>
-<p>FULL STOP The interconnection is not a one-off cross-effect: it propagates forward indefinitely. To fix ideas, consider a simple example. Let inflation (<span class="math inline">\(\pi\)</span>) and GDP each depend on both their own lag and the other’s lag. Since the true data-generating process is unknown, the relationship is left as a generic function:</p>
-<p><span class="math display">\[
-\begin{aligned}
-\pi_t &amp;= f(\pi_{t-1},\, gdp_{t-1}) \\
-gdp_t &amp;= f(gdp_{t-1},\, \pi_{t-1})
-\end{aligned}
-\]</span></p>
-<p>Tracing a single channel makes the mechanism visible. Following only the <span class="math inline">\(gdp \to \pi\)</span> link — own-lag effects operate in parallel, in exactly the same way:</p>
-<p><span class="math display">\[
-gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t+2} \;\rightarrow\; gdp_{t+3} \;\rightarrow\; \cdots
-\]</span></p>
-<p>A shock to GDP today does not stop after reaching inflation next period. It feeds back into GDP the period after, which feeds back into inflation again, and so on without end. This self-sustaining <em>feedback loop</em> is what makes the system genuinely <em>joint</em> — and it is the aspect most often underestimated when first learning VAR. The diagram below animates the transmission: an impulse originating in GDP alternates between the two variables as time advances, never settling.</p>
 </section>
 <section id="why-is-var-simple-and-flexible-so-useful-and-used" class="level4" data-number="3.0.0.3">
 <h4 data-number="3.0.0.3" class="anchored" data-anchor-id="why-is-var-simple-and-flexible-so-useful-and-used"><span class="header-section-number">3.0.0.3</span> Why is VAR simple and flexible, so useful and used?</h4>
