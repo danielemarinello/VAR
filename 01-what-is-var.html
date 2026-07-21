@@ -469,9 +469,9 @@ gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t
 </section>
 <section id="why-is-var-simple-and-flexible-so-useful-and-used" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="why-is-var-simple-and-flexible-so-useful-and-used"><span class="header-section-number">3.2</span> Why is VAR simple and flexible, so useful and used?</h2>
-<p>A standard AR and ARDL model<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is inherently <em>unidirectional</em>: the researcher must decide, a priori, which variable belongs on the left-hand side and which on the right. But the true data-generating process (DGP) is <em>unobservable</em> — we can never verify whether the relationship we impose reflects reality, or is simply a convenient assumption.</p>
-<p>VARs sidestep this problem by allowing for <em>simultaneity</em>: every variable can affect, and be affected by, every other variable, with no need to decide in advance who is endogenous and who is exogenous. Since every equation shares the same regressors — lags of all variables — each can be estimated independently via OLS.</p>
-<p>In microeconomics, this chicken-and-egg problem can sometimes be resolved through natural temporal ordering: education precedes wages, so treating it as exogenous is defensible. In macroeconomics, this precedence rarely exists — GDP, inflation, and interest rates are determined simultaneously, within the same period.</p>
+<p>A standard AR or ARDL model<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is inherently <em>unidirectional</em>: the researcher must decide, a priori, which variable belongs on the left-hand side and which on the right. But the true data-generating process (DGP) is always <em>unobservable</em>, we can never verify whether the relationship we impose reflects reality, or is simply a convenient assumption.</p>
+<p>VARs sidestep this problem by allowing for <em>simultaneity</em>, avoiding the constraint of unidirectionality. As shown above every variable can affect, and be affected by, every other variable, with no need to decide in advance who is endogenous and who is exogenous. Since every equation shares the same regressors (lags of all variables) each can be estimated independently via OLS.</p>
+<p>Also because in microeconomics, this chicken-and-egg problem can sometimes be resolved through natural temporal ordering: education precedes wages, so treating it as exogenous is defensible. In macroeconomics, this precedence rarely exists, following the previous example: GDP and inflation are determined simultaneously, within the same period.</p>
 <p>This is what makes the VAR both <em>simpler</em> and more <em>flexible</em>: it is essentially <em>atheoretical in structure</em>, treating every variable as potentially endogenous and letting the data reveal the dynamics, rather than imposing a priori who (exogenous) influences whom (endogenous).</p>
 </section>
 <section id="var-from-a-mathematical-pov" class="level2" data-number="3.3">
@@ -520,8 +520,7 @@ Z_t = c + \Phi\, Z_{t-1} + w_t
 <li id="fn4"><p><strong>ARDL (AutoRegressive Distributed Lag)</strong>: a single-equation model in which a dependent variable is explained by its own lags (the <em>autoregressive</em> part) plus current and past values of one or more explanatory variables (the <em>distributed-lag</em> part). For a single regressor:</p>
 <p><span class="math display">\[
 y_t = c + \sum_{i=1}^{p} \phi_i\, y_{t-i} + \sum_{j=0}^{q} \beta_j\, x_{t-j} + \varepsilon_t
-\]</span></p>
-<p>The roles are fixed a priori: <span class="math inline">\(y\)</span> is the dependent variable and <span class="math inline">\(x\)</span> is treated as exogenous — exactly the unidirectional assumption a VAR avoids.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+\]</span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p><strong>Identified VAR</strong>: identification means separating <em>correlation</em> from <em>causation</em> — the reduced-form residuals are correlated across equations, but correlation alone cannot tell us which shock caused what. Two main ways to identify a VAR, and so to identify shocks’ effects:</p>
 <ul>
 <li><strong>Recursive ordering</strong>: impose a <em>causal chain</em> among variables (via Cholesky decomposition), assuming variable 1 affects all others within the period, variable 2 affects all but variable 1, and so on.</li>
