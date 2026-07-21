@@ -477,31 +477,29 @@ gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t
 <section id="var-from-a-mathematical-pov" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="var-from-a-mathematical-pov"><span class="header-section-number">3.3</span> VAR from a mathematical POV</h2>
 <p>A VAR is an <span class="math inline">\(n\)</span>-equation, <span class="math inline">\(n\)</span>-variable linear model in which each variable is in turn explained by its own lagged values, plus current and past values of the remaining <span class="math inline">\(n-1\)</span> variables.</p>
-<p>Consider a bivariate VAR(1) with <span class="math inline">\(x_t\)</span> and <span class="math inline">\(y_t\)</span>. In equation-by-equation form:</p>
+<p><em>Example:</em></p>
+<p>The easiest case is a VAR(1), where the number inside parenthesis indicates the number of lags, with just two variable <span class="math inline">\(x_t\)</span> and <span class="math inline">\(y_t\)</span>.</p>
+<p>It could be expressed in equation-by-equation form:</p>
 <p><span id="eq-var1-equations"><span class="math display">\[
 \begin{aligned}
 x_t &amp;= c_1 + \phi_{11}\, x_{t-1} + \phi_{12}\, y_{t-1} + w_{1t} \\
 y_t &amp;= c_2 + \phi_{21}\, x_{t-1} + \phi_{22}\, y_{t-1} + w_{2t}
 \end{aligned}
 \tag{3.1}\]</span></span></p>
-<p>Defining:</p>
+<p>Or in matrix form:</p>
+<p><span id="eq-var1-matrix-const"><span class="math display">\[
+Z_t = c + \Phi\, Z_{t-1} + w_t
+\tag{3.2}\]</span></span></p>
+<p>Where:</p>
 <p><span id="eq-var1-matrices"><span class="math display">\[
 Z_t = \begin{bmatrix} x_t \\ y_t \end{bmatrix}, \qquad
 \Phi = \begin{bmatrix} \phi_{11} &amp; \phi_{12} \\ \phi_{21} &amp; \phi_{22} \end{bmatrix}, \qquad
 w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix}
-\tag{3.2}\]</span></span></p>
-<p>the VAR(1) can be written compactly in matrix form as:</p>
-<p><span id="eq-var1-matrix"><span class="math display">\[
-Z_t = \Phi\, Z_{t-1} + w_t
 \tag{3.3}\]</span></span></p>
-<p>or, including the constant vector <span class="math inline">\(c = \begin{bmatrix} c_1 &amp; c_2 \end{bmatrix}'\)</span>:</p>
-<p><span id="eq-var1-matrix-const"><span class="math display">\[
-Z_t = c + \Phi\, Z_{t-1} + w_t
-\tag{3.4}\]</span></span></p>
-<p>We can verify that <a href="#eq-var1-matrix" class="quarto-xref">Equation&nbsp;<span>3.3</span></a> is equivalent to <a href="#eq-var1-equations" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> by expanding the matrix product:</p>
+<p>It is easy to verify that <span class="quarto-unresolved-ref">?eq-var1-matrix</span> is equivalent to <a href="#eq-var1-equations" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> by expanding the matrix product:</p>
 <p><span id="eq-var1-expansion"><span class="math display">\[
 \Phi Z_{t-1} = \begin{bmatrix} \phi_{11} &amp; \phi_{12} \\ \phi_{21} &amp; \phi_{22} \end{bmatrix} \begin{bmatrix} x_{t-1} \\ y_{t-1} \end{bmatrix} = \begin{bmatrix} \phi_{11} x_{t-1} + \phi_{12} y_{t-1} \\ \phi_{21} x_{t-1} + \phi_{22} y_{t-1} \end{bmatrix}
-\tag{3.5}\]</span></span></p>
+\tag{3.4}\]</span></span></p>
 </section>
 <section id="how-var-is-used-in-macroeconometrics" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="how-var-is-used-in-macroeconometrics"><span class="header-section-number">3.4</span> How VAR is used in macroeconometrics?</h2>
