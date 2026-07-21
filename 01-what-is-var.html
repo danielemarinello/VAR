@@ -254,7 +254,7 @@ window.Quarto = {
 <section id="a-closer-look-joint-dynamics-interconnected-system-and-endogeneity" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="a-closer-look-joint-dynamics-interconnected-system-and-endogeneity"><span class="header-section-number">3.1.1</span> A closer look: joint dynamics, interconnected system and endogeneity</h3>
 <p>In a VAR the variables are not studied side by side: they form a single system in which each one both drives and is driven by the others.</p>
-<p>The interconnection is neither a one-off cross-effect nor unidirectional, it is mutual. Each variable enters the other’s equation, so influence runs in both directions and it propagates forward indefinitely. Neither variable can be held exogenous on RHS: this reciprocal dependence is exactly what <em>endogeneity</em> means here.</p>
+<p>The interconnection is neither a one-off cross-effect nor unidirectional, it is mutual. Each variable enters the other’s equation, so influence runs in both directions and it propagates forward indefinitely. Neither variable can be held exogenous on the left hand side: this reciprocal dependence is exactly what <em>endogeneity</em> means here.</p>
 <p><em>Example:</em></p>
 <p>To fix ideas, let inflation (<span class="math inline">\(\pi\)</span>) and GDP each depend on both their own lag and the other’s lag. Since the true data-generating process is unknown, the relationship is left as a generic function:</p>
 <p><span class="math display">\[
@@ -507,8 +507,7 @@ w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix}
 <p>For forecasting and data description, a <em>reduced-form VAR</em> is sufficient: forecasting only requires the conditional mean of future values given the past, with no need to take a stance on the underlying structural relationships among the variables.</p>
 <p>For structural inference and policy analysis, however, the reduced-form VAR is not enough — these tasks require an <em>identified VAR</em><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. In this context, the goal is to analyze the impact of structural shocks. This is done with <em>impulse-response analysis</em><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and with <em>forecast error variance decomposition</em><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p>
 <p>Two main ways to identify a VAR, and so to identify shocks’ effects:</p>
-<pre><code>- **Recursive ordering**: impose a *causal chain* among variables (via Cholesky decomposition), assuming variable 1 affects all others within the period, variable 2 affects all but variable 1, and so on.
-- **Structural approach**: impose restrictions derived from *economic theory* instead of an arbitrary mechanic ordering.</code></pre>
+<p><strong>Recursive ordering</strong>: impose a <em>causal chain</em> among variables (via Cholesky decomposition), assuming variable 1 affects all others within the period, variable 2 affects all but variable 1, and so on. <strong>Structural approach</strong>: impose restrictions derived from <em>economic theory</em> instead of an arbitrary mechanic ordering.</p>
 
 
 </section>
