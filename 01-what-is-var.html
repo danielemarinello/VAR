@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -107,8 +72,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
-<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -255,157 +218,98 @@ gdp_t &amp;= f(gdp_{t-1},\, \pi_{t-1})
 <p><span class="math display">\[
 gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t+2} \;\rightarrow\; gdp_{t+3} \;\rightarrow\; \cdots
 \]</span></p>
-<p><span class="math display">\[
-\begin{array}{ccccccc}
-gdp_{t-1} &amp; \rightarrow &amp; gdp_t &amp; \rightarrow &amp; gdp_{t+1} &amp; \rightarrow &amp; \cdots \\
-&amp; \diagdown\!\diagup &amp; &amp; \diagdown\!\diagup &amp; &amp; \diagdown\!\diagup &amp; \\
-\pi_{t-1} &amp; \rightarrow &amp; \pi_t &amp; \rightarrow &amp; \pi_{t+1} &amp; \rightarrow &amp; \cdots
-\end{array}
-\]</span></p>
 <p>This single thread, though, understates the structure. Own lags run alongside the cross-links, and an own lag is itself a product of the other variable one period earlier: <span class="math inline">\(gdp_{t-1}\)</span> already carries <span class="math inline">\(\pi_{t-2}\)</span>. Every value is therefore fed, at every period, by both variables at once — the full lattice below. Horizontal arrows are own lags (persistence); diagonal arrows are cross-lags (spillovers). A shock to GDP is already in both variables within one period; from then on each feeds both, and the loop sustains itself. This self-sustaining <em>feedback loop</em> is what makes the system genuinely <em>joint</em>, and it is the aspect most often underestimated when first learning VAR.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="57" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 56;"><span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>animationStep <span class="op">=</span> {</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> N <span class="op">=</span> <span class="dv">6</span><span class="op">,</span> HOLD <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> s <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="kw">true</span>) {</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">yield</span> s<span class="op">;</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> (s <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> (N <span class="op">+</span> HOLD)<span class="op">;</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> Promises<span class="op">.</span><span class="fu">delay</span>(<span class="dv">1100</span>)<span class="op">;</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-1" data-nodetype="declaration">
+<p>//| echo: false { const GDP = 0, PI = 1; const periods = [“t2121”, “t”, “t+1”, “t+2”]; const N = periods.length;</p>
+<p>const colGDP = “#4c78a8”, colPI = “#e45756”; const faint = “#e6e6e6”, firedCol = “#f6c667”, hotArrow = “#f0a202”; const shockCol = “#f0a202”; const coldFill = “#f5f5f5”, coldStroke = “#cfcfcf”; const colOf = r =&gt; (r === GDP ? colGDP : colPI);</p>
+<p>const width = 680, height = 300; const mL = 78, mR = 28, mT = 62, mB = 54; const dx = (width - mL - mR) / (N - 1); const yTop = mT + 6, yBot = height - mB - 6; const R = 14; const x = i =&gt; mL + i * dx; const yOf = r =&gt; (r === GDP ? yTop : yBot);</p>
+<p>const F = [ {kind:“shock”, col:0, row:GDP, caption:“A shock hits GDP at t2121.”}, {kind:“arrow”, from:[0,GDP], to:[1,GDP], caption:“It carries into GDP next period 014 the own lag (persistence).”}, {kind:“arrow”, from:[0,GDP], to:[1,PI], caption:“026and spills into 3C0 014 the cross-lag. Both variables now carry it.”}, {kind:“arrow”, from:[1,GDP], to:[2,GDP], caption:“From here each variable feeds both: GDP 192 GDP026”}, {kind:“arrow”, from:[1,GDP], to:[2,PI], caption:“026GDP 192 3C0026”}, {kind:“arrow”, from:[1,PI], to:[2,GDP], caption:“0263C0 192 GDP026”}, {kind:“arrow”, from:[1,PI], to:[2,PI], caption:“0263C0 192 3C0. Every value at t+1 depends on both.”}, {kind:“shock”, col:2, row:PI, caption:“Now a second, independent shock hits 3C0 at t+1.”}, {kind:“arrow”, from:[2,GDP], to:[3,GDP], caption:“Both shocks travel on together026”}, {kind:“arrow”, from:[2,GDP], to:[3,PI], caption:“026mixing through every channel026”}, {kind:“arrow”, from:[2,PI], to:[3,GDP], caption:“026each variable feeding the other026”}, {kind:“arrow”, from:[2,PI], to:[3,PI], caption:“026the feedback loop sustains itself, forward without end.”}, {kind:“hold”, caption:“Every value is fed by both variables 014 one joint, interconnected system.”}, {kind:“hold”, caption:“Every value is fed by both variables 014 one joint, interconnected system.”} ]; const total = F.length; const akey = (from, to) =&gt; from[0] + “,” + from[1] + “-&gt;” + to[0] + “,” + to[1];</p>
+<p>function stateAt(f) { const hot = [Array(N).fill(false), Array(N).fill(false)]; const fired = new Set(); let curArrow = null, curShock = null, caption = ““; for (let g = 0; g &lt;= f; g++) { const fr = F[g]; caption = fr.caption; if (g === f) { curArrow = null; curShock = null; } if (fr.kind ===”shock”) { hot[fr.row][fr.col] = true; if (g === f) curShock = {col: fr.col, row: fr.row}; } else if (fr.kind === “arrow”) { hot[fr.to[1]][fr.to[0]] = true; const k = akey(fr.from, fr.to); fired.add(k); if (g === f) curArrow = k; } } return {hot, fired, curArrow, curShock, caption}; }</p>
+<p>const container = d3.create(“div”).style(“font-family”, “system-ui, sans-serif”); const controls = container.append(“div”) .style(“display”, “flex”).style(“gap”, “6px”).style(“align-items”, “center”) .style(“margin-bottom”, “6px”); const mkBtn = (label) =&gt; controls.append(“button”).text(label) .style(“padding”, “3px 10px”).style(“font-size”, “13px”) .style(“border”, “1px solid #ccc”).style(“border-radius”, “6px”) .style(“background”, “#fff”).style(“cursor”, “pointer”); const playBtn = mkBtn(“Pause”); const resetBtn = mkBtn(“Reset”); const prevBtn = mkBtn(“039”); const nextBtn = mkBtn(“03A”); const holder = container.append(“div”);</p>
+<p>let f = 0, playing = true;</p>
+<p>function drawArrow(svg, i0, r0, i1, r1, mode) { const x0 = x(i0), y0 = yOf(r0), x1 = x(i1), y1 = yOf(r1); const a = Math.atan2(y1 - y0, x1 - x0); const sx = x0 + R * Math.cos(a), sy = y0 + R * Math.sin(a); const ex = x1 - (R + 5) * Math.cos(a), ey = y1 - (R + 5) * Math.sin(a); const col = mode === “hot” ? hotArrow : mode === “fired” ? firedCol : faint; const w = mode === “hot” ? 3.5 : mode === “fired” ? 2.5 : 1.2; svg.append(“line”) .attr(“x1”, sx).attr(“y1”, sy).attr(“x2”, ex).attr(“y2”, ey) .attr(“stroke”, col).attr(“stroke-width”, w) .attr(“opacity”, mode === “faint” ? 0.7 : 1) .attr(“marker-end”, “url(#ah-” + mode + “)”); }</p>
+<p>function update() { const st = stateAt(f); holder.selectAll(“*“).remove(); const svg = holder.append(”svg”) .attr(“viewBox”, [0, 0, width, height]) .attr(“width”, width) .attr(“style”, “max-width:100%;height:auto;”);</p>
+<pre><code>const defs = svg.append("defs");
+[["faint", faint], ["fired", firedCol], ["hot", hotArrow]].forEach(([id, c]) =&gt; {
+  defs.append("marker").attr("id", "ah-" + id)
+    .attr("viewBox", "0 0 10 10").attr("refX", 9).attr("refY", 5)
+    .attr("markerWidth", 7).attr("markerHeight", 7).attr("orient", "auto")
+    .append("path").attr("d", "M0 0 L10 5 L0 10 z").attr("fill", c);
+});
 
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="70" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 69;"><span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> periods <span class="op">=</span> [<span class="st">"t-1"</span><span class="op">,</span> <span class="st">"t"</span><span class="op">,</span> <span class="st">"t+1"</span><span class="op">,</span> <span class="st">"t+2"</span><span class="op">,</span> <span class="st">"t+3"</span><span class="op">,</span> <span class="st">"t+4"</span>]<span class="op">;</span></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> N <span class="op">=</span> periods<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(animationStep<span class="op">,</span> N <span class="op">-</span> <span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> width <span class="op">=</span> <span class="dv">720</span><span class="op">,</span> height <span class="op">=</span> <span class="dv">300</span><span class="op">;</span></span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mL <span class="op">=</span> <span class="dv">80</span><span class="op">,</span> mR <span class="op">=</span> <span class="dv">30</span><span class="op">,</span> mT <span class="op">=</span> <span class="dv">60</span><span class="op">,</span> mB <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> dx <span class="op">=</span> (width <span class="op">-</span> mL <span class="op">-</span> mR) <span class="op">/</span> (N <span class="op">-</span> <span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> yTop <span class="op">=</span> mT <span class="op">+</span> <span class="dv">10</span><span class="op">,</span> yBot <span class="op">=</span> height <span class="op">-</span> mB <span class="op">-</span> <span class="dv">10</span><span class="op">;</span></span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> x <span class="op">=</span> i <span class="kw">=&gt;</span> mL <span class="op">+</span> i <span class="op">*</span> dx<span class="op">;</span></span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> yOf <span class="op">=</span> r <span class="kw">=&gt;</span> (r <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> yTop <span class="op">:</span> yBot)<span class="op">;</span>   <span class="co">// 0 = GDP, 1 = pi</span></span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> R <span class="op">=</span> <span class="dv">13</span><span class="op">;</span></span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> reached <span class="op">=</span> [<span class="bu">Array</span>(N)<span class="op">.</span><span class="fu">fill</span>(<span class="kw">false</span>)<span class="op">,</span> <span class="bu">Array</span>(N)<span class="op">.</span><span class="fu">fill</span>(<span class="kw">false</span>)]<span class="op">;</span></span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>  reached[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">=</span> <span class="kw">true</span><span class="op">;</span>                         <span class="co">// shock seeded in GDP at t-1</span></span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> k<span class="op">;</span> i<span class="op">++</span>) {</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> prevHot <span class="op">=</span> reached[<span class="dv">0</span>][i<span class="op">-</span><span class="dv">1</span>] <span class="op">||</span> reached[<span class="dv">1</span>][i<span class="op">-</span><span class="dv">1</span>]<span class="op">;</span></span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    reached[<span class="dv">0</span>][i] <span class="op">=</span> prevHot<span class="op">;</span></span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    reached[<span class="dv">1</span>][i] <span class="op">=</span> prevHot<span class="op">;</span></span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> colGDP <span class="op">=</span> <span class="st">"#4c78a8"</span><span class="op">,</span> colPI <span class="op">=</span> <span class="st">"#e45756"</span><span class="op">;</span></span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> hot <span class="op">=</span> <span class="st">"#f0a202"</span><span class="op">,</span> cold <span class="op">=</span> <span class="st">"#dcdcdc"</span><span class="op">;</span></span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> colOf <span class="op">=</span> r <span class="kw">=&gt;</span> (r <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> colGDP <span class="op">:</span> colPI)<span class="op">;</span></span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">create</span>(<span class="st">"svg"</span>)</span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> width<span class="op">,</span> height])</span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> width)</span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"style"</span><span class="op">,</span> <span class="st">"max-width:100%;height:auto;font-family:sans-serif;"</span>)<span class="op">;</span></span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> defs <span class="op">=</span> svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"defs"</span>)<span class="op">;</span></span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>  [[<span class="st">"hot"</span><span class="op">,</span> hot]<span class="op">,</span> [<span class="st">"cold"</span><span class="op">,</span> cold]]<span class="op">.</span><span class="fu">forEach</span>(([id<span class="op">,</span> c]) <span class="kw">=&gt;</span> {</span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    defs<span class="op">.</span><span class="fu">append</span>(<span class="st">"marker"</span>)</span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"id"</span><span class="op">,</span> <span class="st">"ah-"</span> <span class="op">+</span> id)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> <span class="st">"0 0 10 10"</span>)</span>
-<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"refX"</span><span class="op">,</span> <span class="dv">9</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"refY"</span><span class="op">,</span> <span class="dv">5</span>)</span>
-<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"markerWidth"</span><span class="op">,</span> <span class="dv">7</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"markerHeight"</span><span class="op">,</span> <span class="dv">7</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"orient"</span><span class="op">,</span> <span class="st">"auto"</span>)</span>
-<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">append</span>(<span class="st">"path"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"d"</span><span class="op">,</span> <span class="st">"M0 0 L10 5 L0 10 z"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> c)<span class="op">;</span></span>
-<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> drawArrow <span class="op">=</span> (i0<span class="op">,</span> r0<span class="op">,</span> i1<span class="op">,</span> r1<span class="op">,</span> active) <span class="kw">=&gt;</span> {</span>
-<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> x0 <span class="op">=</span> <span class="fu">x</span>(i0)<span class="op">,</span> y0 <span class="op">=</span> <span class="fu">yOf</span>(r0)<span class="op">,</span> x1 <span class="op">=</span> <span class="fu">x</span>(i1)<span class="op">,</span> y1 <span class="op">=</span> <span class="fu">yOf</span>(r1)<span class="op">;</span></span>
-<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> a <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">atan2</span>(y1 <span class="op">-</span> y0<span class="op">,</span> x1 <span class="op">-</span> x0)<span class="op">;</span></span>
-<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> sx <span class="op">=</span> x0 <span class="op">+</span> R <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(a)<span class="op">,</span> sy <span class="op">=</span> y0 <span class="op">+</span> R <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(a)<span class="op">;</span></span>
-<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> ex <span class="op">=</span> x1 <span class="op">-</span> (R <span class="op">+</span> <span class="dv">4</span>) <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(a)<span class="op">,</span> ey <span class="op">=</span> y1 <span class="op">-</span> (R <span class="op">+</span> <span class="dv">4</span>) <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(a)<span class="op">;</span></span>
-<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"line"</span>)</span>
-<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x1"</span><span class="op">,</span> sx)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y1"</span><span class="op">,</span> sy)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x2"</span><span class="op">,</span> ex)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y2"</span><span class="op">,</span> ey)</span>
-<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> active <span class="op">?</span> hot <span class="op">:</span> cold)</span>
-<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> active <span class="op">?</span> <span class="dv">3</span> <span class="op">:</span> <span class="fl">1.5</span>)</span>
-<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"opacity"</span><span class="op">,</span> active <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="fl">0.5</span>)</span>
-<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"marker-end"</span><span class="op">,</span> <span class="st">"url(#ah-"</span> <span class="op">+</span> (active <span class="op">?</span> <span class="st">"hot"</span> <span class="op">:</span> <span class="st">"cold"</span>) <span class="op">+</span> <span class="st">")"</span>)<span class="op">;</span></span>
-<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
-<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>  [[<span class="st">"GDP"</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> [<span class="st">"</span><span class="sc">\u03C0</span><span class="st">"</span><span class="op">,</span> <span class="dv">1</span>]]<span class="op">.</span><span class="fu">forEach</span>(([lab<span class="op">,</span> r]) <span class="kw">=&gt;</span> {</span>
-<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"line"</span>)</span>
-<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x1"</span><span class="op">,</span> mL <span class="op">-</span> <span class="dv">16</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x2"</span><span class="op">,</span> width <span class="op">-</span> mR)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y1"</span><span class="op">,</span> <span class="fu">yOf</span>(r))<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y2"</span><span class="op">,</span> <span class="fu">yOf</span>(r))</span>
-<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> <span class="st">"#f2f2f2"</span>)<span class="op">;</span></span>
-<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
-<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> mL <span class="op">-</span> <span class="dv">30</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> <span class="fu">yOf</span>(r) <span class="op">+</span> <span class="dv">5</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"end"</span>)</span>
-<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-weight"</span><span class="op">,</span> <span class="st">"bold"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">16</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="fu">colOf</span>(r))<span class="op">.</span><span class="fu">text</span>(lab)<span class="op">;</span></span>
-<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>  periods<span class="op">.</span><span class="fu">forEach</span>((p<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
-<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
-<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> <span class="fu">x</span>(i))<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> mT <span class="op">-</span> <span class="dv">28</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"middle"</span>)</span>
-<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">12</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"#999"</span>)<span class="op">.</span><span class="fu">text</span>(p)<span class="op">;</span></span>
-<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++</span>) {</span>
-<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drawArrow</span>(i<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span></span>
-<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drawArrow</span>(i<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span></span>
-<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drawArrow</span>(i<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span></span>
-<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drawArrow</span>(i<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span></span>
-<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (k <span class="op">&gt;=</span> <span class="dv">1</span> <span class="op">&amp;&amp;</span> animationStep <span class="op">&lt;=</span> N <span class="op">-</span> <span class="dv">1</span>) {</span>
-<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (reached[<span class="dv">0</span>][k<span class="op">-</span><span class="dv">1</span>]) { <span class="fu">drawArrow</span>(k<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> k<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span> <span class="fu">drawArrow</span>(k<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> k<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span> }</span>
-<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (reached[<span class="dv">1</span>][k<span class="op">-</span><span class="dv">1</span>]) { <span class="fu">drawArrow</span>(k<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> k<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span> <span class="fu">drawArrow</span>(k<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> k<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span> }</span>
-<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> r <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> r <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> r<span class="op">++</span>) {</span>
-<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++</span>) {</span>
-<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> isHot <span class="op">=</span> reached[r][i]<span class="op">;</span></span>
-<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> isCur <span class="op">=</span> (i <span class="op">===</span> k) <span class="op">&amp;&amp;</span> isHot <span class="op">&amp;&amp;</span> animationStep <span class="op">&lt;=</span> N <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>      svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"circle"</span>)</span>
-<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"cx"</span><span class="op">,</span> <span class="fu">x</span>(i))<span class="op">.</span><span class="fu">attr</span>(<span class="st">"cy"</span><span class="op">,</span> <span class="fu">yOf</span>(r))</span>
-<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"r"</span><span class="op">,</span> isCur <span class="op">?</span> R <span class="op">+</span> <span class="dv">3</span> <span class="op">:</span> R)</span>
-<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> isHot <span class="op">?</span> <span class="fu">colOf</span>(r) <span class="op">:</span> <span class="st">"#f4f4f4"</span>)</span>
-<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> isHot <span class="op">?</span> <span class="fu">colOf</span>(r) <span class="op">:</span> <span class="st">"#cfcfcf"</span>)</span>
-<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="dv">2</span>)</span>
-<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"opacity"</span><span class="op">,</span> isHot <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="fl">0.85</span>)<span class="op">;</span></span>
-<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>  svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
-<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> <span class="fu">x</span>(<span class="dv">0</span>))<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> <span class="fu">yOf</span>(<span class="dv">0</span>) <span class="op">-</span> R <span class="op">-</span> <span class="dv">8</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"middle"</span>)</span>
-<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">12</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> hot)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-weight"</span><span class="op">,</span> <span class="st">"bold"</span>)</span>
-<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">text</span>(animationStep <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"shock!"</span> <span class="op">:</span> <span class="st">""</span>)<span class="op">;</span></span>
-<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> lx <span class="op">=</span> width <span class="op">-</span> mR <span class="op">-</span> <span class="dv">210</span><span class="op">,</span> ly <span class="op">=</span> <span class="dv">22</span><span class="op">;</span></span>
-<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>  svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"line"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x1"</span><span class="op">,</span> lx)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y1"</span><span class="op">,</span> ly)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x2"</span><span class="op">,</span> lx <span class="op">+</span> <span class="dv">26</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y2"</span><span class="op">,</span> ly)</span>
-<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> <span class="st">"#999"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"marker-end"</span><span class="op">,</span> <span class="st">"url(#ah-cold)"</span>)<span class="op">;</span></span>
-<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>  svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> lx <span class="op">+</span> <span class="dv">32</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> ly <span class="op">+</span> <span class="dv">4</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">11</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"#666"</span>)<span class="op">.</span><span class="fu">text</span>(<span class="st">"own lag"</span>)<span class="op">;</span></span>
-<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a>  svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"line"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x1"</span><span class="op">,</span> lx <span class="op">+</span> <span class="dv">108</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y1"</span><span class="op">,</span> ly <span class="op">-</span> <span class="dv">7</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x2"</span><span class="op">,</span> lx <span class="op">+</span> <span class="dv">134</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y2"</span><span class="op">,</span> ly <span class="op">+</span> <span class="dv">7</span>)</span>
-<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> <span class="st">"#999"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"marker-end"</span><span class="op">,</span> <span class="st">"url(#ah-cold)"</span>)<span class="op">;</span></span>
-<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>  svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> lx <span class="op">+</span> <span class="dv">140</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> ly <span class="op">+</span> <span class="dv">4</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">11</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"#666"</span>)<span class="op">.</span><span class="fu">text</span>(<span class="st">"cross-lag"</span>)<span class="op">;</span></span>
-<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> captions <span class="op">=</span> [</span>
-<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A shock hits GDP at t</span><span class="sc">\u2212</span><span class="st">1."</span><span class="op">,</span></span>
-<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a>    <span class="st">"One period on: it persists in GDP (own lag) and crosses into </span><span class="sc">\u03C0</span><span class="st"> (spillover)."</span><span class="op">,</span></span>
-<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Now both variables carry it </span><span class="sc">\u2014</span><span class="st"> and each feeds both in the next period."</span><span class="op">,</span></span>
-<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The cross-links keep mixing the two </span><span class="sc">\u2014</span><span class="st"> every value depends on both."</span><span class="op">,</span></span>
-<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="sc">\u2026</span><span class="st">the feedback loop sustains itself, forward without end."</span><span class="op">,</span></span>
-<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="sc">\u2026</span><span class="st">the feedback loop sustains itself, forward without end."</span></span>
-<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
-<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a>  svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
-<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> width <span class="op">/</span> <span class="dv">2</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> height <span class="op">-</span> <span class="dv">12</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"middle"</span>)</span>
-<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="dv">13</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"#333"</span>)<span class="op">.</span><span class="fu">text</span>(captions[<span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(k<span class="op">,</span> captions<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>)])<span class="op">;</span></span>
-<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> svg<span class="op">.</span><span class="fu">node</span>()<span class="op">;</span></span>
-<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-2" data-nodetype="expression">
+[["GDP", GDP], ["\u03C0", PI]].forEach(([lab, r]) =&gt; {
+  svg.append("line").attr("x1", mL - 18).attr("x2", width - mR)
+    .attr("y1", yOf(r)).attr("y2", yOf(r)).attr("stroke", "#f2f2f2");
+  svg.append("text").attr("x", mL - 32).attr("y", yOf(r) + 5)
+    .attr("text-anchor", "end").attr("font-weight", "bold")
+    .attr("font-size", 16).attr("fill", colOf(r)).text(lab);
+});
+periods.forEach((p, i) =&gt; {
+  svg.append("text").attr("x", x(i)).attr("y", mT - 32)
+    .attr("text-anchor", "middle").attr("font-size", 12).attr("fill", "#999").text(p);
+});
 
-</div>
-</div>
-</div>
+for (let i = 0; i &lt; N - 1; i++) {
+  drawArrow(svg, i, GDP, i + 1, GDP, "faint");
+  drawArrow(svg, i, PI,  i + 1, PI,  "faint");
+  drawArrow(svg, i, GDP, i + 1, PI,  "faint");
+  drawArrow(svg, i, PI,  i + 1, GDP, "faint");
+}
+st.fired.forEach(k =&gt; {
+  if (k === st.curArrow) return;
+  const parts = k.split("-&gt;");
+  const a0 = parts[0].split(",").map(Number);
+  const a1 = parts[1].split(",").map(Number);
+  drawArrow(svg, a0[0], a0[1], a1[0], a1[1], "fired");
+});
+if (st.curArrow) {
+  const parts = st.curArrow.split("-&gt;");
+  const a0 = parts[0].split(",").map(Number);
+  const a1 = parts[1].split(",").map(Number);
+  drawArrow(svg, a0[0], a0[1], a1[0], a1[1], "hot");
+}
+
+for (let r = 0; r &lt; 2; r++) {
+  for (let i = 0; i &lt; N; i++) {
+    const isHot = st.hot[r][i];
+    svg.append("circle").attr("cx", x(i)).attr("cy", yOf(r)).attr("r", R)
+      .attr("fill", isHot ? colOf(r) : coldFill)
+      .attr("stroke", isHot ? colOf(r) : coldStroke).attr("stroke-width", 2);
+  }
+}
+
+if (st.curShock) {
+  const cx = x(st.curShock.col), cy = yOf(st.curShock.row);
+  [0, 1].forEach(idx =&gt; {
+    svg.append("circle").attr("cx", cx).attr("cy", cy)
+      .attr("r", R + 5 + idx * 7).attr("fill", "none")
+      .attr("stroke", shockCol).attr("stroke-width", 2.5)
+      .attr("opacity", 0.8 - idx * 0.35);
+  });
+  svg.append("text").attr("x", cx).attr("y", cy - R - 10)
+    .attr("text-anchor", "middle").attr("font-size", 13)
+    .attr("font-weight", "bold").attr("fill", shockCol).text("shock!");
+}
+
+const lx = width - mR - 250, ly = 20;
+svg.append("line").attr("x1", lx).attr("y1", ly).attr("x2", lx + 24).attr("y2", ly)
+  .attr("stroke", "#bbb").attr("stroke-width", 2).attr("marker-end", "url(#ah-faint)");
+svg.append("text").attr("x", lx + 30).attr("y", ly + 4).attr("font-size", 11).attr("fill", "#666").text("own lag");
+svg.append("line").attr("x1", lx + 92).attr("y1", ly - 6).attr("x2", lx + 116).attr("y2", ly + 6)
+  .attr("stroke", "#bbb").attr("stroke-width", 2).attr("marker-end", "url(#ah-faint)");
+svg.append("text").attr("x", lx + 122).attr("y", ly + 4).attr("font-size", 11).attr("fill", "#666").text("cross-lag");
+svg.append("circle").attr("cx", lx + 196).attr("cy", ly).attr("r", 5)
+  .attr("fill", "none").attr("stroke", shockCol).attr("stroke-width", 2);
+svg.append("text").attr("x", lx + 206).attr("y", ly + 4).attr("font-size", 11).attr("fill", "#666").text("shock");
+
+svg.append("text").attr("x", width / 2).attr("y", height - 14)
+  .attr("text-anchor", "middle").attr("font-size", 13).attr("fill", "#333").text(st.caption);
+svg.append("text").attr("x", width - mR).attr("y", height - 14)
+  .attr("text-anchor", "end").attr("font-size", 11).attr("fill", "#bbb")
+  .text((f + 1) + "/" + total);</code></pre>
+<p>}</p>
+<p>playBtn.on(“click”, () =&gt; { playing = !playing; playBtn.text(playing ? “Pause” : “Play”); }); resetBtn.on(“click”, () =&gt; { f = 0; update(); }); prevBtn.on(“click”, () =&gt; { playing = false; playBtn.text(“Play”); f = (f - 1 + total) % total; update(); }); nextBtn.on(“click”, () =&gt; { playing = false; playBtn.text(“Play”); f = (f + 1) % total; update(); });</p>
+<p>const timer = setInterval(() =&gt; { if (playing) { f = (f + 1) % total; update(); } }, 1150); invalidation.then(() =&gt; clearInterval(timer));</p>
+<p>update(); return container.node(); }</p>
 <p>FULL STOP The interconnection is not a one-off cross-effect: it propagates forward indefinitely. To fix ideas, consider a simple example. Let inflation (<span class="math inline">\(\pi\)</span>) and GDP each depend on both their own lag and the other’s lag. Since the true data-generating process is unknown, the relationship is left as a generic function:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -486,17 +390,6 @@ y_t = c + \sum_{i=1}^{p} \phi_i\, y_{t-i} + \sum_{j=0}^{q} \beta_j\, x_{t-j} + \
 </section>
 
 </main> <!-- /main -->
-<script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImFuaW1hdGlvblN0ZXAgPSB7XG4gIGNvbnN0IE4gPSA2LCBIT0xEID0gMztcbiAgbGV0IHMgPSAwO1xuICB3aGlsZSAodHJ1ZSkge1xuICAgIHlpZWxkIHM7XG4gICAgcyA9IChzICsgMSkgJSAoTiArIEhPTEQpO1xuICAgIGF3YWl0IFByb21pc2VzLmRlbGF5KDExMDApO1xuICB9XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ7XG4gIGNvbnN0IHBlcmlvZHMgPSBbXCJ0LTFcIiwgXCJ0XCIsIFwidCsxXCIsIFwidCsyXCIsIFwidCszXCIsIFwidCs0XCJdO1xuICBjb25zdCBOID0gcGVyaW9kcy5sZW5ndGg7XG4gIGNvbnN0IGsgPSBNYXRoLm1pbihhbmltYXRpb25TdGVwLCBOIC0gMSk7XG5cbiAgY29uc3Qgd2lkdGggPSA3MjAsIGhlaWdodCA9IDMwMDtcbiAgY29uc3QgbUwgPSA4MCwgbVIgPSAzMCwgbVQgPSA2MCwgbUIgPSA1MDtcbiAgY29uc3QgZHggPSAod2lkdGggLSBtTCAtIG1SKSAvIChOIC0gMSk7XG4gIGNvbnN0IHlUb3AgPSBtVCArIDEwLCB5Qm90ID0gaGVpZ2h0IC0gbUIgLSAxMDtcbiAgY29uc3QgeCA9IGkgPT4gbUwgKyBpICogZHg7XG4gIGNvbnN0IHlPZiA9IHIgPT4gKHIgPT09IDAgPyB5VG9wIDogeUJvdCk7ICAgLy8gMCA9IEdEUCwgMSA9IHBpXG4gIGNvbnN0IFIgPSAxMztcblxuICBjb25zdCByZWFjaGVkID0gW0FycmF5KE4pLmZpbGwoZmFsc2UpLCBBcnJheShOKS5maWxsKGZhbHNlKV07XG4gIHJlYWNoZWRbMF1bMF0gPSB0cnVlOyAgICAgICAgICAgICAgICAgICAgICAgICAvLyBzaG9jayBzZWVkZWQgaW4gR0RQIGF0IHQtMVxuICBmb3IgKGxldCBpID0gMTsgaSA8PSBrOyBpKyspIHtcbiAgICBjb25zdCBwcmV2SG90ID0gcmVhY2hlZFswXVtpLTFdIHx8IHJlYWNoZWRbMV1baS0xXTtcbiAgICByZWFjaGVkWzBdW2ldID0gcHJldkhvdDtcbiAgICByZWFjaGVkWzFdW2ldID0gcHJldkhvdDtcbiAgfVxuXG4gIGNvbnN0IGNvbEdEUCA9IFwiIzRjNzhhOFwiLCBjb2xQSSA9IFwiI2U0NTc1NlwiO1xuICBjb25zdCBob3QgPSBcIiNmMGEyMDJcIiwgY29sZCA9IFwiI2RjZGNkY1wiO1xuICBjb25zdCBjb2xPZiA9IHIgPT4gKHIgPT09IDAgPyBjb2xHRFAgOiBjb2xQSSk7XG5cbiAgY29uc3Qgc3ZnID0gZDMuY3JlYXRlKFwic3ZnXCIpXG4gICAgLmF0dHIoXCJ2aWV3Qm94XCIsIFswLCAwLCB3aWR0aCwgaGVpZ2h0XSlcbiAgICAuYXR0cihcIndpZHRoXCIsIHdpZHRoKVxuICAgIC5hdHRyKFwic3R5bGVcIiwgXCJtYXgtd2lkdGg6MTAwJTtoZWlnaHQ6YXV0bztmb250LWZhbWlseTpzYW5zLXNlcmlmO1wiKTtcblxuICBjb25zdCBkZWZzID0gc3ZnLmFwcGVuZChcImRlZnNcIik7XG4gIFtbXCJob3RcIiwgaG90XSwgW1wiY29sZFwiLCBjb2xkXV0uZm9yRWFjaCgoW2lkLCBjXSkgPT4ge1xuICAgIGRlZnMuYXBwZW5kKFwibWFya2VyXCIpXG4gICAgICAuYXR0cihcImlkXCIsIFwiYWgtXCIgKyBpZCkuYXR0cihcInZpZXdCb3hcIiwgXCIwIDAgMTAgMTBcIilcbiAgICAgIC5hdHRyKFwicmVmWFwiLCA5KS5hdHRyKFwicmVmWVwiLCA1KVxuICAgICAgLmF0dHIoXCJtYXJrZXJXaWR0aFwiLCA3KS5hdHRyKFwibWFya2VySGVpZ2h0XCIsIDcpLmF0dHIoXCJvcmllbnRcIiwgXCJhdXRvXCIpXG4gICAgICAuYXBwZW5kKFwicGF0aFwiKS5hdHRyKFwiZFwiLCBcIk0wIDAgTDEwIDUgTDAgMTAgelwiKS5hdHRyKFwiZmlsbFwiLCBjKTtcbiAgfSk7XG5cbiAgY29uc3QgZHJhd0Fycm93ID0gKGkwLCByMCwgaTEsIHIxLCBhY3RpdmUpID0+IHtcbiAgICBjb25zdCB4MCA9IHgoaTApLCB5MCA9IHlPZihyMCksIHgxID0geChpMSksIHkxID0geU9mKHIxKTtcbiAgICBjb25zdCBhID0gTWF0aC5hdGFuMih5MSAtIHkwLCB4MSAtIHgwKTtcbiAgICBjb25zdCBzeCA9IHgwICsgUiAqIE1hdGguY29zKGEpLCBzeSA9IHkwICsgUiAqIE1hdGguc2luKGEpO1xuICAgIGNvbnN0IGV4ID0geDEgLSAoUiArIDQpICogTWF0aC5jb3MoYSksIGV5ID0geTEgLSAoUiArIDQpICogTWF0aC5zaW4oYSk7XG4gICAgc3ZnLmFwcGVuZChcImxpbmVcIilcbiAgICAgIC5hdHRyKFwieDFcIiwgc3gpLmF0dHIoXCJ5MVwiLCBzeSkuYXR0cihcIngyXCIsIGV4KS5hdHRyKFwieTJcIiwgZXkpXG4gICAgICAuYXR0cihcInN0cm9rZVwiLCBhY3RpdmUgPyBob3QgOiBjb2xkKVxuICAgICAgLmF0dHIoXCJzdHJva2Utd2lkdGhcIiwgYWN0aXZlID8gMyA6IDEuNSlcbiAgICAgIC5hdHRyKFwib3BhY2l0eVwiLCBhY3RpdmUgPyAxIDogMC41KVxuICAgICAgLmF0dHIoXCJtYXJrZXItZW5kXCIsIFwidXJsKCNhaC1cIiArIChhY3RpdmUgPyBcImhvdFwiIDogXCJjb2xkXCIpICsgXCIpXCIpO1xuICB9O1xuXG4gIFtbXCJHRFBcIiwgMF0sIFtcIlxcdTAzQzBcIiwgMV1dLmZvckVhY2goKFtsYWIsIHJdKSA9PiB7XG4gICAgc3ZnLmFwcGVuZChcImxpbmVcIilcbiAgICAgIC5hdHRyKFwieDFcIiwgbUwgLSAxNikuYXR0cihcIngyXCIsIHdpZHRoIC0gbVIpLmF0dHIoXCJ5MVwiLCB5T2YocikpLmF0dHIoXCJ5MlwiLCB5T2YocikpXG4gICAgICAuYXR0cihcInN0cm9rZVwiLCBcIiNmMmYyZjJcIik7XG4gICAgc3ZnLmFwcGVuZChcInRleHRcIilcbiAgICAgIC5hdHRyKFwieFwiLCBtTCAtIDMwKS5hdHRyKFwieVwiLCB5T2YocikgKyA1KS5hdHRyKFwidGV4dC1hbmNob3JcIiwgXCJlbmRcIilcbiAgICAgIC5hdHRyKFwiZm9udC13ZWlnaHRcIiwgXCJib2xkXCIpLmF0dHIoXCJmb250LXNpemVcIiwgMTYpLmF0dHIoXCJmaWxsXCIsIGNvbE9mKHIpKS50ZXh0KGxhYik7XG4gIH0pO1xuXG4gIHBlcmlvZHMuZm9yRWFjaCgocCwgaSkgPT4ge1xuICAgIHN2Zy5hcHBlbmQoXCJ0ZXh0XCIpXG4gICAgICAuYXR0cihcInhcIiwgeChpKSkuYXR0cihcInlcIiwgbVQgLSAyOCkuYXR0cihcInRleHQtYW5jaG9yXCIsIFwibWlkZGxlXCIpXG4gICAgICAuYXR0cihcImZvbnQtc2l6ZVwiLCAxMikuYXR0cihcImZpbGxcIiwgXCIjOTk5XCIpLnRleHQocCk7XG4gIH0pO1xuXG4gIGZvciAobGV0IGkgPSAwOyBpIDwgTiAtIDE7IGkrKykge1xuICAgIGRyYXdBcnJvdyhpLCAwLCBpICsgMSwgMCwgZmFsc2UpO1xuICAgIGRyYXdBcnJvdyhpLCAxLCBpICsgMSwgMSwgZmFsc2UpO1xuICAgIGRyYXdBcnJvdyhpLCAwLCBpICsgMSwgMSwgZmFsc2UpO1xuICAgIGRyYXdBcnJvdyhpLCAxLCBpICsgMSwgMCwgZmFsc2UpO1xuICB9XG5cbiAgaWYgKGsgPj0gMSAmJiBhbmltYXRpb25TdGVwIDw9IE4gLSAxKSB7XG4gICAgaWYgKHJlYWNoZWRbMF1bay0xXSkgeyBkcmF3QXJyb3coay0xLCAwLCBrLCAwLCB0cnVlKTsgZHJhd0Fycm93KGstMSwgMCwgaywgMSwgdHJ1ZSk7IH1cbiAgICBpZiAocmVhY2hlZFsxXVtrLTFdKSB7IGRyYXdBcnJvdyhrLTEsIDEsIGssIDEsIHRydWUpOyBkcmF3QXJyb3coay0xLCAxLCBrLCAwLCB0cnVlKTsgfVxuICB9XG5cbiAgZm9yIChsZXQgciA9IDA7IHIgPCAyOyByKyspIHtcbiAgICBmb3IgKGxldCBpID0gMDsgaSA8IE47IGkrKykge1xuICAgICAgY29uc3QgaXNIb3QgPSByZWFjaGVkW3JdW2ldO1xuICAgICAgY29uc3QgaXNDdXIgPSAoaSA9PT0gaykgJiYgaXNIb3QgJiYgYW5pbWF0aW9uU3RlcCA8PSBOIC0gMTtcbiAgICAgIHN2Zy5hcHBlbmQoXCJjaXJjbGVcIilcbiAgICAgICAgLmF0dHIoXCJjeFwiLCB4KGkpKS5hdHRyKFwiY3lcIiwgeU9mKHIpKVxuICAgICAgICAuYXR0cihcInJcIiwgaXNDdXIgPyBSICsgMyA6IFIpXG4gICAgICAgIC5hdHRyKFwiZmlsbFwiLCBpc0hvdCA/IGNvbE9mKHIpIDogXCIjZjRmNGY0XCIpXG4gICAgICAgIC5hdHRyKFwic3Ryb2tlXCIsIGlzSG90ID8gY29sT2YocikgOiBcIiNjZmNmY2ZcIilcbiAgICAgICAgLmF0dHIoXCJzdHJva2Utd2lkdGhcIiwgMilcbiAgICAgICAgLmF0dHIoXCJvcGFjaXR5XCIsIGlzSG90ID8gMSA6IDAuODUpO1xuICAgIH1cbiAgfVxuXG4gIHN2Zy5hcHBlbmQoXCJ0ZXh0XCIpXG4gICAgLmF0dHIoXCJ4XCIsIHgoMCkpLmF0dHIoXCJ5XCIsIHlPZigwKSAtIFIgLSA4KS5hdHRyKFwidGV4dC1hbmNob3JcIiwgXCJtaWRkbGVcIilcbiAgICAuYXR0cihcImZvbnQtc2l6ZVwiLCAxMikuYXR0cihcImZpbGxcIiwgaG90KS5hdHRyKFwiZm9udC13ZWlnaHRcIiwgXCJib2xkXCIpXG4gICAgLnRleHQoYW5pbWF0aW9uU3RlcCA9PT0gMCA/IFwic2hvY2shXCIgOiBcIlwiKTtcblxuICBjb25zdCBseCA9IHdpZHRoIC0gbVIgLSAyMTAsIGx5ID0gMjI7XG4gIHN2Zy5hcHBlbmQoXCJsaW5lXCIpLmF0dHIoXCJ4MVwiLCBseCkuYXR0cihcInkxXCIsIGx5KS5hdHRyKFwieDJcIiwgbHggKyAyNikuYXR0cihcInkyXCIsIGx5KVxuICAgIC5hdHRyKFwic3Ryb2tlXCIsIFwiIzk5OVwiKS5hdHRyKFwic3Ryb2tlLXdpZHRoXCIsIDIpLmF0dHIoXCJtYXJrZXItZW5kXCIsIFwidXJsKCNhaC1jb2xkKVwiKTtcbiAgc3ZnLmFwcGVuZChcInRleHRcIikuYXR0cihcInhcIiwgbHggKyAzMikuYXR0cihcInlcIiwgbHkgKyA0KS5hdHRyKFwiZm9udC1zaXplXCIsIDExKS5hdHRyKFwiZmlsbFwiLCBcIiM2NjZcIikudGV4dChcIm93biBsYWdcIik7XG4gIHN2Zy5hcHBlbmQoXCJsaW5lXCIpLmF0dHIoXCJ4MVwiLCBseCArIDEwOCkuYXR0cihcInkxXCIsIGx5IC0gNykuYXR0cihcIngyXCIsIGx4ICsgMTM0KS5hdHRyKFwieTJcIiwgbHkgKyA3KVxuICAgIC5hdHRyKFwic3Ryb2tlXCIsIFwiIzk5OVwiKS5hdHRyKFwic3Ryb2tlLXdpZHRoXCIsIDIpLmF0dHIoXCJtYXJrZXItZW5kXCIsIFwidXJsKCNhaC1jb2xkKVwiKTtcbiAgc3ZnLmFwcGVuZChcInRleHRcIikuYXR0cihcInhcIiwgbHggKyAxNDApLmF0dHIoXCJ5XCIsIGx5ICsgNCkuYXR0cihcImZvbnQtc2l6ZVwiLCAxMSkuYXR0cihcImZpbGxcIiwgXCIjNjY2XCIpLnRleHQoXCJjcm9zcy1sYWdcIik7XG5cbiAgY29uc3QgY2FwdGlvbnMgPSBbXG4gICAgXCJBIHNob2NrIGhpdHMgR0RQIGF0IHRcXHUyMjEyMS5cIixcbiAgICBcIk9uZSBwZXJpb2Qgb246IGl0IHBlcnNpc3RzIGluIEdEUCAob3duIGxhZykgYW5kIGNyb3NzZXMgaW50byBcXHUwM0MwIChzcGlsbG92ZXIpLlwiLFxuICAgIFwiTm93IGJvdGggdmFyaWFibGVzIGNhcnJ5IGl0IFxcdTIwMTQgYW5kIGVhY2ggZmVlZHMgYm90aCBpbiB0aGUgbmV4dCBwZXJpb2QuXCIsXG4gICAgXCJUaGUgY3Jvc3MtbGlua3Mga2VlcCBtaXhpbmcgdGhlIHR3byBcXHUyMDE0IGV2ZXJ5IHZhbHVlIGRlcGVuZHMgb24gYm90aC5cIixcbiAgICBcIlxcdTIwMjZ0aGUgZmVlZGJhY2sgbG9vcCBzdXN0YWlucyBpdHNlbGYsIGZvcndhcmQgd2l0aG91dCBlbmQuXCIsXG4gICAgXCJcXHUyMDI2dGhlIGZlZWRiYWNrIGxvb3Agc3VzdGFpbnMgaXRzZWxmLCBmb3J3YXJkIHdpdGhvdXQgZW5kLlwiXG4gIF07XG4gIHN2Zy5hcHBlbmQoXCJ0ZXh0XCIpXG4gICAgLmF0dHIoXCJ4XCIsIHdpZHRoIC8gMikuYXR0cihcInlcIiwgaGVpZ2h0IC0gMTIpLmF0dHIoXCJ0ZXh0LWFuY2hvclwiLCBcIm1pZGRsZVwiKVxuICAgIC5hdHRyKFwiZm9udC1zaXplXCIsIDEzKS5hdHRyKFwiZmlsbFwiLCBcIiMzMzNcIikudGV4dChjYXB0aW9uc1tNYXRoLm1pbihrLCBjYXB0aW9ucy5sZW5ndGggLSAxKV0pO1xuXG4gIHJldHVybiBzdmcubm9kZSgpO1xufVxuIn1dfQ==
-</script>
-<script type="module">
-if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
-window._ojs.paths.runtimeToDoc = "../..";
-window._ojs.paths.runtimeToRoot = "../..";
-window._ojs.paths.docToRoot = "";
-window._ojs.selfContained = false;
-window._ojs.runtime.interpretFromScriptTags();
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
