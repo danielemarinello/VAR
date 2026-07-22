@@ -499,7 +499,7 @@ y_t = \frac{w_t}{1-\phi L}
 </section>
 <section id="for-curious-mind-from-ar1-to-ar2-ar3-arn" class="level3" data-number="4.2.4">
 <h3 data-number="4.2.4" class="anchored" data-anchor-id="for-curious-mind-from-ar1-to-ar2-ar3-arn"><span class="header-section-number">4.2.4</span> For curious mind: from AR(1) to AR(2), AR(3),…, AR(n)</h3>
-<p>So far the Wold representation has been obtained by recursive substitution, and its weights turned out to be the powers <span class="math inline">\(\phi^{\,i}\)</span>. That result is specific to the AR(1). This section introduces the tool that handles any number of lags — the <em>lag operator</em> — and shows what changes, and what does not, when moving to an AR(<span class="math inline">\(p\)</span>).</p>
+<p>So far the Wold representation has been obtained by recursive substitution, and its weights turned out to be the powers <span class="math inline">\(\phi^{\,i}\)</span>. This result is specific to the AR(1). This section introduces the tool that handles any number of lags (the <em>lag operator</em>) and shows what changes, and what does not, when moving to an AR(<span class="math inline">\(p\)</span>).</p>
 <section id="the-weights-are-the-impulse-response-whatever-the-model" class="level4" data-number="4.2.4.1">
 <h4 data-number="4.2.4.1" class="anchored" data-anchor-id="the-weights-are-the-impulse-response-whatever-the-model"><span class="header-section-number">4.2.4.1</span> The weights are the impulse response, whatever the model</h4>
 <p>Write the Wold representation with generic weights <span class="math inline">\(\psi_i\)</span>:</p>
@@ -507,39 +507,51 @@ y_t = \frac{w_t}{1-\phi L}
 y_t = \psi_0 w_t + \psi_1 w_{t-1} + \psi_2 w_{t-2} + \cdots
 = \sum_{i=0}^{\infty}\psi_i\, w_{t-i}
 \tag{4.8}\]</span></span></p>
-<p>Shifting <a href="#eq-wold-psi" class="quarto-xref">Equation&nbsp;<span>4.8</span></a> forward by <span class="math inline">\(j\)</span> periods gives <span class="math inline">\(y_{t+j}\)</span> as a weighted sum of shocks up to date <span class="math inline">\(t+j\)</span>. Only one term in that sum contains the shock <span class="math inline">\(w_t\)</span> — the one with <span class="math inline">\(t+j-i=t\)</span>, that is <span class="math inline">\(i=j\)</span> — and it equals <span class="math inline">\(\psi_j w_t\)</span>. Differentiating,</p>
+<p>The model holds at every date, so <a href="#eq-wold-psi" class="quarto-xref">Equation&nbsp;<span>4.8</span></a> can be shifted forward by <span class="math inline">\(j\)</span> periods simply by replacing <span class="math inline">\(t\)</span> with <span class="math inline">\(t+j\)</span> everywhere:</p>
+<p><span id="eq-wold-psi-fwd"><span class="math display">\[
+y_{t+j} = \sum_{i=0}^{\infty}\psi_i\, w_{t+j-i}
+\tag{4.9}\]</span></span></p>
+<p>Writing out the first terms makes the structure visible:</p>
+<p><span id="eq-wold-psi-expanded"><span class="math display">\[
+y_{t+j} = \psi_0\, w_{t+j} + \psi_1\, w_{t+j-1} + \psi_2\, w_{t+j-2} + \cdots + \psi_j\, w_{t} + \psi_{j+1}\, w_{t-1} + \cdots
+\tag{4.10}\]</span></span></p>
+<p>The shocks run backward from date <span class="math inline">\(t+j\)</span>: the first term carries the shock of that same date, the second the shock of one period earlier, and so on. The date of the shock in the generic term is <span class="math inline">\(t+j-i\)</span>, so the term containing the shock of date <span class="math inline">\(t\)</span> is the one for which</p>
+<p><span id="eq-index-match"><span class="math display">\[
+t+j-i = t \;\;\Longleftrightarrow\;\; i = j
+\tag{4.11}\]</span></span></p>
+<p>There is exactly one such term, and it equals <span class="math inline">\(\psi_j\, w_t\)</span>. Every other term in <a href="#eq-wold-psi-expanded" class="quarto-xref">Equation&nbsp;<span>4.10</span></a> carries a shock of a different date, and is therefore unaffected by a change in <span class="math inline">\(w_t\)</span>. Differentiating,</p>
 <p><span id="eq-mult-psi"><span class="math display">\[
 \frac{\partial\, y_{t+j}}{\partial\, w_t} = \psi_j
-\tag{4.9}\]</span></span></p>
-<p>This holds for <strong>any</strong> autoregressive order: the dynamic multiplier at horizon <span class="math inline">\(j\)</span>, the Wold weight <span class="math inline">\(\psi_j\)</span>, and the impulse response at horizon <span class="math inline">\(j\)</span> are three names for the same number. For the AR(1), <span class="math inline">\(\psi_j = \phi^{\,j}\)</span> and <a href="#eq-mult-psi" class="quarto-xref">Equation&nbsp;<span>4.9</span></a> reduces to <a href="#eq-ar-mult" class="quarto-xref">Equation&nbsp;<span>4.5</span></a>.</p>
-<p>The whole problem therefore collapses into a single question: <strong>what are the <span class="math inline">\(\psi_i\)</span>?</strong></p>
+\tag{4.12}\]</span></span></p>
+<p>This holds for <strong>any</strong> autoregressive order: the dynamic multiplier at horizon <span class="math inline">\(j\)</span>, the Wold weight <span class="math inline">\(\psi_j\)</span>, and the impulse response at horizon <span class="math inline">\(j\)</span> are three names for the same number. For the AR(1), <span class="math inline">\(\psi_j = \phi^{\,j}\)</span>, and <a href="#eq-mult-psi" class="quarto-xref">Equation&nbsp;<span>4.12</span></a> reduces to <a href="#eq-ar-mult" class="quarto-xref">Equation&nbsp;<span>4.5</span></a>.</p>
+<p>The whole problem therefore collapses into a single question: what are the <span class="math inline">\(\psi_i\)</span>?</p>
 </section>
 <section id="the-lag-operator" class="level4" data-number="4.2.4.2">
 <h4 data-number="4.2.4.2" class="anchored" data-anchor-id="the-lag-operator"><span class="header-section-number">4.2.4.2</span> The lag operator</h4>
 <p>The lag operator <span class="math inline">\(L\)</span> is an instruction, not a number: it shifts a series back one period.</p>
 <p><span id="eq-lag-op"><span class="math display">\[
 L\,y_t = y_{t-1}, \qquad L^{2} y_t = y_{t-2}, \qquad L^{k} y_t = y_{t-k}
-\tag{4.10}\]</span></span></p>
+\tag{4.13}\]</span></span></p>
 <p>Applied to the AR(1), substituting <span class="math inline">\(y_{t-1}=L y_t\)</span> and collecting <span class="math inline">\(y_t\)</span>:</p>
 <p><span id="eq-ar1-lagform"><span class="math display">\[
 y_t - \phi L\, y_t = w_t
 \;\Longrightarrow\;
 (1-\phi L)\, y_t = w_t
-\tag{4.11}\]</span></span></p>
+\tag{4.14}\]</span></span></p>
 <p>The bracket is the model itself, rewritten with everything on the left. Call it <span class="math inline">\(\phi(L) = 1-\phi L\)</span>.</p>
 <p>The Wold representation can be written the same way. Replacing each lagged shock by <span class="math inline">\(w_{t-i}=L^{i}w_t\)</span> and collecting <span class="math inline">\(w_t\)</span>:</p>
 <p><span id="eq-ar1-woldform"><span class="math display">\[
 y_t = \left(1 + \phi L + \phi^{2} L^{2} + \phi^{3} L^{3} + \cdots\right) w_t
-\tag{4.12}\]</span></span></p>
-<p>Call this second polynomial <span class="math inline">\(\psi(L)\)</span>. Substituting <a href="#eq-ar1-woldform" class="quarto-xref">Equation&nbsp;<span>4.12</span></a> into <a href="#eq-ar1-lagform" class="quarto-xref">Equation&nbsp;<span>4.11</span></a>, the equality must hold for any sequence of shocks, so the two polynomials multiply to one:</p>
+\tag{4.15}\]</span></span></p>
+<p>Call this second polynomial <span class="math inline">\(\psi(L)\)</span>. Substituting <a href="#eq-ar1-woldform" class="quarto-xref">Equation&nbsp;<span>4.15</span></a> into <a href="#eq-ar1-lagform" class="quarto-xref">Equation&nbsp;<span>4.14</span></a>, the equality must hold for any sequence of shocks, so the two polynomials multiply to one:</p>
 <p><span id="eq-inverse-check"><span class="math display">\[
 (1-\phi L)\left(1 + \phi L + \phi^{2} L^{2} + \cdots\right) = 1
-\tag{4.13}\]</span></span></p>
+\tag{4.16}\]</span></span></p>
 <p>The product is immediate to verify: multiplying by <span class="math inline">\(1\)</span> reproduces the series, multiplying by <span class="math inline">\(-\phi L\)</span> reproduces it shifted up one degree and with opposite sign, and the two cancel term by term except for the leading <span class="math inline">\(1\)</span>.</p>
 <p>So <span class="math inline">\(\psi(L)\)</span> is the <strong>inverse</strong> of <span class="math inline">\(\phi(L)\)</span>, in exactly the sense in which <span class="math inline">\(1/5\)</span> is the inverse of <span class="math inline">\(5\)</span>: the polynomial that multiplied by <span class="math inline">\(\phi(L)\)</span> gives one. The model can then be “divided through”:</p>
 <p><span id="eq-invert"><span class="math display">\[
 y_t = \frac{1}{\phi(L)}\, w_t = \psi(L)\, w_t
-\tag{4.14}\]</span></span></p>
+\tag{4.17}\]</span></span></p>
 <p>The two polynomials are the two directions of the same road. <span class="math inline">\(\phi(L)\)</span> strips the dynamics out of the series and leaves the shock — it subtracts from <span class="math inline">\(y_t\)</span> precisely the part that was predictable from the past. <span class="math inline">\(\psi(L)\)</span> runs the other way, rebuilding the series from its shocks. The AR form describes <span class="math inline">\(y_t\)</span> through its own past; the MA form describes it through the shocks. Same process, two readings — and the second is the one in which the impulse response is written in plain sight.</p>
 </section>
 <section id="arp-the-weights-follow-a-recursion" class="level4" data-number="4.2.4.3">
@@ -549,20 +561,20 @@ y_t = \frac{1}{\phi(L)}\, w_t = \psi(L)\, w_t
 <p><span id="eq-arp-lagform"><span class="math display">\[
 \phi(L) = 1-\phi_1 L - \phi_2 L^{2} - \cdots - \phi_p L^{p},
 \qquad \phi(L)\, y_t = w_t
-\tag{4.15}\]</span></span></p>
+\tag{4.18}\]</span></span></p>
 <p>The inverse <span class="math inline">\(\psi(L)=\psi_0+\psi_1 L+\psi_2 L^{2}+\cdots\)</span> is no longer known in advance, so its coefficients are recovered one at a time by imposing <span class="math inline">\(\phi(L)\psi(L)=1\)</span>. Since the constant polynomial <span class="math inline">\(1\)</span> has zero coefficient on every power of <span class="math inline">\(L\)</span>, matching coefficients degree by degree gives</p>
 <p><span id="eq-psi-recursion"><span class="math display">\[
 \psi_0 = 1, \qquad
 \psi_i = \phi_1\psi_{i-1} + \phi_2\psi_{i-2} + \cdots + \phi_p\psi_{i-p}
-\tag{4.16}\]</span></span></p>
+\tag{4.19}\]</span></span></p>
 <p>with the convention <span class="math inline">\(\psi_j=0\)</span> for <span class="math inline">\(j&lt;0\)</span>. For an AR(2), explicitly:</p>
 <p><span id="eq-psi-ar2"><span class="math display">\[
 \psi_1 = \phi_1, \qquad
 \psi_2 = \phi_1^{2}+\phi_2, \qquad
 \psi_3 = \phi_1^{3}+2\phi_1\phi_2
-\tag{4.17}\]</span></span></p>
+\tag{4.20}\]</span></span></p>
 <p>The interpretation is transparent: <span class="math inline">\(\psi_2\)</span> collects the two routes by which a shock two periods old reaches today — through the first lag twice (<span class="math inline">\(\phi_1^2\)</span>), or through the second lag directly (<span class="math inline">\(\phi_2\)</span>).</p>
-<p>The AR(1) is the degenerate case of <a href="#eq-psi-recursion" class="quarto-xref">Equation&nbsp;<span>4.16</span></a>. With only <span class="math inline">\(\phi_1\)</span> present the recursion becomes <span class="math inline">\(\psi_i = \phi\,\psi_{i-1}\)</span>: every weight is the previous one times the <em>same</em> factor, which iterated from <span class="math inline">\(\psi_0=1\)</span> gives the pure powers <span class="math inline">\(\psi_i=\phi^{\,i}\)</span>. With two or more lags each weight mixes the previous ones, and the closed form disappears.</p>
+<p>The AR(1) is the degenerate case of <a href="#eq-psi-recursion" class="quarto-xref">Equation&nbsp;<span>4.19</span></a>. With only <span class="math inline">\(\phi_1\)</span> present the recursion becomes <span class="math inline">\(\psi_i = \phi\,\psi_{i-1}\)</span>: every weight is the previous one times the <em>same</em> factor, which iterated from <span class="math inline">\(\psi_0=1\)</span> gives the pure powers <span class="math inline">\(\psi_i=\phi^{\,i}\)</span>. With two or more lags each weight mixes the previous ones, and the closed form disappears.</p>
 <p>One consequence worth noting: distant lags do not affect early responses. In an AR(3), <span class="math inline">\(\psi_1\)</span> and <span class="math inline">\(\psi_2\)</span> are identical to those of an AR(2), because <span class="math inline">\(\phi_3\)</span> only enters from <span class="math inline">\(\psi_3\)</span> onward — a third lag cannot influence the response before three periods have passed.</p>
 </section>
 <section id="why-more-lags-matter-the-shape-of-the-response" class="level4" data-number="4.2.4.4">
@@ -617,9 +629,9 @@ y_t = \frac{1}{\phi(L)}\, w_t = \psi(L)\, w_t
 <p>The detour is worth taking because for an AR(<span class="math inline">\(p\)</span>) there is no single coefficient to inspect, only a whole polynomial. The condition becomes: all roots of</p>
 <p><span id="eq-arp-roots"><span class="math display">\[
 1-\phi_1 z-\phi_2 z^{2}-\cdots-\phi_p z^{p} = 0
-\tag{4.18}\]</span></span></p>
+\tag{4.21}\]</span></span></p>
 <p>lie outside the unit circle — equivalently, all <em>inverse</em> roots lie inside it, which is what estimation software plots.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>This is also the form that survives the move to the multivariate case. In Part B the scalar polynomial <span class="math inline">\(\phi(L)\)</span> becomes a matrix of polynomials <span class="math inline">\(G(L)\)</span>, the inverse <span class="math inline">\(\psi(L)\)</span> becomes <span class="math inline">\(G(L)^{-1}=\sum_i \Psi_i L^{i}\)</span>, the recursion <a href="#eq-psi-recursion" class="quarto-xref">Equation&nbsp;<span>4.16</span></a> becomes a recursion in matrices, and the root condition <a href="#eq-arp-roots" class="quarto-xref">Equation&nbsp;<span>4.18</span></a> becomes a condition on <span class="math inline">\(\det G(z)\)</span>. Nothing conceptual is added: scalars become matrices.</p>
+<p>This is also the form that survives the move to the multivariate case. In Part B the scalar polynomial <span class="math inline">\(\phi(L)\)</span> becomes a matrix of polynomials <span class="math inline">\(G(L)\)</span>, the inverse <span class="math inline">\(\psi(L)\)</span> becomes <span class="math inline">\(G(L)^{-1}=\sum_i \Psi_i L^{i}\)</span>, the recursion <a href="#eq-psi-recursion" class="quarto-xref">Equation&nbsp;<span>4.19</span></a> becomes a recursion in matrices, and the root condition <a href="#eq-arp-roots" class="quarto-xref">Equation&nbsp;<span>4.21</span></a> becomes a condition on <span class="math inline">\(\det G(z)\)</span>. Nothing conceptual is added: scalars become matrices.</p>
 </section>
 </section>
 </section>
@@ -631,11 +643,11 @@ y_t = \frac{1}{\phi(L)}\, w_t = \psi(L)\, w_t
 <p>The reduced-form VAR(1) (again dropping the constant) is the matrix twin of <a href="#eq-ar-dyn" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>, with <span class="math inline">\(Z_t\)</span> stacking the <span class="math inline">\(n\)</span> variables, <span class="math inline">\(\Phi\)</span> an <span class="math inline">\(n\times n\)</span> coefficient matrix, and <span class="math inline">\(w_t\)</span> the vector of innovations:</p>
 <p><span id="eq-var-dyn"><span class="math display">\[
 Z_t = \Phi\, Z_{t-1} + w_t
-\tag{4.19}\]</span></span></p>
+\tag{4.22}\]</span></span></p>
 <p>Substituting, exactly as before, every <span class="math inline">\(\phi^{\,i}\)</span> becoming <span class="math inline">\(\Phi^{\,i}\)</span>:</p>
 <p><span id="eq-var-recsub"><span class="math display">\[
 Z_t = \Phi^{\,t+1} Z_{-1} + \sum_{i=0}^{t}\Phi^{\,i}\, w_{t-i}
-\tag{4.20}\]</span></span></p>
+\tag{4.23}\]</span></span></p>
 <p>Same structure as <a href="#eq-ar-recsub" class="quarto-xref">Equation&nbsp;<span>4.3</span></a>: a transient <span class="math inline">\(\Phi^{\,t+1} Z_{-1}\)</span> plus a weighted sum of past shock vectors, now with matrix weights <span class="math inline">\(\Phi^{\,i}\)</span>.</p>
 </section>
 <section id="the-vmainfty-the-multivariate-wold-representation" class="level3" data-number="4.3.2">
@@ -645,11 +657,11 @@ Z_t = \Phi^{\,t+1} Z_{-1} + \sum_{i=0}^{t}\Phi^{\,i}\, w_{t-i}
 Z_t = \sum_{i=0}^{\infty}\Phi^{\,i}\, w_{t-i}
 = \sum_{i=0}^{\infty}\Psi_i\, w_{t-i},
 \qquad \Psi_i = \Phi^{\,i},\;\; \Psi_0 = I_n
-\tag{4.21}\]</span></span></p>
+\tag{4.24}\]</span></span></p>
 <p>This is the <strong>VMA(<span class="math inline">\(\infty\)</span>)</strong>, the multivariate Wold representation. For a VAR(1) the moving-average matrices are simply the powers <span class="math inline">\(\Psi_i=\Phi^{\,i}\)</span> the literal analogue of the scalar <span class="math inline">\(\phi^{\,i}\)</span>. For a general VAR(<span class="math inline">\(p\)</span>) the same object is obtained with the lag operator: writing the model as <span class="math inline">\(G(L)\,Z_t = w_t\)</span> and inverting the matrix polynomial,</p>
 <p><span id="eq-var-wold"><span class="math display">\[
 Z_t = \mu + G(L)^{-1} w_t = \mu + \sum_{i=0}^{\infty}\Psi_i\, w_{t-i},
-\tag{4.22}\]</span></span></p>
+\tag{4.25}\]</span></span></p>
 <p>where the <span class="math inline">\(\Psi_i\)</span> are the coefficient matrices of the power series <span class="math inline">\(G(L)^{-1}=\sum_i \Psi_i L^{i}\)</span> (with <span class="math inline">\(\Psi_0=I_n\)</span>), and <span class="math inline">\(\mu\)</span> is the mean, restored once the constant is put back.</p>
 <p>The parallel with the scalar case is one-to-one:</p>
 <table class="caption-top table">
@@ -701,14 +713,14 @@ Z_t = \mu + G(L)^{-1} w_t = \mu + \sum_{i=0}^{\infty}\Psi_i\, w_{t-i},
 </section>
 <section id="the-multiplier-becomes-the-impulse-response" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="the-multiplier-becomes-the-impulse-response"><span class="header-section-number">4.3.3</span> The multiplier becomes the impulse response</h3>
-<p>Differentiating <a href="#eq-var-wold" class="quarto-xref">Equation&nbsp;<span>4.22</span></a> with respect to the shock vector, exactly as in the scalar case:</p>
+<p>Differentiating <a href="#eq-var-wold" class="quarto-xref">Equation&nbsp;<span>4.25</span></a> with respect to the shock vector, exactly as in the scalar case:</p>
 <p><span id="eq-var-irf"><span class="math display">\[
 \frac{\partial\, Z_{t+j}}{\partial\, w_t'} = \Psi_j
-\tag{4.23}\]</span></span></p>
+\tag{4.26}\]</span></span></p>
 <p>Each matrix <span class="math inline">\(\Psi_j\)</span> is the system’s response, <span class="math inline">\(j\)</span> periods ahead, to a one-unit impulse in the shocks: its <span class="math inline">\((k,\ell)\)</span> entry is the reaction of variable <span class="math inline">\(k\)</span> to a shock in variable <span class="math inline">\(\ell\)</span>. Where the scalar multiplier <span class="math inline">\(\phi^{\,j}\)</span> traced a single decaying (or oscillating, or explosive) path, <span class="math inline">\(\Psi_j\)</span> now carries <strong>both own- and cross-effects</strong>, so responses can travel between variables, oscillate, and feed back through the system before dying out — the <em>feedback loop</em> of the previous chapter, made quantitative.</p>
 <p>For a bivariate VAR(1) this is a <span class="math inline">\(2\times2\)</span> grid: each variable’s reaction to each shock. The sliders are the four entries of <span class="math inline">\(\Phi\)</span>; each panel traces an entry of <span class="math inline">\(\Psi_j=\Phi^{\,j}\)</span> over the horizon <span class="math inline">\(j\)</span>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="466" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 465;"><span id="cb4-466"><a href="#cb4-466" aria-hidden="true" tabindex="-1"></a>viewof phi11 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="fl">0.95</span><span class="op">,</span> <span class="fl">0.95</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Phi 1,1 (x on own lag)"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="485" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 484;"><span id="cb4-485"><a href="#cb4-485" aria-hidden="true" tabindex="-1"></a>viewof phi11 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="fl">0.95</span><span class="op">,</span> <span class="fl">0.95</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Phi 1,1 (x on own lag)"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -716,7 +728,7 @@ Z_t = \mu + G(L)^{-1} w_t = \mu + \sum_{i=0}^{\infty}\Psi_i\, w_{t-i},
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="471" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 470;"><span id="cb5-471"><a href="#cb5-471" aria-hidden="true" tabindex="-1"></a>viewof phi12 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="fl">0.95</span><span class="op">,</span> <span class="fl">0.95</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.3</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Phi 1,2 (x on lagged y)"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="490" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 489;"><span id="cb5-490"><a href="#cb5-490" aria-hidden="true" tabindex="-1"></a>viewof phi12 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="fl">0.95</span><span class="op">,</span> <span class="fl">0.95</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.3</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Phi 1,2 (x on lagged y)"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
 
@@ -724,7 +736,7 @@ Z_t = \mu + G(L)^{-1} w_t = \mu + \sum_{i=0}^{\infty}\Psi_i\, w_{t-i},
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="476" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 475;"><span id="cb6-476"><a href="#cb6-476" aria-hidden="true" tabindex="-1"></a>viewof phi21 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="fl">0.95</span><span class="op">,</span> <span class="fl">0.95</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.2</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Phi 2,1 (y on lagged x)"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="495" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 494;"><span id="cb6-495"><a href="#cb6-495" aria-hidden="true" tabindex="-1"></a>viewof phi21 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="fl">0.95</span><span class="op">,</span> <span class="fl">0.95</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.2</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Phi 2,1 (y on lagged x)"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
 
@@ -732,7 +744,7 @@ Z_t = \mu + G(L)^{-1} w_t = \mu + \sum_{i=0}^{\infty}\Psi_i\, w_{t-i},
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="481" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 480;"><span id="cb7-481"><a href="#cb7-481" aria-hidden="true" tabindex="-1"></a>viewof phi22 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="fl">0.95</span><span class="op">,</span> <span class="fl">0.95</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Phi 2,2 (y on own lag)"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="500" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 499;"><span id="cb7-500"><a href="#cb7-500" aria-hidden="true" tabindex="-1"></a>viewof phi22 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="fl">0.95</span><span class="op">,</span> <span class="fl">0.95</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Phi 2,2 (y on own lag)"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="declaration">
 
@@ -740,48 +752,48 @@ Z_t = \mu + G(L)^{-1} w_t = \mu + \sum_{i=0}^{\infty}\Psi_i\, w_{t-i},
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="486" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 485;"><span id="cb8-486"><a href="#cb8-486" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb8-487"><a href="#cb8-487" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> H <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span>
-<span id="cb8-488"><a href="#cb8-488" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> Phi <span class="op">=</span> [[phi11<span class="op">,</span> phi12]<span class="op">,</span> [phi21<span class="op">,</span> phi22]]<span class="op">;</span></span>
-<span id="cb8-489"><a href="#cb8-489" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mul <span class="op">=</span> (A<span class="op">,</span> B) <span class="kw">=&gt;</span> [</span>
-<span id="cb8-490"><a href="#cb8-490" aria-hidden="true" tabindex="-1"></a>    [A[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">*</span>B[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">+</span> A[<span class="dv">0</span>][<span class="dv">1</span>]<span class="op">*</span>B[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">,</span> A[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">*</span>B[<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">+</span> A[<span class="dv">0</span>][<span class="dv">1</span>]<span class="op">*</span>B[<span class="dv">1</span>][<span class="dv">1</span>]]<span class="op">,</span></span>
-<span id="cb8-491"><a href="#cb8-491" aria-hidden="true" tabindex="-1"></a>    [A[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">*</span>B[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">+</span> A[<span class="dv">1</span>][<span class="dv">1</span>]<span class="op">*</span>B[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">,</span> A[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">*</span>B[<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">+</span> A[<span class="dv">1</span>][<span class="dv">1</span>]<span class="op">*</span>B[<span class="dv">1</span>][<span class="dv">1</span>]]</span>
-<span id="cb8-492"><a href="#cb8-492" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
-<span id="cb8-493"><a href="#cb8-493" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> vars <span class="op">=</span> [<span class="st">"x"</span><span class="op">,</span> <span class="st">"y"</span>]<span class="op">;</span></span>
-<span id="cb8-494"><a href="#cb8-494" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> Psi <span class="op">=</span> [[<span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]]<span class="op">;</span></span>
-<span id="cb8-495"><a href="#cb8-495" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> rows <span class="op">=</span> []<span class="op">;</span></span>
-<span id="cb8-496"><a href="#cb8-496" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;=</span> H<span class="op">;</span> j<span class="op">++</span>) {</span>
-<span id="cb8-497"><a href="#cb8-497" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> k<span class="op">++</span>) {</span>
-<span id="cb8-498"><a href="#cb8-498" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (<span class="kw">let</span> l <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> l <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> l<span class="op">++</span>) {</span>
-<span id="cb8-499"><a href="#cb8-499" aria-hidden="true" tabindex="-1"></a>        rows<span class="op">.</span><span class="fu">push</span>({</span>
-<span id="cb8-500"><a href="#cb8-500" aria-hidden="true" tabindex="-1"></a>          j<span class="op">,</span></span>
-<span id="cb8-501"><a href="#cb8-501" aria-hidden="true" tabindex="-1"></a>          <span class="dt">resp</span><span class="op">:</span> Psi[k][l]<span class="op">,</span></span>
-<span id="cb8-502"><a href="#cb8-502" aria-hidden="true" tabindex="-1"></a>          <span class="dt">respVar</span><span class="op">:</span> <span class="st">"response of "</span> <span class="op">+</span> vars[k]<span class="op">,</span></span>
-<span id="cb8-503"><a href="#cb8-503" aria-hidden="true" tabindex="-1"></a>          <span class="dt">shockVar</span><span class="op">:</span> <span class="st">"shock to "</span> <span class="op">+</span> vars[l]</span>
-<span id="cb8-504"><a href="#cb8-504" aria-hidden="true" tabindex="-1"></a>        })<span class="op">;</span></span>
-<span id="cb8-505"><a href="#cb8-505" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb8-506"><a href="#cb8-506" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb8-507"><a href="#cb8-507" aria-hidden="true" tabindex="-1"></a>    Psi <span class="op">=</span> <span class="fu">mul</span>(Phi<span class="op">,</span> Psi)<span class="op">;</span></span>
-<span id="cb8-508"><a href="#cb8-508" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-509"><a href="#cb8-509" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb8-510"><a href="#cb8-510" aria-hidden="true" tabindex="-1"></a>    <span class="dt">height</span><span class="op">:</span> <span class="dv">380</span><span class="op">,</span></span>
-<span id="cb8-511"><a href="#cb8-511" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
-<span id="cb8-512"><a href="#cb8-512" aria-hidden="true" tabindex="-1"></a>    <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"horizon j"</span> }<span class="op">,</span></span>
-<span id="cb8-513"><a href="#cb8-513" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"response"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span> }<span class="op">,</span></span>
-<span id="cb8-514"><a href="#cb8-514" aria-hidden="true" tabindex="-1"></a>    <span class="dt">fx</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span></span>
-<span id="cb8-515"><a href="#cb8-515" aria-hidden="true" tabindex="-1"></a>    <span class="dt">fy</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span></span>
-<span id="cb8-516"><a href="#cb8-516" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb8-517"><a href="#cb8-517" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
-<span id="cb8-518"><a href="#cb8-518" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">barY</span>(rows<span class="op">,</span> {</span>
-<span id="cb8-519"><a href="#cb8-519" aria-hidden="true" tabindex="-1"></a>        <span class="dt">x</span><span class="op">:</span> <span class="st">"j"</span><span class="op">,</span></span>
-<span id="cb8-520"><a href="#cb8-520" aria-hidden="true" tabindex="-1"></a>        <span class="dt">y</span><span class="op">:</span> <span class="st">"resp"</span><span class="op">,</span></span>
-<span id="cb8-521"><a href="#cb8-521" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fx</span><span class="op">:</span> <span class="st">"shockVar"</span><span class="op">,</span></span>
-<span id="cb8-522"><a href="#cb8-522" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fy</span><span class="op">:</span> <span class="st">"respVar"</span><span class="op">,</span></span>
-<span id="cb8-523"><a href="#cb8-523" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">resp</span> <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"#4c78a8"</span> <span class="op">:</span> <span class="st">"#e45756"</span></span>
-<span id="cb8-524"><a href="#cb8-524" aria-hidden="true" tabindex="-1"></a>      })</span>
-<span id="cb8-525"><a href="#cb8-525" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb8-526"><a href="#cb8-526" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb8-527"><a href="#cb8-527" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="505" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 504;"><span id="cb8-505"><a href="#cb8-505" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb8-506"><a href="#cb8-506" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> H <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb8-507"><a href="#cb8-507" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> Phi <span class="op">=</span> [[phi11<span class="op">,</span> phi12]<span class="op">,</span> [phi21<span class="op">,</span> phi22]]<span class="op">;</span></span>
+<span id="cb8-508"><a href="#cb8-508" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mul <span class="op">=</span> (A<span class="op">,</span> B) <span class="kw">=&gt;</span> [</span>
+<span id="cb8-509"><a href="#cb8-509" aria-hidden="true" tabindex="-1"></a>    [A[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">*</span>B[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">+</span> A[<span class="dv">0</span>][<span class="dv">1</span>]<span class="op">*</span>B[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">,</span> A[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">*</span>B[<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">+</span> A[<span class="dv">0</span>][<span class="dv">1</span>]<span class="op">*</span>B[<span class="dv">1</span>][<span class="dv">1</span>]]<span class="op">,</span></span>
+<span id="cb8-510"><a href="#cb8-510" aria-hidden="true" tabindex="-1"></a>    [A[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">*</span>B[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">+</span> A[<span class="dv">1</span>][<span class="dv">1</span>]<span class="op">*</span>B[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">,</span> A[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">*</span>B[<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">+</span> A[<span class="dv">1</span>][<span class="dv">1</span>]<span class="op">*</span>B[<span class="dv">1</span>][<span class="dv">1</span>]]</span>
+<span id="cb8-511"><a href="#cb8-511" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb8-512"><a href="#cb8-512" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> vars <span class="op">=</span> [<span class="st">"x"</span><span class="op">,</span> <span class="st">"y"</span>]<span class="op">;</span></span>
+<span id="cb8-513"><a href="#cb8-513" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> Psi <span class="op">=</span> [[<span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]]<span class="op">;</span></span>
+<span id="cb8-514"><a href="#cb8-514" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> rows <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb8-515"><a href="#cb8-515" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;=</span> H<span class="op">;</span> j<span class="op">++</span>) {</span>
+<span id="cb8-516"><a href="#cb8-516" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> k<span class="op">++</span>) {</span>
+<span id="cb8-517"><a href="#cb8-517" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (<span class="kw">let</span> l <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> l <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> l<span class="op">++</span>) {</span>
+<span id="cb8-518"><a href="#cb8-518" aria-hidden="true" tabindex="-1"></a>        rows<span class="op">.</span><span class="fu">push</span>({</span>
+<span id="cb8-519"><a href="#cb8-519" aria-hidden="true" tabindex="-1"></a>          j<span class="op">,</span></span>
+<span id="cb8-520"><a href="#cb8-520" aria-hidden="true" tabindex="-1"></a>          <span class="dt">resp</span><span class="op">:</span> Psi[k][l]<span class="op">,</span></span>
+<span id="cb8-521"><a href="#cb8-521" aria-hidden="true" tabindex="-1"></a>          <span class="dt">respVar</span><span class="op">:</span> <span class="st">"response of "</span> <span class="op">+</span> vars[k]<span class="op">,</span></span>
+<span id="cb8-522"><a href="#cb8-522" aria-hidden="true" tabindex="-1"></a>          <span class="dt">shockVar</span><span class="op">:</span> <span class="st">"shock to "</span> <span class="op">+</span> vars[l]</span>
+<span id="cb8-523"><a href="#cb8-523" aria-hidden="true" tabindex="-1"></a>        })<span class="op">;</span></span>
+<span id="cb8-524"><a href="#cb8-524" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb8-525"><a href="#cb8-525" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-526"><a href="#cb8-526" aria-hidden="true" tabindex="-1"></a>    Psi <span class="op">=</span> <span class="fu">mul</span>(Phi<span class="op">,</span> Psi)<span class="op">;</span></span>
+<span id="cb8-527"><a href="#cb8-527" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-528"><a href="#cb8-528" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb8-529"><a href="#cb8-529" aria-hidden="true" tabindex="-1"></a>    <span class="dt">height</span><span class="op">:</span> <span class="dv">380</span><span class="op">,</span></span>
+<span id="cb8-530"><a href="#cb8-530" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb8-531"><a href="#cb8-531" aria-hidden="true" tabindex="-1"></a>    <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"horizon j"</span> }<span class="op">,</span></span>
+<span id="cb8-532"><a href="#cb8-532" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"response"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span> }<span class="op">,</span></span>
+<span id="cb8-533"><a href="#cb8-533" aria-hidden="true" tabindex="-1"></a>    <span class="dt">fx</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span></span>
+<span id="cb8-534"><a href="#cb8-534" aria-hidden="true" tabindex="-1"></a>    <span class="dt">fy</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span></span>
+<span id="cb8-535"><a href="#cb8-535" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb8-536"><a href="#cb8-536" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
+<span id="cb8-537"><a href="#cb8-537" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">barY</span>(rows<span class="op">,</span> {</span>
+<span id="cb8-538"><a href="#cb8-538" aria-hidden="true" tabindex="-1"></a>        <span class="dt">x</span><span class="op">:</span> <span class="st">"j"</span><span class="op">,</span></span>
+<span id="cb8-539"><a href="#cb8-539" aria-hidden="true" tabindex="-1"></a>        <span class="dt">y</span><span class="op">:</span> <span class="st">"resp"</span><span class="op">,</span></span>
+<span id="cb8-540"><a href="#cb8-540" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fx</span><span class="op">:</span> <span class="st">"shockVar"</span><span class="op">,</span></span>
+<span id="cb8-541"><a href="#cb8-541" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fy</span><span class="op">:</span> <span class="st">"respVar"</span><span class="op">,</span></span>
+<span id="cb8-542"><a href="#cb8-542" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">resp</span> <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"#4c78a8"</span> <span class="op">:</span> <span class="st">"#e45756"</span></span>
+<span id="cb8-543"><a href="#cb8-543" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb8-544"><a href="#cb8-544" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb8-545"><a href="#cb8-545" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb8-546"><a href="#cb8-546" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="expression">
 
@@ -797,17 +809,17 @@ Z_t = \mu + G(L)^{-1} w_t = \mu + \sum_{i=0}^{\infty}\Psi_i\, w_{t-i},
 <section id="from-innovations-to-shocks-the-bridge-to-identification" class="level3" data-number="4.3.5">
 <h3 data-number="4.3.5" class="anchored" data-anchor-id="from-innovations-to-shocks-the-bridge-to-identification"><span class="header-section-number">4.3.5</span> From innovations to shocks: the bridge to identification</h3>
 <p>Up to this point <span class="math inline">\(w_t\)</span> has been called a shock, loosely. It is time to be precise, because the distinction is what the next chapter is built on.</p>
-<p>What <a href="#eq-var-dyn" class="quarto-xref">Equation&nbsp;<span>4.19</span></a> contains are <strong>innovations</strong>: a statistical object, defined as the one-step-ahead forecast error — the part of <span class="math inline">\(Z_t\)</span> that cannot be predicted from its own past,</p>
+<p>What <a href="#eq-var-dyn" class="quarto-xref">Equation&nbsp;<span>4.22</span></a> contains are <strong>innovations</strong>: a statistical object, defined as the one-step-ahead forecast error — the part of <span class="math inline">\(Z_t\)</span> that cannot be predicted from its own past,</p>
 <p><span id="eq-innovation"><span class="math display">\[
 w_t = Z_t - E\!\left[Z_t \mid Z_{t-1}, Z_{t-2}, \dots\right]
-\tag{4.24}\]</span></span></p>
+\tag{4.27}\]</span></span></p>
 <p>that is, the genuinely <em>new</em> information arriving at date <span class="math inline">\(t\)</span> — hence the name. Nothing in this definition carries economic content: it is a residual, whatever OLS leaves unexplained equation by equation.</p>
 <p>A <strong>structural shock</strong>, by contrast, is an economically meaningful disturbance: a monetary policy shock, a technology shock, a demand shock.</p>
 <p>The gap between the two is not a matter of vocabulary, it is a matter of correlation. Reduced-form innovations are correlated across equations:</p>
 <p><span id="eq-sigma"><span class="math display">\[
 E\!\left[w_t\, w_t'\right] = \Sigma, \qquad \Sigma \text{ generally non-diagonal}
-\tag{4.25}\]</span></span></p>
-<p>so <span class="math inline">\(w_{1t}\)</span> is not “the shock to the first variable”: when it moves, the other innovations typically move with it. Asking “what happens if <span class="math inline">\(w_{1t}\)</span> increases by one unit, holding the others fixed?” describes an event that is never observed in the data — which is why the <span class="math inline">\(\Psi_j\)</span> of <a href="#eq-var-irf" class="quarto-xref">Equation&nbsp;<span>4.23</span></a> are <strong>reduced-form</strong> impulse responses, correct as a description of the joint dynamics, but not readable as economic experiments.</p>
+\tag{4.28}\]</span></span></p>
+<p>so <span class="math inline">\(w_{1t}\)</span> is not “the shock to the first variable”: when it moves, the other innovations typically move with it. Asking “what happens if <span class="math inline">\(w_{1t}\)</span> increases by one unit, holding the others fixed?” describes an event that is never observed in the data — which is why the <span class="math inline">\(\Psi_j\)</span> of <a href="#eq-var-irf" class="quarto-xref">Equation&nbsp;<span>4.26</span></a> are <strong>reduced-form</strong> impulse responses, correct as a description of the joint dynamics, but not readable as economic experiments.</p>
 <p>Recovering structural impulse responses means turning correlated innovations into mutually uncorrelated, interpretable shocks. This is the <em>identification</em> problem: writing <span class="math inline">\(w_t = B\, u_t\)</span>, where the structural shocks <span class="math inline">\(u_t\)</span> are orthogonal, and finding enough restrictions to pin down <span class="math inline">\(B\)</span>. Two routes are available — a <em>recursive</em> ordering (Cholesky) or restrictions drawn from <em>economic theory</em> — and they are the subject of the next chapter, together with the forecast error variance decomposition, which uses these very same <span class="math inline">\(\Psi_j\)</span> to split forecast uncertainty across shocks.</p>
 
 
