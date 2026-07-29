@@ -245,9 +245,9 @@ window.Quarto = {
 
 <section id="what-is-var" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="what-is-var"><span class="header-section-number">3.1</span> What is VAR?</h2>
-<p>3 Starting key info:</p>
+<p>3 starting key info:</p>
 <ol type="1">
-<li><p>VAR (Vector AutoRegressive) is a <em>multivariate</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> linear time series model, designed to capture the <em>joint dynamics</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> of multiple time series through an **interconnected system*.</p></li>
+<li><p>VAR (Vector AutoRegressive) is a <em>multivariate</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> linear time series model, designed to capture the <em>joint dynamics</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> of multiple time series through an <em>interconnected system</em>.</p></li>
 <li><p>VARs treat each endogenous variable<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> in the system as a function of lagged values of all endogenous variables by default; plus exogenous variables only when explicitly added.</p></li>
 <li><p>VARs offer a simple and <em>flexible</em> alternative to traditional multiple equation models.</p></li>
 </ol>
@@ -515,7 +515,7 @@ w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix}
 <hr>
 <ol>
 <li id="fn1"><p><strong>Multivariate</strong>: VAR models <em>several variables</em> jointly, not just one. Each variable depends on its own lags and on the lags of all other variables in the system. (Univariate AR: only own past values. VAR: own past + others’ past.)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><strong>Joint dynamics</strong>: All variables move <em>together</em> and <em>influence each other</em> over time — not “multiple” series side by side.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>Joint dynamics</strong>: All variables move <em>together</em> and <em>influence each other</em> over time, not “multiple” series side by side.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p><strong>Endogenous vs.&nbsp;exogenous</strong>: an <em>endogenous</em> variable is determined <em>within</em> the system, the model explains it, and it can be both cause and effect of the others. An <em>exogenous</em> variable is taken as given from <em>outside</em> the system, it may influence the endogenous variables but is never explained by them.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p><strong>ARDL (AutoRegressive Distributed Lag)</strong>: a single-equation model in which a dependent variable is explained by its own lags (the <em>autoregressive</em> part) plus current and past values of one or more explanatory variables (the <em>distributed-lag</em> part). For a single regressor:</p>
 <p><span class="math display">\[
