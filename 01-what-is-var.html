@@ -215,8 +215,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#a-closer-look-joint-dynamics-interconnected-system-and-endogeneity" id="toc-a-closer-look-joint-dynamics-interconnected-system-and-endogeneity" class="nav-link" data-scroll-target="#a-closer-look-joint-dynamics-interconnected-system-and-endogeneity"><span class="header-section-number">3.1.1</span> A closer look: joint dynamics, interconnected system and endogeneity</a></li>
   </ul></li>
-  <li><a href="#why-is-var-simple-and-flexible-so-useful-and-used" id="toc-why-is-var-simple-and-flexible-so-useful-and-used" class="nav-link" data-scroll-target="#why-is-var-simple-and-flexible-so-useful-and-used"><span class="header-section-number">3.2</span> Why is VAR simple and flexible, so useful and used?</a></li>
-  <li><a href="#var-from-a-mathematical-pov" id="toc-var-from-a-mathematical-pov" class="nav-link" data-scroll-target="#var-from-a-mathematical-pov"><span class="header-section-number">3.3</span> VAR from a mathematical POV</a></li>
+  <li><a href="#var-from-a-mathematical-pov" id="toc-var-from-a-mathematical-pov" class="nav-link" data-scroll-target="#var-from-a-mathematical-pov"><span class="header-section-number">3.2</span> VAR from a mathematical POV</a></li>
+  <li><a href="#why-vars-are-simple-flexible-and-widely-used" id="toc-why-vars-are-simple-flexible-and-widely-used" class="nav-link" data-scroll-target="#why-vars-are-simple-flexible-and-widely-used"><span class="header-section-number">3.3</span> Why VARs are simple, flexible, and widely used?</a></li>
   <li><a href="#how-var-is-used-in-macroeconometrics" id="toc-how-var-is-used-in-macroeconometrics" class="nav-link" data-scroll-target="#how-var-is-used-in-macroeconometrics"><span class="header-section-number">3.4</span> How VAR is used in macroeconometrics?</a></li>
   </ul>
 </nav>
@@ -248,13 +248,13 @@ window.Quarto = {
 <p>3 starting key info:</p>
 <ol type="1">
 <li><p>VAR (Vector AutoRegressive) is a <em>multivariate</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> linear time series model, designed to capture the <em>joint dynamics</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> of multiple time series through an <em>interconnected system</em>.</p></li>
-<li><p>VARs, by default, treat each endogenous variable<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> in the system as a function of lagged values of all endogenous variables. Exogenous variables enters only when explicitly added.</p></li>
+<li><p>VARs, by default, treat each endogenous variable<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> in the system as a function of lagged values of all endogenous variables. Exogenous variables enter only when explicitly added.</p></li>
 <li><p>VARs offer a <em>simple</em><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and <em>flexible</em> alternative to traditional multiple equation models<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p></li>
 </ol>
 <section id="a-closer-look-joint-dynamics-interconnected-system-and-endogeneity" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="a-closer-look-joint-dynamics-interconnected-system-and-endogeneity"><span class="header-section-number">3.1.1</span> A closer look: joint dynamics, interconnected system and endogeneity</h3>
 <p>In a VAR the variables are not studied side by side. They form a single system, where each one drives the others and is driven by them. This happens because each variable appears on the left-hand side of its own equation and on the right-hand side of the others. Since every variable has its own equation, each one is explained within the system, and none can be treated as exogenous: this is exactly what <em>endogeneity</em> means here.<br>
-The link is not a one-off cross-effect, nor does it run in one direction only: it is <em>mutual</em>, and it propagates forward indefinitely</p>
+The link is not a one-off cross-effect, nor does it run in one direction only: it is <em>mutual</em>, and it propagates forward indefinitely.</p>
 <p><em>Example:</em></p>
 <p>To fix ideas, let inflation (<span class="math inline">\(\pi\)</span>) and GDP each depend on both their own lag and the other’s lag. Since the true data-generating process is unknown, the relationship is left as a generic function:</p>
 <p><span class="math display">\[
@@ -452,18 +452,11 @@ gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t
 </div>
 </section>
 </section>
-<section id="why-is-var-simple-and-flexible-so-useful-and-used" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="why-is-var-simple-and-flexible-so-useful-and-used"><span class="header-section-number">3.2</span> Why is VAR simple and flexible, so useful and used?</h2>
-<p>A standard AR or ARDL model<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> is inherently <em>unidirectional</em>: the researcher must decide, a priori, which variable belongs on the left-hand side and which on the right. But the true data-generating process (DGP) is always <em>unobservable</em>, we can never verify whether the relationship we impose reflects reality, or is simply a convenient assumption.</p>
-<p>VARs sidestep this problem by allowing for <em>simultaneity</em>, avoiding the constraint of unidirectionality. As shown above every variable can affect, and be affected by, every other variable, with no need to decide in advance who is endogenous and who is exogenous.</p>
-<p>Also because in microeconomics, this chicken-and-egg problem can sometimes be resolved through natural temporal ordering: education precedes wages, so treating it as exogenous is defensible. In macroeconomics, this precedence rarely exists, following the previous example: GDP and inflation are determined simultaneously, within the same period.</p>
-<p>This is what makes the VAR both <em>simpler</em> and more <em>flexible</em>: it is essentially <em>atheoretical in structure</em>, treating every variable as potentially endogenous and letting the data reveal the dynamics, rather than imposing a priori who (exogenous) influences whom (endogenous).</p>
-</section>
-<section id="var-from-a-mathematical-pov" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="var-from-a-mathematical-pov"><span class="header-section-number">3.3</span> VAR from a mathematical POV</h2>
+<section id="var-from-a-mathematical-pov" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="var-from-a-mathematical-pov"><span class="header-section-number">3.2</span> VAR from a mathematical POV</h2>
 <p>A VAR is an <span class="math inline">\(n\)</span>-equation, <span class="math inline">\(n\)</span>-variable linear model in which each variable is in turn explained by its own lagged values, plus current and past values of the remaining <span class="math inline">\(n-1\)</span> variables.</p>
 <p><em>Example:</em></p>
-<p>The easiest case is a VAR(1), where the number inside parenthesis indicates the number of lags, with just two variable <span class="math inline">\(x_t\)</span> and <span class="math inline">\(y_t\)</span>.</p>
+<p>The easiest case is a VAR(1), where the number inside parenthesis indicates the number of lags, with just two variables <span class="math inline">\(x_t\)</span> and <span class="math inline">\(y_t\)</span>.</p>
 <p>It could be expressed in equation-by-equation form:</p>
 <p><span id="eq-var1-equations"><span class="math display">\[
 \begin{aligned}
@@ -485,6 +478,13 @@ w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix}
 <p><span id="eq-var1-expansion"><span class="math display">\[
 \Phi Z_{t-1} = \begin{bmatrix} \phi_{11} &amp; \phi_{12} \\ \phi_{21} &amp; \phi_{22} \end{bmatrix} \begin{bmatrix} x_{t-1} \\ y_{t-1} \end{bmatrix} = \begin{bmatrix} \phi_{11} x_{t-1} + \phi_{12} y_{t-1} \\ \phi_{21} x_{t-1} + \phi_{22} y_{t-1} \end{bmatrix}
 \tag{3.4}\]</span></span></p>
+</section>
+<section id="why-vars-are-simple-flexible-and-widely-used" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="why-vars-are-simple-flexible-and-widely-used"><span class="header-section-number">3.3</span> Why VARs are simple, flexible, and widely used?</h2>
+<p>A standard AR or ARDL model<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> is inherently <em>unidirectional</em>: the researcher must decide, a priori, which variable belongs on the left-hand side and which on the right. But the true data-generating process (DGP) is always <em>unobservable</em>, we can never verify whether the relationship we impose reflects reality, or is simply a convenient assumption.</p>
+<p>VARs sidestep this problem by allowing for <em>simultaneity</em>, avoiding the constraint of unidirectionality. As shown above every variable can affect, and be affected by, every other variable, with no need to decide in advance who is endogenous and who is exogenous.</p>
+<p>In microeconomics this chicken-and-egg problem can sometimes be resolved through a natural temporal ordering: education precedes wages, so treating it as exogenous is defensible. In macroeconomics, this precedence rarely exists, following the previous example: GDP and inflation are determined simultaneously, within the same period.</p>
+<p>This is what makes the VAR both <em>simpler</em> and more <em>flexible</em>: it is essentially <em>atheoretical in structure</em>, treating every variable as potentially endogenous and letting the data reveal the dynamics, rather than imposing a priori who (exogenous) influences whom (endogenous).</p>
 </section>
 <section id="how-var-is-used-in-macroeconometrics" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="how-var-is-used-in-macroeconometrics"><span class="header-section-number">3.4</span> How VAR is used in macroeconometrics?</h2>
