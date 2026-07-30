@@ -254,7 +254,7 @@ window.Quarto = {
 <section id="a-closer-look-joint-dynamics-interconnected-system-and-endogeneity" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="a-closer-look-joint-dynamics-interconnected-system-and-endogeneity"><span class="header-section-number">3.1.1</span> A closer look: joint dynamics, interconnected system and endogeneity</h3>
 <p>In a VAR the variables are not studied side by side: they form a single system in which each one both drives and is driven by the others.</p>
-<p>The interconnection is neither a one-off cross-effect nor unidirectional, it is <em>mutual</em>. Each variable enters the other’s equation, so influence runs in both directions and it propagates forward indefinitely. Neither variable can be held exogenous on the left hand side: this reciprocal dependence is exactly what <em>endogeneity</em> means here.</p>
+<p>The interconnection is neither a one-off cross-effect nor unidirectional, it is <em>mutual</em>. Each variable enters the other’s equation, so influence runs in both directions and it propagates forward indefinitely. Each variable appears on the left-hand side of its own equation and on the right-hand side of the others: it is at once explained by the system and a driver of it. Since every variable has its own equation, none is left unexplained and none can be treated as exogenous. This is exactly what <em>endogeneity</em> means here</p>
 <p><em>Example:</em></p>
 <p>To fix ideas, let inflation (<span class="math inline">\(\pi\)</span>) and GDP each depend on both their own lag and the other’s lag. Since the true data-generating process is unknown, the relationship is left as a generic function:</p>
 <p><span class="math display">\[
