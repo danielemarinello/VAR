@@ -94,7 +94,7 @@
     "href": "02-from-ar-to-var.html#how-to-trace-the-dynamic-effect-of-a-shock",
     "title": "4  From AR to VAR",
     "section": "",
-    "text": "Recursive substitution: unwinding the model until \\(y_t\\) is written in terms of past shocks.\nDynamic multiplier: the effect of one shock, horizon by horizon. This is the impulse response.\nWold representation: under the stationarity assumption the influence of the initial value fades to zero and only the shock sum survives, this is the moving-average form, whose coefficients are the multipliers of point 2.",
+    "text": "Recursive substitution: unwinding the model until \\(y_t\\) is written in terms of past shocks.\n\nDynamic multiplier: the effect of one shock, horizon by horizon. This is the impulse response.\n\nWold representation: under the stationarity assumption the influence of the initial value fades to zero and only the shock sum survives, this is the moving-average form, whose coefficients are the multipliers of point 2.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>From AR to VAR</span>"
     ]
