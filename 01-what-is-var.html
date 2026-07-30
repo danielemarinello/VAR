@@ -253,7 +253,8 @@ window.Quarto = {
 </ol>
 <section id="a-closer-look-joint-dynamics-interconnected-system-and-endogeneity" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="a-closer-look-joint-dynamics-interconnected-system-and-endogeneity"><span class="header-section-number">3.1.1</span> A closer look: joint dynamics, interconnected system and endogeneity</h3>
-<p>In a VAR the variables are not studied side by side. They form a single system, where each one drives the others and is driven by them. This happens because each variable appears on the left-hand side of its own equation and on the right-hand side of the others. Since every variable has its own equation, each one is explained within the system, and none can be treated as exogenous. This is exactly what <em>endogeneity</em> means here. The link is not a one-off cross-effect, nor does it run in one direction only: it is <em>mutual</em>, and it propagates forward indefinitely</p>
+<p>In a VAR the variables are not studied side by side. They form a single system, where each one drives the others and is driven by them. This happens because each variable appears on the left-hand side of its own equation and on the right-hand side of the others. Since every variable has its own equation, each one is explained within the system, and none can be treated as exogenous: this is exactly what <em>endogeneity</em> means here.<br>
+The link is not a one-off cross-effect, nor does it run in one direction only: it is <em>mutual</em>, and it propagates forward indefinitely</p>
 <p><em>Example:</em></p>
 <p>To fix ideas, let inflation (<span class="math inline">\(\pi\)</span>) and GDP each depend on both their own lag and the other’s lag. Since the true data-generating process is unknown, the relationship is left as a generic function:</p>
 <p><span class="math display">\[
@@ -266,7 +267,7 @@ gdp_t &amp;= f(gdp_{t-1},\, \pi_{t-1})
 <p><span class="math display">\[
 gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t+2} \;\rightarrow\; gdp_{t+3} \;\rightarrow\; \cdots
 \]</span></p>
-<p>This single thread, though, understates the structure. Own lags run alongside these cross-links, and each own lag is itself shaped by the other variable one period earlier: <span class="math inline">\(gdp_{t-1}\)</span> already carries <span class="math inline">\(\pi_{t-2}\)</span>. Every value is therefore fed, at every period, by both variables at once, as shown in the animation below, where horizontal arrows are own lags (persistence) and diagonal arrows are cross-lags (spillovers)..</p>
+<p>This single thread is real, but on its own it understates the structure. Own lags run alongside these cross-links, and each own lag is itself shaped by the other variable one period earlier. Own lags run alongside these cross-links, and each own lag is itself shaped by the other variable one period earlier: <span class="math inline">\(gdp_{t-1}\)</span> already carries <span class="math inline">\(\pi_{t-2}\)</span>. Every value is therefore fed, at every period, by both variables at once; as shown in the animation below, where horizontal arrows are own lags (persistence) and diagonal arrows are cross-lags (spillovers).</p>
 <p>This self-sustaining <em>feedback loop</em> is what makes the system genuinely <em>joint</em>, and it is the aspect most often underestimated when first learning VAR.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="58" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 57;"><span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>{</span>
@@ -493,7 +494,7 @@ w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix}
 <p>Two main ways to identify a VAR, and so to identify shocks’ effects:</p>
 <p><strong>Recursive ordering</strong>: impose a <em>causal chain</em> among variables (via Cholesky decomposition), assuming variable 1 affects all others within the period, variable 2 affects all but variable 1, and so on.<br>
 <strong>Structural approach</strong>: impose restrictions derived from <em>economic theory</em> instead of an arbitrary mechanic ordering.</p>
-<p>More about both approach later in chapter 5.</p>
+<p>More about both approaches later in Chapter 5.</p>
 
 
 </section>
