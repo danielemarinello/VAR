@@ -457,7 +457,7 @@ gdp_{t-1} \;\rightarrow\; \pi_t \;\rightarrow\; gdp_{t+1} \;\rightarrow\; \pi_{t
 </section>
 <section id="var-from-a-mathematical-pov" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="var-from-a-mathematical-pov"><span class="header-section-number">3.2</span> VAR from a mathematical POV</h2>
-<p>A VAR is an <span class="math inline">\(n\)</span>-equation, <span class="math inline">\(n\)</span>-variable linear model in which each variable is in turn explained by its own lagged values, plus current and past values of the remaining <span class="math inline">\(n-1\)</span> variables.</p>
+<p>A VAR is an <span class="math inline">\(n\)</span>-equation, <span class="math inline">\(n\)</span>-variable linear model in which each variable is explained by its own lagged values, plus current (initially this term will missed, it appears later) and past values of the remaining <span class="math inline">\(n-1\)</span> variables.</p>
 <p>Formally, let <span class="math inline">\(Z_t\)</span> be a vector collecting the values of <span class="math inline">\(n\)</span> variables at time <span class="math inline">\(t\)</span>, for instance inflation, output gap, and the interest rate. A vector autoregressive process of order <span class="math inline">\(p\)</span>, written VAR(<span class="math inline">\(p\)</span>), generalizes the one-variable AR(<span class="math inline">\(p\)</span>) process to <span class="math inline">\(n\)</span> variables:</p>
 <p><span id="eq-varp-general"><span class="math display">\[
 Z_t = c + \Phi_1 Z_{t-1} + \Phi_2 Z_{t-2} + \cdots + \Phi_p Z_{t-p} + w_t
@@ -841,7 +841,7 @@ So two perfectly independent structural shocks produce observed residuals correl
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p><strong>Multivariate</strong>: VAR models <em>several variables</em> jointly, not just one. Each variable depends on its own lags and on the lags of all other variables in the system. (Univariate AR: only own past values. VAR: own past + others’ past.)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p><strong>Multivariate</strong>: VAR models <em>several</em> variables jointly, not just one. Each variable depends on its own lags and on the lags of all other variables in the system. (Univariate AR: only own past values. VAR: own past + others’ past.)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p><strong>Joint dynamics</strong>: All variables move <em>together</em> and <em>influence each other</em> over time, not “multiple” series side by side.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p><strong>Endogenous vs.&nbsp;exogenous</strong>: an <em>endogenous</em> variable is determined <em>within</em> the system, the model explains it, and it can be both cause and effect of the others. An <em>exogenous</em> variable is taken as given from <em>outside</em> the system, it may influence the endogenous variables but is never explained by them.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Estimation is <em>simple</em> in the sense that each equation can be estimated separately by OLS. The number of parameters, however, grows quickly with the number of variables and lags, leading to the <em>curse of dimensionality</em> typical of time series data.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
