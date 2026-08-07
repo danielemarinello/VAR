@@ -473,7 +473,7 @@ c = \begin{bmatrix} c_1 \\ c_2 \\ \vdots \\ c_n \end{bmatrix}, \qquad
 w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \\ \vdots \\ w_{nt} \end{bmatrix}
 \tag{3.2}\]</span></span></p>
 <p>The model describes the evolution of <span class="math inline">\(Z_t\)</span> as a function of its own past realizations <span class="math inline">\(Z_{t-1}, \dots, Z_{t-p}\)</span> and of a vector of white noise errors <span class="math inline">\(w_t\)</span>.</p>
-<p>The white-noise assumption on <span class="math inline">\(w_t\)</span> is central and deserves to be stated precisely: errors are serially uncorrelated, with zero mean and finite variance:</p>
+<p>The white-noise assumption on <span class="math inline">\(w_t\)</span> is central and deserves to be stated precisely: errors are serially uncorrelated <em>inside</em> equation but NOT <em>across</em> equation (this point is crucial and will be repeated and approdondito multiple time long the text), with zero mean and finite variance:</p>
 <p><span id="eq-varp-errors"><span class="math display">\[
 \operatorname{E}[w_t] = 0, \qquad
 \operatorname{E}[w_t w_\tau'] =
