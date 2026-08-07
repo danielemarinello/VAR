@@ -473,7 +473,7 @@ c = \begin{bmatrix} c_1 \\ c_2 \\ \vdots \\ c_n \end{bmatrix}, \qquad
 w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \\ \vdots \\ w_{nt} \end{bmatrix}
 \tag{3.2}\]</span></span></p>
 <p>The model describes the evolution of <span class="math inline">\(Z_t\)</span> as a function of its own past realizations <span class="math inline">\(Z_{t-1}, \dots, Z_{t-p}\)</span> and of a vector of white noise errors <span class="math inline">\(w_t\)</span>.</p>
-<p>The white-noise assumption on <span class="math inline">\(w_t\)</span> is central and deserves to be stated precisely. Each error has zero mean and finite variance, is serially uncorrelated <em>within</em> equation over time but it may be correlated <em>across</em> equation at the same time. This distinction is crucial and recurs multiple time throughout the text.<br>
+<p>The white-noise assumption on <span class="math inline">\(w_t\)</span> is central and deserves to be stated precisely. Each error has zero mean and finite variance, is serially uncorrelated <em>within</em> equation over time but it may be correlated <em>across</em> equations at the same time. This distinction is crucial and recurs multiple time throughout the text.<br>
 Formally:</p>
 <p><span id="eq-varp-errors"><span class="math display">\[
 \operatorname{E}[w_t] = 0, \qquad
@@ -483,7 +483,7 @@ Formally:</p>
 0 &amp; \text{if } t \neq \tau
 \end{cases}
 \tag{3.3}\]</span></span></p>
-<p>Two properties of this error structure matter:</p>
+<p>More precisely:</p>
 <ol type="1">
 <li>Along the time dimension, the errors are uncorrelated with their own past and with all the right-hand-side variables, the lagged <span class="math inline">\(Z\)</span>’s. This absence of serial correlation is what makes OLS, applied equation by equation, consistent.</li>
 <li>Across equations, by contrast, <span class="math inline">\(\Omega\)</span> is <em>not</em> assumed to be diagonal<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, so the errors of different equations can be correlated at the same date <span class="math inline">\(t\)</span>. This non-zero off-diagonal is the trace left by the contemporaneous links between the variables, and it is the reason this is called a reduced-form VAR: the contemporaneous variables, the ones set aside earlier, are apparently absent from the right-hand side.</li>
