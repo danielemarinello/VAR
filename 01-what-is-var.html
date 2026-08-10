@@ -598,12 +598,13 @@ This is the <em>curse of dimensionality</em> of VARs, and the reason parsimony i
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="sec-errors"><span class="header-section-number">3.2.1</span> The error structure</h3>
 <p>The white-noise assumption on <span class="math inline">\(w_t\)</span> is central and deserves to be stated precisely. Each error has zero mean and finite variance, is serially uncorrelated <em>within</em> equation over time but it may be correlated <em>across</em> equations at the same time. This distinction is crucial and recurs multiple time throughout the text.<br>
 Formally:</p>
-<p><span class="math display">\[\operatorname{E}[w_t] = 0, \qquad
+<p><span id="eq-varp-errors"><span class="math display">\[\operatorname{E}[w_t] = 0, \qquad
 \operatorname{E}[w_t w_\tau'] =
 \begin{cases}
 \Omega &amp; \text{if } t = \tau \\
 0 &amp; \text{if } t \neq \tau
-\end{cases}\]</span> {#eq-varp-errors}</p>
+\end{cases}
+\tag{3.2}\]</span></span></p>
 <p>More precisely:</p>
 <ol type="1">
 <li>Along the time dimension, the errors are uncorrelated with their own past and with all the right-hand-side variables, the lagged <span class="math inline">\(Z\)</span>’s. This absence of serial correlation is what makes OLS, applied equation by equation, consistent.</li>
@@ -611,7 +612,7 @@ Formally:</p>
 </ol>
 <p>This cross-equation correlation is not a nuisance to be removed but the core of the reduced form, and it is collected in a single object that deserves examination on its own: the error variance covariance matrix <span class="math inline">\(\Omega\)</span>.</p>
 <p><strong>#### The error variance covariance matrix</strong> {#sec-omega}</p>
-<p>The matrix <span class="math inline">\(\Omega\)</span> introduced in <span class="quarto-unresolved-ref">?eq-varp-errors</span> is the contemporaneous variance-covariance matrix of the error vector <span class="math inline">\(w_t\)</span>. In a reduced-form VAR it is the only place where the contemporaneous relations among the variables survive, and for this reason it carries the whole weight that identification will later have to lift.</p>
+<p>The matrix <span class="math inline">\(\Omega\)</span> introduced in <a href="#eq-varp-errors" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> is the contemporaneous variance-covariance matrix of the error vector <span class="math inline">\(w_t\)</span>. In a reduced-form VAR it is the only place where the contemporaneous relations among the variables survive, and for this reason it carries the whole weight that identification will later have to lift.</p>
 <p>Its content follows directly from the definition <span class="math inline">\(\Omega = \operatorname{E}[w_t w_t']\)</span>. Taking <span class="math inline">\(n = 2\)</span>, the outer product of the error vector with itself is</p>
 <p><span class="math display">\[w_t w_t' = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix} \begin{bmatrix} w_{1t} &amp; w_{2t} \end{bmatrix} = \begin{bmatrix} w_{1t}^2 &amp; w_{1t} w_{2t} \\ w_{2t} w_{1t} &amp; w_{2t}^2 \end{bmatrix},\]</span></p>
 <p>so taking expectations entry by entry gives</p>
