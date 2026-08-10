@@ -460,10 +460,11 @@ gdp_t &amp;= f(gdp_{t-1},\, \pi_{t-1})
 <p>Formally, let <span class="math inline">\(Z_t\)</span> be a vector collecting the values of <span class="math inline">\(n\)</span> variables at time <span class="math inline">\(t\)</span>, for instance inflation, output gap, and the interest rate. A vector autoregressive process of order <span class="math inline">\(p\)</span>, written VAR(<span class="math inline">\(p\)</span>), generalizes the one-variable AR(<span class="math inline">\(p\)</span>) process to <span class="math inline">\(n\)</span> variables:</p>
 <p><span class="math display">\[Z_t = c + \Phi_1 Z_{t-1} + \Phi_2 Z_{t-2} + \cdots + \Phi_p Z_{t-p} + w_t\]</span> {#eq-varp-general}</p>
 <p>where:</p>
-<p><span class="math display">\[Z_t = \begin{bmatrix} z_{1t} \\ z_{2t} \\ \vdots \\ z_{nt} \end{bmatrix}, \qquad
+<p><span id="eq-varp-components"><span class="math display">\[Z_t = \begin{bmatrix} z_{1t} \\ z_{2t} \\ \vdots \\ z_{nt} \end{bmatrix}, \qquad
 c = \begin{bmatrix} c_1 \\ c_2 \\ \vdots \\ c_n \end{bmatrix}, \qquad
 \Phi_j = \begin{bmatrix} \phi_{11}^{(j)} &amp; \cdots &amp; \phi_{1n}^{(j)} \\ \vdots &amp; \ddots &amp; \vdots \\ \phi_{n1}^{(j)} &amp; \cdots &amp; \phi_{nn}^{(j)} \end{bmatrix}, \qquad
-w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \\ \vdots \\ w_{nt} \end{bmatrix}\]</span> {#eq-varp-components}</p>
+w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \\ \vdots \\ w_{nt} \end{bmatrix}
+\tag{3.1}\]</span></span></p>
 <p>The model describes the evolution of <span class="math inline">\(Z_t\)</span> as a function of its own past realizations <span class="math inline">\(Z_{t-1}, \dots, Z_{t-p}\)</span> and of a vector of white noise errors <span class="math inline">\(w_t\)</span>.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Deeper dive: How the system grows with n variable and p lags">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -609,8 +610,7 @@ Formally:</p>
 <li>Across equations, by contrast, <span class="math inline">\(\Omega\)</span> is <em>not</em> assumed to be diagonal<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, so the errors of different equations can be correlated at the same date <span class="math inline">\(t\)</span>. This non-zero off-diagonal is the trace left by the contemporaneous links between the variables, and it is the reason this is called a reduced-form VAR: the contemporaneous variables, the ones set aside earlier, are apparently absent from the right-hand side.</li>
 </ol>
 <p>This cross-equation correlation is not a nuisance to be removed but the core of the reduced form, and it is collected in a single object that deserves examination on its own: the error variance covariance matrix <span class="math inline">\(\Omega\)</span>.</p>
-<section id="sec-omega" class="level4" data-number="3.2.1.1">
-<h4 data-number="3.2.1.1" class="anchored" data-anchor-id="sec-omega"><span class="header-section-number">3.2.1.1</span> <strong>The error variance covariance matrix</strong></h4>
+<p><strong>#### The error variance covariance matrix</strong> {#sec-omega}</p>
 <p>The matrix <span class="math inline">\(\Omega\)</span> introduced in <span class="quarto-unresolved-ref">?eq-varp-errors</span> is the contemporaneous variance-covariance matrix of the error vector <span class="math inline">\(w_t\)</span>. In a reduced-form VAR it is the only place where the contemporaneous relations among the variables survive, and for this reason it carries the whole weight that identification will later have to lift.</p>
 <p>Its content follows directly from the definition <span class="math inline">\(\Omega = \operatorname{E}[w_t w_t']\)</span>. Taking <span class="math inline">\(n = 2\)</span>, the outer product of the error vector with itself is</p>
 <p><span class="math display">\[w_t w_t' = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix} \begin{bmatrix} w_{1t} &amp; w_{2t} \end{bmatrix} = \begin{bmatrix} w_{1t}^2 &amp; w_{1t} w_{2t} \\ w_{2t} w_{1t} &amp; w_{2t}^2 \end{bmatrix},\]</span></p>
@@ -641,7 +641,6 @@ y_t &amp;= c_2 + \phi_{21}\, x_{t-1} + \phi_{22}\, y_{t-1} + w_{2t}
 w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix}\]</span> {#eq-var1-matrices}</p>
 <p>It is easy to verify that <span class="quarto-unresolved-ref">?eq-var1-matrix-const</span> is equivalent to <span class="quarto-unresolved-ref">?eq-var1-equations</span> by expanding the matrix product:</p>
 <p><span class="math display">\[\Phi Z_{t-1} = \begin{bmatrix} \phi_{11} &amp; \phi_{12} \\ \phi_{21} &amp; \phi_{22} \end{bmatrix} \begin{bmatrix} x_{t-1} \\ y_{t-1} \end{bmatrix} = \begin{bmatrix} \phi_{11} x_{t-1} + \phi_{12} y_{t-1} \\ \phi_{21} x_{t-1} + \phi_{22} y_{t-1} \end{bmatrix}\]</span> {#eq-var1-expansion}</p>
-</section>
 </section>
 </section>
 <section id="why-vars-are-simple-flexible-and-widely-used" class="level2" data-number="3.3">
