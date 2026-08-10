@@ -219,7 +219,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#sec-errors" id="toc-sec-errors" class="nav-link" data-scroll-target="#sec-errors"><span class="header-section-number">3.2.1</span> The error structure</a></li>
   </ul></li>
-  <li><a href="#why-vars-are-simple-flexible-and-widely-used" id="toc-why-vars-are-simple-flexible-and-widely-used" class="nav-link" data-scroll-target="#why-vars-are-simple-flexible-and-widely-used"><span class="header-section-number">3.3</span> Why VARs are simple, flexible, and widely used</a>
+  <li><a href="#why-vars-are-simple-flexible-and-so-widely-used" id="toc-why-vars-are-simple-flexible-and-so-widely-used" class="nav-link" data-scroll-target="#why-vars-are-simple-flexible-and-so-widely-used"><span class="header-section-number">3.3</span> Why VARs are simple, flexible, and (so) widely used</a>
   <ul class="collapse">
   <li><a href="#a-closer-look-simultaneity-and-the-reduced-form" id="toc-a-closer-look-simultaneity-and-the-reduced-form" class="nav-link" data-scroll-target="#a-closer-look-simultaneity-and-the-reduced-form"><span class="header-section-number">3.3.1</span> A closer look: simultaneity and the reduced form</a></li>
   </ul></li>
@@ -769,9 +769,9 @@ The matrix is symmetric, since <span class="math inline">\(\sigma_{ij} = \sigma_
 </section>
 </section>
 </section>
-<section id="why-vars-are-simple-flexible-and-widely-used" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="why-vars-are-simple-flexible-and-widely-used"><span class="header-section-number">3.3</span> Why VARs are simple, flexible, and widely used</h2>
-<p>A standard AR or ARDL model<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> is inherently <em>unidirectional</em>: the researcher must decide, a priori, which variable belongs on the left-hand side and which on the right. The true data-generating process (DGP), however, is always <em>unobservable</em>. There is no way to verify whether the imposed relationship reflects reality or is merely a convenient assumption.</p>
+<section id="why-vars-are-simple-flexible-and-so-widely-used" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="why-vars-are-simple-flexible-and-so-widely-used"><span class="header-section-number">3.3</span> Why VARs are simple, flexible, and (so) widely used</h2>
+<p>A standard ARDL model<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> is inherently <em>unidirectional</em>: the researcher must decide, a priori, which variable belongs on the left-hand side and which on the right. The true data-generating process (DGP), however, is always <em>unobservable</em>. There is no way to verify whether the imposed relationship reflects reality or is merely a convenient assumption.</p>
 <p>VARs sidestep this problem by dropping the constraint of unidirectionality. As shown above, every variable can affect, and be affected by, every other, with no need to decide in advance who is endogenous and who is exogenous.</p>
 <p>In microeconomics this chicken-and-egg problem is usually resolved through a natural temporal ordering: education precedes wages, so treating it as exogenous is defensible. In macroeconomics such precedence rarely exists: to continue the earlier example, GDP and inflation are determined simultaneously, within the same period.</p>
 <p>This is what makes the VAR both <em>simpler</em> and more <em>flexible</em>: it is essentially <em>atheoretical in structure</em>, treating every variable as potentially endogenous and letting the data reveal the dynamics, rather than imposing a priori who (exogenous) influences whom (endogenous).</p>
