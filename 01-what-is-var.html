@@ -458,12 +458,14 @@ gdp_t &amp;= f(gdp_{t-1},\, \pi_{t-1})
 <h2 data-number="3.2" class="anchored" data-anchor-id="var-from-a-mathematical-pov"><span class="header-section-number">3.2</span> VAR from a mathematical POV</h2>
 <p>A VAR is an <span class="math inline">\(n\)</span>-equation, <span class="math inline">\(n\)</span>-variable linear model in which each variable is explained by its own lagged values, plus current (initially this term will missed, it appears later in the text) and past values of the remaining <span class="math inline">\(n-1\)</span> variables.</p>
 <p>Formally, let <span class="math inline">\(Z_t\)</span> be a vector collecting the values of <span class="math inline">\(n\)</span> variables at time <span class="math inline">\(t\)</span>, for instance inflation, output gap, and the interest rate. A vector autoregressive process of order <span class="math inline">\(p\)</span>, written VAR(<span class="math inline">\(p\)</span>), generalizes the one-variable AR(<span class="math inline">\(p\)</span>) process to <span class="math inline">\(n\)</span> variables:</p>
-<p><span class="math display">\[Z_t = c + \Phi_1 Z_{t-1} + \Phi_2 Z_{t-2} + \cdots + \Phi_p Z_{t-p} + w_t\]</span> {#eq-varp-general}</p>
+<p><span id="eq-varp-general"><span class="math display">\[Z_t = c + \Phi_1 Z_{t-1} + \Phi_2 Z_{t-2} + \cdots + \Phi_p Z_{t-p} + w_t
+\tag{3.1}\]</span></span></p>
 <p>where:</p>
-<p><span class="math display">\[Z_t = \begin{bmatrix} z_{1t} \\ z_{2t} \\ \vdots \\ z_{nt} \end{bmatrix}, \qquad
+<p><span id="eq-varp-components"><span class="math display">\[Z_t = \begin{bmatrix} z_{1t} \\ z_{2t} \\ \vdots \\ z_{nt} \end{bmatrix}, \qquad
 c = \begin{bmatrix} c_1 \\ c_2 \\ \vdots \\ c_n \end{bmatrix}, \qquad
 \Phi_j = \begin{bmatrix} \phi_{11}^{(j)} &amp; \cdots &amp; \phi_{1n}^{(j)} \\ \vdots &amp; \ddots &amp; \vdots \\ \phi_{n1}^{(j)} &amp; \cdots &amp; \phi_{nn}^{(j)} \end{bmatrix}, \qquad
-w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \\ \vdots \\ w_{nt} \end{bmatrix}\]</span> {#eq-varp-components}</p>
+w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \\ \vdots \\ w_{nt} \end{bmatrix}
+\tag{3.2}\]</span></span></p>
 <p>The model describes the evolution of <span class="math inline">\(Z_t\)</span> as a function of its own past realizations <span class="math inline">\(Z_{t-1}, \dots, Z_{t-p}\)</span> and of a vector of white noise errors <span class="math inline">\(w_t\)</span>.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Deeper dive: How the system grows with n variable and p lags">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -477,7 +479,7 @@ w_t = \begin{bmatrix} w_{1t} \\ w_{2t} \\ \vdots \\ w_{nt} \end{bmatrix}\]</span
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The compact form of <span class="quarto-unresolved-ref">?eq-varp-general</span> hides how quickly the system grows once <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span> increase. The interactive below writes out the full set of equations for any chosen number of variables and lags (max 4 and 4), and tracks the number of parameters this entails.</p>
+<p>The compact form of <a href="#eq-varp-general" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> hides how quickly the system grows once <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span> increase. The interactive below writes out the full set of equations for any chosen number of variables and lags (max 4 and 4), and tracks the number of parameters this entails.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="249" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 248;"><span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> katex <span class="op">=</span> <span class="cf">await</span> <span class="pp">require</span>(<span class="st">"katex@0.16.9"</span>)<span class="op">;</span></span>
@@ -597,22 +599,23 @@ This is the <em>curse of dimensionality</em> of VARs, and the reason parsimony i
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="sec-errors"><span class="header-section-number">3.2.1</span> The error structure</h3>
 <p>The white-noise assumption on <span class="math inline">\(w_t\)</span> is central and deserves to be stated precisely. Each error has zero mean and finite variance, is serially uncorrelated <em>within</em> equation over time but it may be correlated <em>across</em> equations at the same time. This distinction is crucial and recurs multiple time throughout the text.<br>
 Formally:</p>
-<p><span class="math display">\[\operatorname{E}[w_t] = 0, \qquad
+<p><span id="eq-varp-errors"><span class="math display">\[\operatorname{E}[w_t] = 0, \qquad
 \operatorname{E}[w_t w_\tau'] =
 \begin{cases}
 \Omega &amp; \text{if } t = \tau \\
 0 &amp; \text{if } t \neq \tau
-\end{cases}\]</span> {#eq-varp-errors}</p>
+\end{cases}
+\tag{3.3}\]</span></span></p>
 <p>More precisely:</p>
 <ol type="1">
 <li>Along the time dimension, the errors are uncorrelated with their own past and with all the right-hand-side variables, the lagged <span class="math inline">\(Z\)</span>’s. This absence of serial correlation is what makes OLS, applied equation by equation, consistent.</li>
-<li>Across equations, by contrast, <span class="math inline">\(\Omega\)</span> is <em>not</em> assumed to be diagonal<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, so the errors of different equations can be correlated at the same date <span class="math inline">\(t\)</span>. This non-zero off-diagonal is the trace left by the contemporaneous links between the variables: how in reality they influence each other in <span class="math inline">\(t\)</span>. This is the reason why, starting to be precise with name and classification, <span class="quarto-unresolved-ref">?eq-varp-general</span> is called reduced-form VAR: the contemporaneous variables, the ones quoted earlier, are apparently absent from the right-hand side.</li>
+<li>Across equations, by contrast, <span class="math inline">\(\Omega\)</span> is <em>not</em> assumed to be diagonal<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, so the errors of different equations can be correlated at the same date <span class="math inline">\(t\)</span>. This non-zero off-diagonal is the trace left by the contemporaneous links between the variables: how in reality they influence each other in <span class="math inline">\(t\)</span>. This is the reason why, starting to be precise with name and classification, <a href="#eq-varp-general" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> is called reduced-form VAR: the contemporaneous variables, the ones quoted earlier, are apparently absent from the right-hand side.</li>
 </ol>
 <p>This cross-equation correlation is not a nuisance to be removed but the core point of the reduced form. The general picture can now begin to take shape. Contemporaneous variables are kept off the right-hand side because their presence would make the model impossible to estimate, as shown below; what is estimated is therefore the so-called <em>reduced form</em>.<br>
 Yet the trace of how the variables influence one another within period <span class="math inline">\(t\)</span> does not vanish: it hides in the off-diagonal entries of the variance-covariance matrix, which record the covariances between the errors of the different equations at the same date. That single object, <span class="math inline">\(\Omega\)</span>, is where the whole contemporaneous structure now lives, and it deserves examination on its own.</p>
 <section id="sec-omega" class="level4" data-number="3.2.1.1">
 <h4 data-number="3.2.1.1" class="anchored" data-anchor-id="sec-omega"><span class="header-section-number">3.2.1.1</span> <strong>The error variance covariance matrix</strong></h4>
-<p>The matrix <span class="math inline">\(\Omega\)</span> introduced in <span class="quarto-unresolved-ref">?eq-varp-errors</span> is the contemporaneous variance-covariance matrix of the error vector <span class="math inline">\(w_t\)</span>. In a reduced-form VAR it is the only place where the contemporaneous relations among the variables survive. Its entries are what needs to be examined: the diagonal and the off-diagonal carry different information, and seeing why, from the algebra, clarifies what the matrix actually measures.</p>
+<p>The matrix <span class="math inline">\(\Omega\)</span> introduced in <a href="#eq-varp-errors" class="quarto-xref">Equation&nbsp;<span>3.3</span></a> is the contemporaneous variance-covariance matrix of the error vector <span class="math inline">\(w_t\)</span>. In a reduced-form VAR it is the only place where the contemporaneous relations among the variables survive. Its entries are what needs to be examined: the diagonal and the off-diagonal carry different information, and seeing why, from the algebra, clarifies what the matrix actually measures.</p>
 <p>Its content follows directly from the definition <span class="math inline">\(\Omega = \operatorname{E}[w_t w_t']\)</span>. To see why it holds variances on the diagonal and covariances off it, take <span class="math inline">\(n = 2\)</span> and expand. The outer product of the error vector with itself is</p>
 <p><span class="math display">\[w_t w_t' = \begin{bmatrix} w_{1t} \\ w_{2t} \end{bmatrix} \begin{bmatrix} w_{1t} &amp; w_{2t} \end{bmatrix} = \begin{bmatrix} w_{1t}^2 &amp; w_{1t} w_{2t} \\ w_{2t} w_{1t} &amp; w_{2t}^2 \end{bmatrix},\]</span></p>
 <p>so taking expectations entry by entry gives</p>
@@ -622,9 +625,10 @@ Yet the trace of how the variables influence one another within period <span cla
 \operatorname{Cov}(w_{it}, w_{jt}) = \operatorname{E}[w_{it} w_{jt}] - \underbrace{\operatorname{E}[w_{it}]\operatorname{E}[w_{jt}]}_{=\,0} = \operatorname{E}[w_{it} w_{jt}].\]</span></p>
 <p>The diagonal entries <span class="math inline">\(\operatorname{E}[w_{it}^2]\)</span> are therefore the variances <span class="math inline">\(\sigma_i^2\)</span>, and the off-diagonal entries <span class="math inline">\(\operatorname{E}[w_{it} w_{jt}]\)</span> the contemporaneous covariances <span class="math inline">\(\sigma_{ij}\)</span>.</p>
 <p>Written out, for clarification, for <span class="math inline">\(n = 2\)</span> and <span class="math inline">\(n = 3\)</span> the matrix takes the following form:</p>
-<p><span class="math display">\[\Omega_{(n=2)} = \begin{bmatrix} \sigma_1^2 &amp; \sigma_{12} \\ \sigma_{12} &amp; \sigma_2^2 \end{bmatrix},
+<p><span id="eq-omega-examples"><span class="math display">\[\Omega_{(n=2)} = \begin{bmatrix} \sigma_1^2 &amp; \sigma_{12} \\ \sigma_{12} &amp; \sigma_2^2 \end{bmatrix},
 \qquad
-\Omega_{(n=3)} = \begin{bmatrix} \sigma_1^2 &amp; \sigma_{12} &amp; \sigma_{13} \\ \sigma_{12} &amp; \sigma_2^2 &amp; \sigma_{23} \\ \sigma_{13} &amp; \sigma_{23} &amp; \sigma_3^2 \end{bmatrix}\]</span> {#eq-omega-examples}</p>
+\Omega_{(n=3)} = \begin{bmatrix} \sigma_1^2 &amp; \sigma_{12} &amp; \sigma_{13} \\ \sigma_{12} &amp; \sigma_2^2 &amp; \sigma_{23} \\ \sigma_{13} &amp; \sigma_{23} &amp; \sigma_3^2 \end{bmatrix}
+\tag{3.4}\]</span></span></p>
 <p>Two things can be read from this structure directly. As said before the diagonal collects the variances <span class="math inline">\(\sigma_i^2\)</span>, one per equation, measuring how volatile each equation’s own shock is; instead the off-diagonal collects the contemporaneous covariances <span class="math inline">\(\sigma_{ij}\)</span>, measuring whether and in which direction the shocks of equations <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> move together at the same date.<br>
 The matrix is symmetric, since <span class="math inline">\(\sigma_{ij} = \sigma_{ji}\)</span>, so the co-movement between two equations is a single number, not two. A diagonal <span class="math inline">\(\Omega\)</span>, with every <span class="math inline">\(\sigma_{ij} = 0\)</span>, would describe a system whose shocks are mutually uncorrelated, each equation disturbed on its own; in macroeconomic data this is the exception rather than the rule.</p>
 <p>A non-zero off-diagonal is thus the footprint of the contemporaneous links among the variables. As long as non-zero values are present, <span class="math inline">\(w_t\)</span> cannot be called a vector of structural shocks: the terms used instead are <em>innovations</em>, <em>reduced-form residuals</em>, or one-step-ahead <em>forecast errors</em> of the system. Structural shocks require the off-diagonal entries to be zero (called orthogonality<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>), since only then would the errors be mutually uncorrelated and thus separately interpretable.</p>
@@ -883,7 +887,7 @@ The matrix is symmetric, since <span class="math inline">\(\sigma_{ij} = \sigma_
 <p><span id="eq-svar-structural"><span class="math display">\[\begin{aligned}
 x_t &amp;= \beta_{12}\, y_t + \gamma_{11}\, x_{t-1} + \gamma_{12}\, y_{t-1} + \eta_{1t}\\
 y_t &amp;= \beta_{21}\, x_t + \gamma_{21}\, x_{t-1} + \gamma_{22}\, y_{t-1} + \eta_{2t}
-\end{aligned} \tag{3.1}\]</span></span></p>
+\end{aligned} \tag{3.5}\]</span></span></p>
 <p>The shocks <span class="math inline">\(\eta_{1t}, \eta_{2t}\)</span> are the <em>structural shocks</em>, also called primitive impulses, structural innovations, or fundamental shocks in the literature. They are the genuine economic driving forces, a monetary-policy shock or a technology shock for instance, and they are uncorrelated with each other.</p>
 <p>Moving the contemporaneous terms <span class="math inline">\(\beta_{12}\, y_t\)</span> and <span class="math inline">\(\beta_{21}\, x_t\)</span> to the left-hand side gathers everything dated <span class="math inline">\(t\)</span> on one side. This regrouping is what the matrix <span class="math inline">\(B\)</span> encodes, and it is done for computational convenience: with the period-<span class="math inline">\(t\)</span> variables collected together, the system can later be solved in one step by premultiplying by <span class="math inline">\(B^{-1}\)</span>. In matrix form it becomes <span class="math inline">\(B\, Z_t = \Gamma\, Z_{t-1} + \eta_t\)</span>, with</p>
 <p><span id="eq-svar-B"><span class="math display">\[\begin{aligned}
@@ -892,21 +896,21 @@ y_t &amp;= \beta_{21}\, x_t + \gamma_{21}\, x_{t-1} + \gamma_{22}\, y_{t-1} + \e
 \eta_t = \begin{bmatrix} \eta_{1t} \\ \eta_{2t} \end{bmatrix} \\[8pt]
 &amp;Z_t = \begin{bmatrix} x_t \\ y_t \end{bmatrix}, \qquad
 Z_{t-1} = \begin{bmatrix} x_{t-1} \\ y_{t-1} \end{bmatrix}
-\end{aligned} \tag{3.2}\]</span></span></p>
+\end{aligned} \tag{3.6}\]</span></span></p>
 <p>Each piece plays a distinct role. <span class="math inline">\(Z_t\)</span> stacks the two contemporaneous variables, and <span class="math inline">\(Z_{t-1}\)</span> their first lags. On the left, <span class="math inline">\(B\)</span> holds the contemporaneous links: ones on the diagonal, so each variable enters its own equation with coefficient one, and the off-diagonal entries <span class="math inline">\(-\beta_{12}, -\beta_{21}\)</span> carrying the simultaneous effects moved over from the right. On the right, <span class="math inline">\(\Gamma\)</span> holds the lag coefficients, mapping how yesterday’s values <span class="math inline">\(Z_{t-1}\)</span> feed today’s, and <span class="math inline">\(\eta_t\)</span> collects the two structural shocks. If the off-diagonal entries of <span class="math inline">\(B\)</span> were zero, <span class="math inline">\(B\)</span> would reduce to the identity and there would be no simultaneity left to deal with.</p>
 <ol start="2" type="1">
 <li>Why it cannot be estimated:<br>
 </li>
 </ol>
-<p>OLS delivers a reliable and consistent estimate under one essential condition: each regressor must be uncorrelated with the error of its own equation<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Consider estimating the first equation of <a href="#eq-svar-structural" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> and apply that single test. The contemporaneous regressor is <span class="math inline">\(y_t\)</span> and the error is <span class="math inline">\(\eta_{1t}\)</span>. Trace the chain: <span class="math inline">\(y_t\)</span> is set by the second equation, where it depends on <span class="math inline">\(x_t\)</span>; and <span class="math inline">\(x_t\)</span> is set by the first equation, where it carries <span class="math inline">\(\eta_{1t}\)</span>. Putting these together, <span class="math inline">\(\eta_{1t}\)</span> moves <span class="math inline">\(x_t\)</span>, which moves <span class="math inline">\(y_t\)</span>, so <span class="math inline">\(y_t\)</span> and <span class="math inline">\(\eta_{1t}\)</span> move together: <span class="math inline">\(\text{Cov}(y_t, \eta_{1t}) \neq 0\)</span>. The key condition is violated; OLS then credits the regressor with movement that in reality belongs to the error, and returns a biased and inconsistent estimate. This is the classic <em>simultaneity bias</em>, and it is exactly why the traditional simultaneous-equation models had to rely on instrumental variables and exclusion restrictions to break the link between regressors and errors: the credibility of those restrictions is what Sims contested. The moral is clear: written explicitly into the equations, simultaneity makes the model impossible to estimate directly.</p>
+<p>OLS delivers a reliable and consistent estimate under one essential condition: each regressor must be uncorrelated with the error of its own equation<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Consider estimating the first equation of <a href="#eq-svar-structural" class="quarto-xref">Equation&nbsp;<span>3.5</span></a> and apply that single test. The contemporaneous regressor is <span class="math inline">\(y_t\)</span> and the error is <span class="math inline">\(\eta_{1t}\)</span>. Trace the chain: <span class="math inline">\(y_t\)</span> is set by the second equation, where it depends on <span class="math inline">\(x_t\)</span>; and <span class="math inline">\(x_t\)</span> is set by the first equation, where it carries <span class="math inline">\(\eta_{1t}\)</span>. Putting these together, <span class="math inline">\(\eta_{1t}\)</span> moves <span class="math inline">\(x_t\)</span>, which moves <span class="math inline">\(y_t\)</span>, so <span class="math inline">\(y_t\)</span> and <span class="math inline">\(\eta_{1t}\)</span> move together: <span class="math inline">\(\text{Cov}(y_t, \eta_{1t}) \neq 0\)</span>. The key condition is violated; OLS then credits the regressor with movement that in reality belongs to the error, and returns a biased and inconsistent estimate. This is the classic <em>simultaneity bias</em>, and it is exactly why the traditional simultaneous-equation models had to rely on instrumental variables and exclusion restrictions to break the link between regressors and errors: the credibility of those restrictions is what Sims contested. The moral is clear: written explicitly into the equations, simultaneity makes the model impossible to estimate directly.</p>
 <ol start="3" type="1">
 <li>The way out:<br>
 </li>
 </ol>
-<p>Premultiplying <a href="#eq-svar-B" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> by <span class="math inline">\(B^{-1}\)</span> isolates <span class="math inline">\(Z_t\)</span> on the left. Indeed <span class="math inline">\(B^{-1} B = I\)</span> and on the left-hand side what is left is <span class="math inline">\(Z_t\)</span>, while every term on the right is equal to the previous one multiplied by <span class="math inline">\(B^{-1}\)</span>:</p>
+<p>Premultiplying <a href="#eq-svar-B" class="quarto-xref">Equation&nbsp;<span>3.6</span></a> by <span class="math inline">\(B^{-1}\)</span> isolates <span class="math inline">\(Z_t\)</span> on the left. Indeed <span class="math inline">\(B^{-1} B = I\)</span> and on the left-hand side what is left is <span class="math inline">\(Z_t\)</span>, while every term on the right is equal to the previous one multiplied by <span class="math inline">\(B^{-1}\)</span>:</p>
 <p><span id="eq-svar-reduced"><span class="math display">\[B^{-1} B\, Z_t = B^{-1}\Gamma\, Z_{t-1} + B^{-1}\eta_t
 \;\;\Longrightarrow\;\;
-Z_t = \underbrace{B^{-1}\Gamma}_{\Phi}\, Z_{t-1} + \underbrace{B^{-1}\eta_t}_{w_t} \tag{3.3}\]</span></span></p>
+Z_t = \underbrace{B^{-1}\Gamma}_{\Phi}\, Z_{t-1} + \underbrace{B^{-1}\eta_t}_{w_t} \tag{3.7}\]</span></span></p>
 <p>The contemporaneous terms are gone: only lagged variables remain on the right-hand side and this is what makes OLS valid here. The regressors are all dated <span class="math inline">\(t-1\)</span>, while the error <span class="math inline">\(w_t\)</span> is dated <span class="math inline">\(t\)</span>. A value already determined in the previous period cannot move together with a shock that arrives only in the current one, so regressors and error are necessarily uncorrelated and the condition of step 2 is satisfied. Each equation can therefore be estimated separately by OLS. This is the reduced-form VAR of <span class="quarto-unresolved-ref">?eq-var1-matrix-const</span>, and this is why estimation is simple.</p>
 <ol start="4" type="1">
 <li>Where the simultaneity goes:<br>
@@ -935,7 +939,7 @@ The inverse of <span class="math inline">\(B\)</span> is</p>
 <p><span id="eq-w-blend"><span class="math display">\[\begin{aligned}
 w_{1t} &amp;= \frac{1}{1 - \beta_{12}\beta_{21}}\left(\eta_{1t} + \beta_{12}\,\eta_{2t}\right)\\[4pt]
 w_{2t} &amp;= \frac{1}{1 - \beta_{12}\beta_{21}}\left(\beta_{21}\,\eta_{1t} + \eta_{2t}\right)
-\end{aligned} \tag{3.4}\]</span></span></p>
+\end{aligned} \tag{3.8}\]</span></span></p>
 <ul>
 <li>A numerical case:<br>
 </li>
@@ -954,7 +958,7 @@ w_{2t} = \tfrac{2}{3}\,\eta_{1t} + \tfrac{4}{3}\,\eta_{2t}.\]</span></p>
 <p><span id="eq-w-blend"><span class="math display">\[\begin{aligned}
 w_{1t} &amp;= \frac{1}{1 - \beta_{12}\beta_{21}}\left(\eta_{1t} + \beta_{12}\,\eta_{2t}\right)\\[4pt]
 w_{2t} &amp;= \frac{1}{1 - \beta_{12}\beta_{21}}\left(\beta_{21}\,\eta_{1t} + \eta_{2t}\right)
-\end{aligned} \tag{3.5}\]</span></span></p>
+\end{aligned} \tag{3.9}\]</span></span></p>
 <p>Two properties must be kept apart. <em>Within</em> each equation the residual is white noise: serially uncorrelated with its own past, as a well-specified model requires. Residual autocorrelation would instead signal misspecification, typically too few lags, and would call for a different specification rather than for identification. <em>Across</em> equations, however, the two residuals are correlated at the same date <span class="math inline">\(t\)</span>, because they share the same underlying shocks <span class="math inline">\(\eta_{1t}\)</span> and <span class="math inline">\(\eta_{2t}\)</span>. This contemporaneous cross-equation correlation is the footprint left by simultaneity, now stored in the residual covariance matrix rather than on the right-hand side.</p>
 <p>A numerical case makes the size of the effect concrete. Let <span class="math inline">\(\beta_{12} = \beta_{21} = 0.5\)</span>, so that <span class="math inline">\(1 - \beta_{12}\beta_{21} = 0.75\)</span> and</p>
 <p><span class="math display">\[w_{1t} = \tfrac{4}{3}\,\eta_{1t} + \tfrac{2}{3}\,\eta_{2t}, \qquad
