@@ -898,14 +898,14 @@ y_t &amp;= \beta_{21}\, x_t + \gamma_{21}\, x_{t-1} + \gamma_{22}\, y_{t-1} + \e
 x_t - \beta_{12}\, y_t &amp;= \gamma_{11}\, x_{t-1} + \gamma_{12}\, y_{t-1} + \eta_{1t}\\
 -\beta_{21}\, x_t + y_t &amp;= \gamma_{21}\, x_{t-1} + \gamma_{22}\, y_{t-1} + \eta_{2t}
 \end{aligned} \tag{3.6}\]</span></span></p>
-<p>In matrix form it becomes <span class="math inline">\(B\, Z_t = \Gamma\, Z_{t-1} + \eta_t\)</span>, with</p>
-<p><span id="eq-svar-B"><span class="math display">\[\begin{aligned}
+<p>In matrix form it becomes <span class="math inline">\(B\, Z_t = \Gamma\, Z_{t-1} + \eta_t\)</span> {#eq-svar-B}, with</p>
+<p><span class="math display">\[\begin{aligned}
 &amp;B = \begin{bmatrix} 1 &amp; -\beta_{12} \\ -\beta_{21} &amp; 1 \end{bmatrix}, \qquad
 \Gamma = \begin{bmatrix} \gamma_{11} &amp; \gamma_{12} \\ \gamma_{21} &amp; \gamma_{22} \end{bmatrix}, \qquad
 \eta_t = \begin{bmatrix} \eta_{1t} \\ \eta_{2t} \end{bmatrix} \\[8pt]
 &amp;Z_t = \begin{bmatrix} x_t \\ y_t \end{bmatrix}, \qquad
 Z_{t-1} = \begin{bmatrix} x_{t-1} \\ y_{t-1} \end{bmatrix}
-\end{aligned} \tag{3.7}\]</span></span></p>
+\end{aligned}\]</span></p>
 <p>Where each piece plays a distinct role. <span class="math inline">\(Z_t\)</span> stacks the two contemporaneous variables, and <span class="math inline">\(Z_{t-1}\)</span> their first lags. On the left, <span class="math inline">\(B\)</span> holds the contemporaneous links: ones on the diagonal, so each variable enters its own equation with coefficient one, and the off-diagonal entries <span class="math inline">\(-\beta_{12}, -\beta_{21}\)</span> carrying the simultaneous effects moved over from the right. On the right, <span class="math inline">\(\Gamma\)</span> holds the lag coefficients and <span class="math inline">\(\eta_t\)</span> collects the two structural shocks.<br>
 If the off-diagonal entries of <span class="math inline">\(B\)</span> were zero, <span class="math inline">\(B\)</span> would reduce to the identity matrix and there would be no simultaneity left to deal with.</p>
 <ol start="2" type="1">
@@ -918,10 +918,10 @@ This is the classic <em>simultaneity bias</em>, and it is exactly why the tradit
 <li>The way out:<br>
 </li>
 </ol>
-<p>Premultiplying <a href="#eq-svar-B" class="quarto-xref">Equation&nbsp;<span>3.7</span></a> by <span class="math inline">\(B^{-1}\)</span> isolates <span class="math inline">\(Z_t\)</span> on the left. Indeed <span class="math inline">\(B^{-1} B = I\)</span> and on the left-hand side what is left is <span class="math inline">\(Z_t\)</span>, while every term on the right is equal to the previous one multiplied by <span class="math inline">\(B^{-1}\)</span>:</p>
+<p>Premultiplying <span class="quarto-unresolved-ref">?eq-svar-B</span> by <span class="math inline">\(B^{-1}\)</span> isolates <span class="math inline">\(Z_t\)</span> on the left. Indeed <span class="math inline">\(B^{-1} B = I\)</span> and on the left-hand side what is left is <span class="math inline">\(Z_t\)</span>, while every term on the right is equal to the previous one multiplied by <span class="math inline">\(B^{-1}\)</span>:</p>
 <p><span id="eq-svar-reduced"><span class="math display">\[B^{-1} B\, Z_t = B^{-1}\Gamma\, Z_{t-1} + B^{-1}\eta_t
 \;\;\Longrightarrow\;\;
-Z_t = \underbrace{B^{-1}\Gamma}_{\Phi}\, Z_{t-1} + \underbrace{B^{-1}\eta_t}_{w_t} \tag{3.8}\]</span></span></p>
+Z_t = \underbrace{B^{-1}\Gamma}_{\Phi}\, Z_{t-1} + \underbrace{B^{-1}\eta_t}_{w_t} \tag{3.7}\]</span></span></p>
 <p>The contemporaneous terms are gone: only lagged variables remain on the right-hand side and this is what makes OLS valid here. The regressors are all dated <span class="math inline">\(t-1\)</span>, while the error <span class="math inline">\(w_t\)</span> is dated <span class="math inline">\(t\)</span>. A value already determined in the previous period cannot move together with a shock that arrives only in the current one, so regressors and error are necessarily uncorrelated and the condition of step 2 is satisfied. Each equation can therefore be estimated separately by OLS. This is the reduced-form VAR of <span class="quarto-unresolved-ref">?eq-var1-matrix-const</span>, and this is why estimation is simple.</p>
 <ol start="4" type="1">
 <li>Where the simultaneity goes:<br>
@@ -950,7 +950,7 @@ The inverse of <span class="math inline">\(B\)</span> is</p>
 <p><span id="eq-w-blend"><span class="math display">\[\begin{aligned}
 w_{1t} &amp;= \frac{1}{1 - \beta_{12}\beta_{21}}\left(\eta_{1t} + \beta_{12}\,\eta_{2t}\right)\\[4pt]
 w_{2t} &amp;= \frac{1}{1 - \beta_{12}\beta_{21}}\left(\beta_{21}\,\eta_{1t} + \eta_{2t}\right)
-\end{aligned} \tag{3.9}\]</span></span></p>
+\end{aligned} \tag{3.8}\]</span></span></p>
 <ul>
 <li>A numerical case:<br>
 </li>
@@ -969,7 +969,7 @@ w_{2t} = \tfrac{2}{3}\,\eta_{1t} + \tfrac{4}{3}\,\eta_{2t}.\]</span></p>
 <p><span id="eq-w-blend"><span class="math display">\[\begin{aligned}
 w_{1t} &amp;= \frac{1}{1 - \beta_{12}\beta_{21}}\left(\eta_{1t} + \beta_{12}\,\eta_{2t}\right)\\[4pt]
 w_{2t} &amp;= \frac{1}{1 - \beta_{12}\beta_{21}}\left(\beta_{21}\,\eta_{1t} + \eta_{2t}\right)
-\end{aligned} \tag{3.10}\]</span></span></p>
+\end{aligned} \tag{3.9}\]</span></span></p>
 <p>Two properties must be kept apart. <em>Within</em> each equation the residual is white noise: serially uncorrelated with its own past, as a well-specified model requires. Residual autocorrelation would instead signal misspecification, typically too few lags, and would call for a different specification rather than for identification. <em>Across</em> equations, however, the two residuals are correlated at the same date <span class="math inline">\(t\)</span>, because they share the same underlying shocks <span class="math inline">\(\eta_{1t}\)</span> and <span class="math inline">\(\eta_{2t}\)</span>. This contemporaneous cross-equation correlation is the footprint left by simultaneity, now stored in the residual covariance matrix rather than on the right-hand side.</p>
 <p>A numerical case makes the size of the effect concrete. Let <span class="math inline">\(\beta_{12} = \beta_{21} = 0.5\)</span>, so that <span class="math inline">\(1 - \beta_{12}\beta_{21} = 0.75\)</span> and</p>
 <p><span class="math display">\[w_{1t} = \tfrac{4}{3}\,\eta_{1t} + \tfrac{2}{3}\,\eta_{2t}, \qquad
