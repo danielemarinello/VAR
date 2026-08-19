@@ -219,7 +219,7 @@ window.Quarto = {
   <li><a href="#stationarity" id="toc-stationarity" class="nav-link" data-scroll-target="#stationarity"><span class="header-section-number">4.3.3</span> Stationarity</a></li>
   <li><a href="#from-recursive-substitution-to-the-wold-representation" id="toc-from-recursive-substitution-to-the-wold-representation" class="nav-link" data-scroll-target="#from-recursive-substitution-to-the-wold-representation"><span class="header-section-number">4.3.4</span> From recursive substitution to the Wold representation</a></li>
   </ul></li>
-  <li><a href="#part-a2---from-ar1-the-arp---wip" id="toc-part-a2---from-ar1-the-arp---wip" class="nav-link" data-scroll-target="#part-a2---from-ar1-the-arp---wip"><span class="header-section-number">4.4</span> Part A2 - From AR(1) the AR(p) - WIP</a>
+  <li><a href="#part-a2---from-ar1-the-arp---wip---rivedere-teoria-bene-dallhamilton" id="toc-part-a2---from-ar1-the-arp---wip---rivedere-teoria-bene-dallhamilton" class="nav-link" data-scroll-target="#part-a2---from-ar1-the-arp---wip---rivedere-teoria-bene-dallhamilton"><span class="header-section-number">4.4</span> Part A2 - From AR(1) the AR(p) - WIP - RIVEDERE TEORIA bene dall’hamilton</a>
   <ul class="collapse">
   <li><a href="#the-weights-are-the-impulse-response-whatever-the-model" id="toc-the-weights-are-the-impulse-response-whatever-the-model" class="nav-link" data-scroll-target="#the-weights-are-the-impulse-response-whatever-the-model"><span class="header-section-number">4.4.1</span> The weights are the impulse response, whatever the model</a></li>
   <li><a href="#the-lag-operator" id="toc-the-lag-operator" class="nav-link" data-scroll-target="#the-lag-operator"><span class="header-section-number">4.4.2</span> The lag operator</a></li>
@@ -1300,8 +1300,8 @@ r\,S &amp;= \phantom{1 + {}} r + r^{2} + r^{3} + r^{4} + \cdots
 <p>The three objects introduced in this part are now one. Recursive substitution unwinds the model into past shocks; the dynamic multiplier reads off the effect of one of them; the Wold representation is that unwinding taken to its limit, and its weights are those very multipliers. What made the limit possible was stationarity, which is why the same condition <span class="math inline">\(|\phi|&lt;1\)</span> governs the decay of the response, the convergence of the geometric series, and the finiteness of the variance.</p>
 </section>
 </section>
-<section id="part-a2---from-ar1-the-arp---wip" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="part-a2---from-ar1-the-arp---wip"><span class="header-section-number">4.4</span> Part A2 - From AR(1) the AR(p) - WIP</h2>
+<section id="part-a2---from-ar1-the-arp---wip---rivedere-teoria-bene-dallhamilton" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="part-a2---from-ar1-the-arp---wip---rivedere-teoria-bene-dallhamilton"><span class="header-section-number">4.4</span> Part A2 - From AR(1) the AR(p) - WIP - RIVEDERE TEORIA bene dall’hamilton</h2>
 <p>In the AR(1) the Wold weights turned out to be the powers <span class="math inline">\(\phi^{\,i}\)</span>, a closed form obtained almost for free from recursive substitution. That was a fortunate case. With two lags the substitution has two <span class="math inline">\(y\)</span> terms to chase at every step, with three lags three, and the chain becomes unmanageable long before any pattern emerges.</p>
 <p>What is needed is a method that does not depend on the number of lags. This part introduces it, and the reward is threefold: the weights of any AR(<span class="math inline">\(p\)</span>) can be computed, the shapes the impulse response can take turn out to be far richer than in the AR(1), and the stationarity condition acquires a form that survives the move to matrices in Part B.</p>
 <section id="the-weights-are-the-impulse-response-whatever-the-model" class="level3" data-number="4.4.1">
