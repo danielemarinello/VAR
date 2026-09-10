@@ -1,3 +1,32 @@
+/* ---------------------------------------------------------------
+   VAR step by step — stylesheet
+   --------------------------------------------------------------- */
+
+/* Testo giustificato */
 p {
   text-align: justify;
+}
+
+/* Display math: mai fuori dalla colonna.
+   Se un'equazione eccede comunque, scorre invece di sfondare. */
+mjx-container[display="true"],
+.katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 0;
+}
+
+/* Le celle OJS occupano tutta la larghezza della colonna */
+.cell-output,
+.cell-output-display,
+.observablehq {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Gli SVG delle animazioni si adattano al contenitore */
+.cell-output-display svg {
+  max-width: 100%;
+  height: auto;
 }
